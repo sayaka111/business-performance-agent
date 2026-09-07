@@ -1,0 +1,309 @@
+{
+  "schema_version": "1.0",
+  "time_attribution_default": "paid_at",
+  "metrics": [
+    {
+      "id": "gross_gmv",
+      "name_en": "Gross Merchandise Value",
+      "name_zh": "商品交易总额",
+      "description": "分析周期内按 paid_at 归属的有效订单商品成交金额总和，不扣除后续退款。",
+      "formula": "SUM(valid_order_item_merchandise_amount)",
+      "metric_type": "additive",
+      "grain": "order_item",
+      "unit": "currency",
+      "time_attribution": "paid_at",
+      "includes": [
+        "valid paid merchandise amount"
+      ],
+      "excludes": [
+        "unpaid orders",
+        "cancelled unpaid orders",
+        "shipping",
+        "tax"
+      ],
+      "refund_treatment": "not_deducted",
+      "required_fields": [
+        "order_id",
+        "order_item_id",
+        "paid_at",
+        "payment_success",
+        "merchandise_amount"
+      ]
+    },
+    {
+      "id": "refunded_merchandise_amount",
+      "name_en": "Refunded Merchandise Amount",
+      "name_zh": "退款商品金额",
+      "description": "已确认退款的商品金额。为保持与 paid_at 经营口径一致，退款金额归属回原订单的 paid_at 周期。",
+      "formula": "SUM(confirmed_refunded_merchandise_amount)",
+      "metric_type": "additive",
+      "grain": "order_item_refund",
+      "unit": "currency",
+      "time_attribution": "original_order_paid_at",
+      "includes": [
+        "confirmed full refunds",
+        "confirmed partial merchandise refunds"
+      ],
+      "excludes": [
+        "shipping refunds",
+        "tax refunds",
+        "unconfirmed refund requests"
+      ],
+      "required_fields": [
+        "order_id",
+        "original_order_paid_at",
+        "refund_status",
+        "refunded_merchandise_amount"
+      ]
+    },
+    {
+      "id": "net_gmv",
+      "name_en": "Net Merchandise Value",
+      "name_zh": "净商品交易额",
+      "description": "按原订单 paid_at 归属的 Gross GMV 扣除已确认退款商品金额后的净交易额。退款发生后历史周期允许重述。",
+      "formula": "gross_gmv - refunded_merchandise_amount",
+      "metric_type": "derived_additive",
+      "grain": "period_or_segment",
+      "unit": "currency",
+      "time_attribution": "original_order_paid_at",
+      "required_metrics": [
+        "gross_gmv",
+        "refunded_merchandise_amount"
+      ],
+      "restatement_policy": "historical_periods_may_restate_after_confirmed_refunds"
+    },
+    {
+      "id": "orders",
+      "name_en": "Orders",
+      "name_zh": "有效订单数",
+      "description": "分析周期内按 paid_at 归属的有效订单唯一数。",
+      "formula": "COUNT(DISTINCT order_id)",
+      "metric_type": "additive_only_under_mutually_exclusive_order_partition",
+      "grain": "order",
+      "unit": "count",
+      "time_attribution": "paid_at",
+      "required_fields": [
+        "order_id",
+        "paid_at",
+        "payment_success"
+      ]
+    },
+    {
+      "id": "aov",
+      "name_en": "Average Order Value",
+      "name_zh": "平均订单金额",
+      "description": "平均每笔有效订单贡献的 Gross GMV。",
+      "formula": "gross_gmv / orders",
+      "metric_type": "derived_ratio",
+      "grain": "period_or_segment",
+      "unit": "currency_per_order",
+      "time_attribution": "paid_at",
+      "required_metrics": [
+        "gross_gmv",
+        "orders"
+      ],
+      "zero_denominator_policy": "undefined"
+    },
+    {
+      "id": "buyers",
+      "name_en": "Buyers",
+      "name_zh": "购买用户数",
+      "description": "分析周期内至少产生一笔有效订单的唯一用户数量。",
+      "formula": "COUNT(DISTINCT customer_id)",
+      "metric_type": "semi_additive",
+      "grain": "customer_period",
+      "unit": "count",
+      "time_attribution": "paid_at",
+      "required_fields": [
+        "customer_id",
+        "order_id",
+        "paid_at",
+        "payment_success"
+      ]
+    },
+    {
+      "id": "orders_per_buyer",
+      "name_en": "Orders per Buyer",
+      "name_zh": "人均订单数",
+      "description": "分析周期内平均每位购买用户产生的有效订单数。",
+      "formula": "orders / buyers",
+      "metric_type": "derived_ratio",
+      "grain": "period_or_segment",
+      "unit": "orders_per_buyer",
+      "required_metrics": [
+        "orders",
+        "buyers"
+      ],
+      "zero_denominator_policy": "undefined"
+    },
+    {
+      "id": "units",
+      "name_en": "Units",
+      "name_zh": "成交商品件数",
+      "description": "分析周期内有效订单中的商品件数总和。",
+      "formula": "SUM(quantity)",
+      "metric_type": "additive",
+      "grain": "order_item",
+      "unit": "count",
+      "time_attribution": "paid_at",
+      "required_fields": [
+        "order_item_id",
+        "order_id",
+        "quantity",
+        "paid_at",
+        "payment_success"
+      ]
+    },
+    {
+      "id": "units_per_order",
+      "name_en": "Units per Order",
+      "name_zh": "每单件数",
+      "description": "平均每笔有效订单包含的商品件数。",
+      "formula": "units / orders",
+      "metric_type": "derived_ratio",
+      "grain": "period_or_segment",
+      "unit": "units_per_order",
+      "required_metrics": [
+        "units",
+        "orders"
+      ],
+      "zero_denominator_policy": "undefined"
+    },
+    {
+      "id": "average_realized_unit_price",
+      "name_en": "Average Realized Unit Price",
+      "name_zh": "平均实际成交单件金额",
+      "description": "实际成交商品结构形成的平均单件 Gross GMV，不等于商品标价。",
+      "formula": "gross_gmv / units",
+      "metric_type": "derived_ratio",
+      "grain": "period_or_segment",
+      "unit": "currency_per_unit",
+      "required_metrics": [
+        "gross_gmv",
+        "units"
+      ],
+      "zero_denominator_policy": "undefined",
+      "semantic_warning": "A decline does not by itself prove list-price reduction."
+    },
+    {
+      "id": "new_buyers",
+      "name_en": "New Buyers",
+      "name_zh": "新购买用户数",
+      "description": "首次有效购买时间落在当前分析周期内，且当前周期发生有效购买的唯一用户数。用户在整个分析周期内统一标记为 New。",
+      "formula": "COUNT(DISTINCT customer_id WHERE first_valid_paid_at BETWEEN period_start AND period_end)",
+      "metric_type": "partition_additive_with_returning_buyers",
+      "grain": "customer_period",
+      "unit": "count",
+      "required_fields": [
+        "customer_id",
+        "first_valid_paid_at",
+        "paid_at"
+      ]
+    },
+    {
+      "id": "returning_buyers",
+      "name_en": "Returning Buyers",
+      "name_zh": "老购买用户数",
+      "description": "首次有效购买发生在当前分析周期之前，且当前周期存在有效购买的唯一用户数。",
+      "formula": "COUNT(DISTINCT customer_id WHERE first_valid_paid_at < period_start AND has_valid_order_in_period = true)",
+      "metric_type": "partition_additive_with_new_buyers",
+      "grain": "customer_period",
+      "unit": "count",
+      "required_fields": [
+        "customer_id",
+        "first_valid_paid_at",
+        "paid_at"
+      ]
+    },
+    {
+      "id": "new_buyer_orders",
+      "name_en": "New Buyer Orders",
+      "name_zh": "新客订单数",
+      "description": "当前分析周期内，由周期级 New Buyer 产生的全部有效订单数；该用户当期第二、第三笔订单仍归入 New Buyer Orders。",
+      "formula": "COUNT(DISTINCT order_id WHERE customer_type_for_period = 'new')",
+      "metric_type": "partition_additive_with_returning_buyer_orders",
+      "grain": "order",
+      "unit": "count",
+      "required_fields": [
+        "order_id",
+        "customer_id",
+        "first_valid_paid_at",
+        "paid_at"
+      ]
+    },
+    {
+      "id": "returning_buyer_orders",
+      "name_en": "Returning Buyer Orders",
+      "name_zh": "老客订单数",
+      "description": "当前分析周期内，由周期级 Returning Buyer 产生的有效订单数。",
+      "formula": "COUNT(DISTINCT order_id WHERE customer_type_for_period = 'returning')",
+      "metric_type": "partition_additive_with_new_buyer_orders",
+      "grain": "order",
+      "unit": "count",
+      "required_fields": [
+        "order_id",
+        "customer_id",
+        "first_valid_paid_at",
+        "paid_at"
+      ]
+    },
+    {
+      "id": "sessions",
+      "name_en": "Sessions",
+      "name_zh": "会话数",
+      "description": "可选指标。只有在行为数据能够可靠构建 Session 时启用。Session 切分规则由具体数据源配置，不由 Agent 临时决定。",
+      "formula": "COUNT(DISTINCT session_id)",
+      "metric_type": "optional_additive",
+      "grain": "session",
+      "unit": "count",
+      "required_fields": [
+        "session_id",
+        "session_start_at"
+      ],
+      "availability": "optional"
+    },
+    {
+      "id": "orders_per_session",
+      "name_en": "Orders per Session",
+      "name_zh": "每会话订单数",
+      "description": "平均每个 Session 产生的有效订单数，用于严格满足 Orders = Sessions × Orders per Session。",
+      "formula": "orders / sessions",
+      "metric_type": "derived_ratio",
+      "grain": "period_or_segment",
+      "unit": "orders_per_session",
+      "required_metrics": [
+        "orders",
+        "sessions"
+      ],
+      "zero_denominator_policy": "undefined",
+      "availability": "optional"
+    },
+    {
+      "id": "sessions_with_order",
+      "name_en": "Sessions with Order",
+      "name_zh": "有订单会话数",
+      "description": "至少产生一笔有效订单的唯一 Session 数。",
+      "formula": "COUNT(DISTINCT session_id WHERE valid_order_count >= 1)",
+      "metric_type": "optional_additive",
+      "grain": "session",
+      "unit": "count",
+      "availability": "optional"
+    },
+    {
+      "id": "session_conversion_rate",
+      "name_en": "Session Conversion Rate",
+      "name_zh": "会话转化率",
+      "description": "产生至少一笔有效订单的 Session 占全部 Session 的比例。属于诊断指标，不直接作为 Orders 的严格数学 Driver。",
+      "formula": "sessions_with_order / sessions",
+      "metric_type": "diagnostic_ratio",
+      "grain": "period_or_segment",
+      "unit": "ratio",
+      "required_metrics": [
+        "sessions_with_order",
+        "sessions"
+      ],
+      "zero_denominator_policy": "undefined",
+      "availability": "optional"
+    }
+  ]
+}

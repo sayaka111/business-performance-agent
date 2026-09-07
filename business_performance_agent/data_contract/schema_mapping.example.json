@@ -1,0 +1,29 @@
+{
+  "dataset_id": "mock_retail_v1",
+  "table": "mock_order_items",
+  "semantic_mapping": {
+    "order_id": "mock_order_key",
+    "order_item_id": "mock_item_key",
+    "customer_id": "mock_customer_key",
+    "paid_at": "mock_paid_date",
+    "payment_success": "mock_paid_ok",
+    "merchandise_amount": "mock_goods_amount",
+    "valid_order_item_merchandise_amount": "mock_goods_amount",
+    "quantity": "mock_quantity",
+    "first_valid_paid_at": "mock_first_purchase",
+    "original_order_paid_at": "mock_paid_date",
+    "refund_status": "mock_refund_status",
+    "refunded_merchandise_amount": "mock_refund_amount",
+    "confirmed_refunded_merchandise_amount": "mock_refund_amount",
+    "channel": "mock_channel",
+    "campaign": "mock_campaign",
+    "region": "mock_region",
+    "order_delivery_region": "mock_region",
+    "category": "mock_category",
+    "product": "mock_product"
+  },
+  "capabilities": {
+    "reliable_session_definition": false,
+    "reliable_order_session_linkage": false
+  }
+}

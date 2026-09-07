@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "rules": [
+    {
+      "id": "time_attribution",
+      "rule": "经营指标默认按 paid_at 归属分析周期。",
+      "exceptions": {
+        "refunded_merchandise_amount": "归属回原订单 original_order_paid_at",
+        "net_gmv": "按 original_order_paid_at 重述净额"
+      }
+    },
+    {
+      "id": "valid_order",
+      "rule": "有效订单至少要求 payment_success = true。具体订单状态映射由 Dataset Adapter 配置。",
+      "minimum_condition": "payment_success = true"
+    },
+    {
+      "id": "gross_gmv_refund_policy",
+      "rule": "Gross GMV 不扣除退款。退款必须通过 refunded_merchandise_amount 与 net_gmv 单独表达。"
+    },
+    {
+      "id": "net_gmv_refund_policy",
+      "rule": "Net GMV = Gross GMV - confirmed refunded merchandise amount。退款金额回溯至原订单 paid_at 周期，因此历史 Net GMV 允许重述。"
+    },
+    {
+      "id": "customer_identity",
+      "rule": "Buyer 及新老客分析依赖稳定 customer_id。无法跨订单稳定识别用户时，相关指标标记 unavailable。"
+    },
+    {
+      "id": "new_returning_period_classification",
+      "rule": "New / Returning 使用分析周期级分类。若 first_valid_paid_at 位于当前周期，则该用户当期全部有效订单均归入 New Buyer Orders。"
+    },
+    {
+      "id": "unknown_preservation",
+      "rule": "维度 NULL / 未归因值不得直接过滤，统一映射为 unknown 或 unattributed，以保证贡献闭合。"
+    },
+    {
+      "id": "zero_denominator",
+      "rule": "派生比率指标分母为 0 时返回 undefined，不返回 0。"
+    },
+    {
+      "id": "additivity_constraint",
+      "rule": "只有 dimensions.json 明确 contribution_support = true 的 Metric × Dimension 组合允许输出严格贡献占比。"
+    },
+    {
+      "id": "metric_definition_immutability",
+      "rule": "运行过程中 LLM / Skill 不允许临时修改指标口径。若定义与当前数据冲突，应返回 semantic_conflict。"
+    },
+    {
+      "id": "session_availability",
+      "rule": "Sessions 相关指标仅在 Session 定义稳定且 Order ↔ Session 关联可靠时启用。"
+    },
+    {
+      "id": "orders_session_identity",
+      "rule": "严格流量拆解使用 Orders = Sessions × OrdersPerSession。SessionConversionRate 仅作为诊断指标。"
+    },
+    {
+      "id": "category_product_order_constraint",
+      "rule": "Category / Product 由于一笔订单可跨多个值，不允许直接对 Orders 做严格贡献归因；可以做描述性 segment comparison。"
+    },
+    {
+      "id": "causal_boundary",
+      "rule": "Knowledge 只定义内部业务语义，不授权从内部变化直接推断竞争、市场、用户心理、广告竞价等外部因果。"
+    }
+  ]
+}

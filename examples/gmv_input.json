@@ -1,0 +1,7 @@
+{
+  "metric_id": "gross_gmv",
+  "current_period": {"start": "2026-08-31", "end": "2026-09-06"},
+  "baseline_period": {"start": "2026-08-24", "end": "2026-08-30"},
+  "filters": {},
+  "context": {}
+}

@@ -1,0 +1,12 @@
+include README.md QUICKSTART.md AGENTS.md .gitignore .gitattributes run.ps1 pyproject.toml
+recursive-include business_performance_agent *.py *.json
+recursive-include specs *.md *.json
+recursive-include docs *.md
+recursive-include tests *.py
+recursive-include examples *.json *.md
+recursive-include .github *.yml
+prune logs
+prune .venv
+prune build
+prune dist
+global-exclude __pycache__ *.py[cod] .env

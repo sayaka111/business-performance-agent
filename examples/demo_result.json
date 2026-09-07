@@ -1,0 +1,847 @@
+{
+  "example_type": "Mock / synthetic example",
+  "execution_mode": {
+    "dataset": "mock",
+    "dataset_id": "mock_retail_v1",
+    "llm": "mock",
+    "real_business_data": false
+  },
+  "result": {
+    "workflow_id": "gmv_diagnosis",
+    "workflow_version": "1.0",
+    "workflow_status": "completed",
+    "target": {
+      "metric_id": "gross_gmv",
+      "current_value": 7350.0,
+      "baseline_value": 10000.0,
+      "absolute_change": -2650.0,
+      "relative_change": -0.265
+    },
+    "primary_driver": {
+      "metric_id": "orders",
+      "effect": -2475.0,
+      "aligned_share": 0.9339622641509434
+    },
+    "secondary_drivers": [],
+    "diagnostic_path": [
+      {
+        "metric_id": "gross_gmv",
+        "relationship_id": "gross_gmv_orders_aov",
+        "dimension_id": null,
+        "segment_id": null
+      },
+      {
+        "metric_id": "orders",
+        "relationship_id": "orders_buyers_frequency",
+        "dimension_id": null,
+        "segment_id": null
+      },
+      {
+        "metric_id": "buyers",
+        "relationship_id": null,
+        "dimension_id": "customer_type",
+        "segment_id": null
+      }
+    ],
+    "key_findings": [
+      {
+        "claim_id": "C0001",
+        "claim": "gross_gmv 从 10000.0 变为 7350.0，变化 -2650.0（-26.50%）。",
+        "evidence_level": "direct",
+        "evidence_refs": [
+          "E0001"
+        ]
+      },
+      {
+        "claim_id": "C0004",
+        "claim": "在 gross_gmv 的本层分解中，orders 是最大同向内部贡献项：effect=-2475，占本层同向贡献 93.40%。",
+        "evidence_level": "derived",
+        "evidence_refs": [
+          "E0004"
+        ]
+      },
+      {
+        "claim_id": "C0006",
+        "claim": "在 orders 的本层分解中，buyers 是最大同向内部贡献项：effect=-23.8421，占本层同向贡献 95.37%。",
+        "evidence_level": "derived",
+        "evidence_refs": [
+          "E0006"
+        ]
+      },
+      {
+        "claim_id": "C0008",
+        "claim": "在 buyers，维度 customer_type 的本层分解中，new 是最大同向内部贡献项：effect=-7，占本层同向贡献 58.33%。",
+        "evidence_level": "derived",
+        "evidence_refs": [
+          "E0008"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_id": "E0001",
+        "evidence_level": "direct",
+        "source_step": "metric_compare",
+        "payload": {
+          "kind": "comparison",
+          "fact": {
+            "metric_id": "gross_gmv",
+            "current_value": 7350.0,
+            "baseline_value": 10000.0,
+            "absolute_change": -2650.0,
+            "relative_change": -0.265,
+            "provenance": [
+              {
+                "query_id": "Q00003",
+                "dataset_id": "mock_retail_v1",
+                "operation": "metric",
+                "request": {
+                  "metric_id": "gross_gmv",
+                  "period": {
+                    "start": "2026-08-24",
+                    "end": "2026-08-30"
+                  },
+                  "filters": {}
+                },
+                "read_only": true
+              },
+              {
+                "query_id": "Q00002",
+                "dataset_id": "mock_retail_v1",
+                "operation": "metric",
+                "request": {
+                  "metric_id": "gross_gmv",
+                  "period": {
+                    "start": "2026-08-31",
+                    "end": "2026-09-06"
+                  },
+                  "filters": {}
+                },
+                "read_only": true
+              }
+            ]
+          },
+          "scope": {
+            "metric_id": "gross_gmv",
+            "current_period": {
+              "start": "2026-08-31",
+              "end": "2026-09-06"
+            },
+            "baseline_period": {
+              "start": "2026-08-24",
+              "end": "2026-08-30"
+            },
+            "filters": {}
+          },
+          "provenance": [
+            {
+              "query_id": "Q00003",
+              "dataset_id": "mock_retail_v1",
+              "operation": "metric",
+              "request": {
+                "metric_id": "gross_gmv",
+                "period": {
+                  "start": "2026-08-24",
+                  "end": "2026-08-30"
+                },
+                "filters": {}
+              },
+              "read_only": true
+            },
+            {
+              "query_id": "Q00002",
+              "dataset_id": "mock_retail_v1",
+              "operation": "metric",
+              "request": {
+                "metric_id": "gross_gmv",
+                "period": {
+                  "start": "2026-08-31",
+                  "end": "2026-09-06"
+                },
+                "filters": {}
+              },
+              "read_only": true
+            }
+          ]
+        }
+      },
+      {
+        "evidence_id": "E0002",
+        "evidence_level": "derived",
+        "source_step": "anomaly_evaluate",
+        "payload": {
+          "kind": "anomaly",
+          "fact": {
+            "is_anomaly": true,
+            "severity": "critical",
+            "direction": "decrease"
+          },
+          "scope": {
+            "metric_id": "gross_gmv",
+            "current_period": {
+              "start": "2026-08-31",
+              "end": "2026-09-06"
+            },
+            "baseline_period": {
+              "start": "2026-08-24",
+              "end": "2026-08-30"
+            },
+            "filters": {}
+          },
+          "provenance": []
+        }
+      },
+      {
+        "evidence_id": "E0003",
+        "evidence_level": "direct",
+        "source_step": "decompose_gross_gmv",
+        "payload": {
+          "kind": "decomposition",
+          "fact": {
+            "target_metric": "gross_gmv",
+            "relationship": {
+              "id": "gross_gmv_orders_aov",
+              "target_metric": "gross_gmv",
+              "type": "exact_multiplicative",
+              "formula": "gross_gmv = orders * aov",
+              "drivers": [
+                "orders",
+                "aov"
+              ]
+            },
+            "drivers": [
+              {
+                "metric_id": "orders",
+                "coefficient": 1,
+                "baseline": 100,
+                "current": 75
+              },
+              {
+                "metric_id": "aov",
+                "coefficient": 1,
+                "baseline": 100.0,
+                "current": 98.0
+              }
+            ],
+            "provenance": [
+              {
+                "query_id": "Q00005",
+                "dataset_id": "mock_retail_v1",
+                "operation": "metric",
+                "request": {
+                  "metric_id": "orders",
+                  "period": {
+                    "start": "2026-08-24",
+                    "end": "2026-08-30"
+                  },
+                  "filters": {}
+                },
+                "read_only": true
+              },
+              {
+                "query_id": "Q00006",
+                "dataset_id": "mock_retail_v1",
+                "operation": "metric",
+                "request": {
+                  "metric_id": "orders",
+                  "period": {
+                    "start": "2026-08-31",
+                    "end": "2026-09-06"
+                  },
+                  "filters": {}
+                },
+                "read_only": true
+              },
+              {
+                "query_id": "Q00007",
+                "dataset_id": "mock_retail_v1",
+                "operation": "metric",
+                "request": {
+                  "metric_id": "aov",
+                  "period": {
+                    "start": "2026-08-24",
+                    "end": "2026-08-30"
+                  },
+                  "filters": {}
+                },
+                "read_only": true
+              },
+              {
+                "query_id": "Q00008",
+                "dataset_id": "mock_retail_v1",
+                "operation": "metric",
+                "request": {
+                  "metric_id": "aov",
+                  "period": {
+                    "start": "2026-08-31",
+                    "end": "2026-09-06"
+                  },
+                  "filters": {}
+                },
+                "read_only": true
+              }
+            ]
+          },
+          "scope": {
+            "metric_id": "gross_gmv",
+            "current_period": {
+              "start": "2026-08-31",
+              "end": "2026-09-06"
+            },
+            "baseline_period": {
+              "start": "2026-08-24",
+              "end": "2026-08-30"
+            },
+            "filters": {}
+          },
+          "provenance": [
+            {
+              "query_id": "Q00005",
+              "dataset_id": "mock_retail_v1",
+              "operation": "metric",
+              "request": {
+                "metric_id": "orders",
+                "period": {
+                  "start": "2026-08-24",
+                  "end": "2026-08-30"
+                },
+                "filters": {}
+              },
+              "read_only": true
+            },
+            {
+              "query_id": "Q00006",
+              "dataset_id": "mock_retail_v1",
+              "operation": "metric",
+              "request": {
+                "metric_id": "orders",
+                "period": {
+                  "start": "2026-08-31",
+                  "end": "2026-09-06"
+                },
+                "filters": {}
+              },
+              "read_only": true
+            },
+            {
+              "query_id": "Q00007",
+              "dataset_id": "mock_retail_v1",
+              "operation": "metric",
+              "request": {
+                "metric_id": "aov",
+                "period": {
+                  "start": "2026-08-24",
+                  "end": "2026-08-30"
+                },
+                "filters": {}
+              },
+              "read_only": true
+            },
+            {
+              "query_id": "Q00008",
+              "dataset_id": "mock_retail_v1",
+              "operation": "metric",
+              "request": {
+                "metric_id": "aov",
+                "period": {
+                  "start": "2026-08-31",
+                  "end": "2026-09-06"
+                },
+                "filters": {}
+              },
+              "read_only": true
+            }
+          ]
+        }
+      },
+      {
+        "evidence_id": "E0004",
+        "evidence_level": "derived",
+        "source_step": "contribution_analysis",
+        "payload": {
+          "kind": "contribution",
+          "fact": {
+            "target_metric": "gross_gmv",
+            "target_change": -2650.0,
+            "relationship_id": "gross_gmv_orders_aov",
+            "dimension_id": null,
+            "effects": [
+              {
+                "id": "orders",
+                "effect": -2475.0,
+                "role": "aligned_driver",
+                "aligned_share": 0.9339622641509434
+              },
+              {
+                "id": "aov",
+                "effect": -175.0,
+                "role": "aligned_driver",
+                "aligned_share": 0.0660377358490566
+              }
+            ],
+            "closure_error": 0.0,
+            "closed": true
+          },
+          "scope": {
+            "metric_id": "gross_gmv",
+            "current_period": {
+              "start": "2026-08-31",
+              "end": "2026-09-06"
+            },
+            "baseline_period": {
+              "start": "2026-08-24",
+              "end": "2026-08-30"
+            },
+            "filters": {}
+          },
+          "provenance": [
+            {
+              "query_id": "Q00010",
+              "dataset_id": "mock_retail_v1",
+              "operation": "metric",
+              "request": {
+                "metric_id": "gross_gmv",
+                "period": {
+                  "start": "2026-08-24",
+                  "end": "2026-08-30"
+                },
+                "filters": {}
+              },
+              "read_only": true
+            },
+            {
+              "query_id": "Q00009",
+              "dataset_id": "mock_retail_v1",
+              "operation": "metric",
+              "request": {
+                "metric_id": "gross_gmv",
+                "period": {
+                  "start": "2026-08-31",
+                  "end": "2026-09-06"
+                },
+                "filters": {}
+              },
+              "read_only": true
+            }
+          ]
+        }
+      },
+      {
+        "evidence_id": "E0005",
+        "evidence_level": "direct",
+        "source_step": "metric_decompose",
+        "payload": {
+          "kind": "decomposition",
+          "fact": {
+            "target_metric": "orders",
+            "relationship": {
+              "id": "orders_buyers_frequency",
+              "target_metric": "orders",
+              "type": "exact_multiplicative",
+              "formula": "orders = buyers * orders_per_buyer",
+              "drivers": [
+                "buyers",
+                "orders_per_buyer"
+              ]
+            },
+            "drivers": [
+              {
+                "metric_id": "buyers",
+                "coefficient": 1,
+                "baseline": 50,
+                "current": 38
+              },
+              {
+                "metric_id": "orders_per_buyer",
+                "coefficient": 1,
+                "baseline": 2.0,
+                "current": 1.9736842105263157
+              }
+            ],
+            "provenance": [
+              {
+                "query_id": "Q00012",
+                "dataset_id": "mock_retail_v1",
+                "operation": "metric",
+                "request": {
+                  "metric_id": "buyers",
+                  "period": {
+                    "start": "2026-08-24",
+                    "end": "2026-08-30"
+                  },
+                  "filters": {}
+                },
+                "read_only": true
+              },
+              {
+                "query_id": "Q00013",
+                "dataset_id": "mock_retail_v1",
+                "operation": "metric",
+                "request": {
+                  "metric_id": "buyers",
+                  "period": {
+                    "start": "2026-08-31",
+                    "end": "2026-09-06"
+                  },
+                  "filters": {}
+                },
+                "read_only": true
+              },
+              {
+                "query_id": "Q00014",
+                "dataset_id": "mock_retail_v1",
+                "operation": "metric",
+                "request": {
+                  "metric_id": "orders_per_buyer",
+                  "period": {
+                    "start": "2026-08-24",
+                    "end": "2026-08-30"
+                  },
+                  "filters": {}
+                },
+                "read_only": true
+              },
+              {
+                "query_id": "Q00015",
+                "dataset_id": "mock_retail_v1",
+                "operation": "metric",
+                "request": {
+                  "metric_id": "orders_per_buyer",
+                  "period": {
+                    "start": "2026-08-31",
+                    "end": "2026-09-06"
+                  },
+                  "filters": {}
+                },
+                "read_only": true
+              }
+            ]
+          },
+          "scope": {
+            "metric_id": "orders",
+            "current_period": {
+              "start": "2026-08-31",
+              "end": "2026-09-06"
+            },
+            "baseline_period": {
+              "start": "2026-08-24",
+              "end": "2026-08-30"
+            },
+            "filters": {}
+          },
+          "provenance": [
+            {
+              "query_id": "Q00012",
+              "dataset_id": "mock_retail_v1",
+              "operation": "metric",
+              "request": {
+                "metric_id": "buyers",
+                "period": {
+                  "start": "2026-08-24",
+                  "end": "2026-08-30"
+                },
+                "filters": {}
+              },
+              "read_only": true
+            },
+            {
+              "query_id": "Q00013",
+              "dataset_id": "mock_retail_v1",
+              "operation": "metric",
+              "request": {
+                "metric_id": "buyers",
+                "period": {
+                  "start": "2026-08-31",
+                  "end": "2026-09-06"
+                },
+                "filters": {}
+              },
+              "read_only": true
+            },
+            {
+              "query_id": "Q00014",
+              "dataset_id": "mock_retail_v1",
+              "operation": "metric",
+              "request": {
+                "metric_id": "orders_per_buyer",
+                "period": {
+                  "start": "2026-08-24",
+                  "end": "2026-08-30"
+                },
+                "filters": {}
+              },
+              "read_only": true
+            },
+            {
+              "query_id": "Q00015",
+              "dataset_id": "mock_retail_v1",
+              "operation": "metric",
+              "request": {
+                "metric_id": "orders_per_buyer",
+                "period": {
+                  "start": "2026-08-31",
+                  "end": "2026-09-06"
+                },
+                "filters": {}
+              },
+              "read_only": true
+            }
+          ]
+        }
+      },
+      {
+        "evidence_id": "E0006",
+        "evidence_level": "derived",
+        "source_step": "contribution_analysis",
+        "payload": {
+          "kind": "contribution",
+          "fact": {
+            "target_metric": "orders",
+            "target_change": -25,
+            "relationship_id": "orders_buyers_frequency",
+            "dimension_id": null,
+            "effects": [
+              {
+                "id": "buyers",
+                "effect": -23.842105263157897,
+                "role": "aligned_driver",
+                "aligned_share": 0.9536842105263156
+              },
+              {
+                "id": "orders_per_buyer",
+                "effect": -1.1578947368421089,
+                "role": "aligned_driver",
+                "aligned_share": 0.046315789473684345
+              }
+            ],
+            "closure_error": -7.105427357601002e-15,
+            "closed": true
+          },
+          "scope": {
+            "metric_id": "orders",
+            "current_period": {
+              "start": "2026-08-31",
+              "end": "2026-09-06"
+            },
+            "baseline_period": {
+              "start": "2026-08-24",
+              "end": "2026-08-30"
+            },
+            "filters": {}
+          },
+          "provenance": [
+            {
+              "query_id": "Q00017",
+              "dataset_id": "mock_retail_v1",
+              "operation": "metric",
+              "request": {
+                "metric_id": "orders",
+                "period": {
+                  "start": "2026-08-24",
+                  "end": "2026-08-30"
+                },
+                "filters": {}
+              },
+              "read_only": true
+            },
+            {
+              "query_id": "Q00016",
+              "dataset_id": "mock_retail_v1",
+              "operation": "metric",
+              "request": {
+                "metric_id": "orders",
+                "period": {
+                  "start": "2026-08-31",
+                  "end": "2026-09-06"
+                },
+                "filters": {}
+              },
+              "read_only": true
+            }
+          ]
+        }
+      },
+      {
+        "evidence_id": "E0007",
+        "evidence_level": "direct",
+        "source_step": "dimension_drilldown",
+        "payload": {
+          "kind": "segments",
+          "fact": {
+            "metric_id": "buyers",
+            "dimension_id": "customer_type",
+            "contribution_supported": true,
+            "segments": [
+              {
+                "id": "new",
+                "current": 18,
+                "baseline": 25,
+                "absolute_change": -7,
+                "relative_change": -0.28
+              },
+              {
+                "id": "returning",
+                "current": 20,
+                "baseline": 25,
+                "absolute_change": -5,
+                "relative_change": -0.2
+              }
+            ],
+            "provenance": [
+              {
+                "query_id": "Q00020",
+                "dataset_id": "mock_retail_v1",
+                "operation": "segments",
+                "request": {
+                  "metric_id": "buyers",
+                  "dimension_id": "customer_type",
+                  "period": {
+                    "start": "2026-08-24",
+                    "end": "2026-08-30"
+                  },
+                  "filters": {}
+                },
+                "read_only": true
+              },
+              {
+                "query_id": "Q00019",
+                "dataset_id": "mock_retail_v1",
+                "operation": "segments",
+                "request": {
+                  "metric_id": "buyers",
+                  "dimension_id": "customer_type",
+                  "period": {
+                    "start": "2026-08-31",
+                    "end": "2026-09-06"
+                  },
+                  "filters": {}
+                },
+                "read_only": true
+              }
+            ]
+          },
+          "scope": {
+            "metric_id": "buyers",
+            "current_period": {
+              "start": "2026-08-31",
+              "end": "2026-09-06"
+            },
+            "baseline_period": {
+              "start": "2026-08-24",
+              "end": "2026-08-30"
+            },
+            "filters": {}
+          },
+          "provenance": [
+            {
+              "query_id": "Q00020",
+              "dataset_id": "mock_retail_v1",
+              "operation": "segments",
+              "request": {
+                "metric_id": "buyers",
+                "dimension_id": "customer_type",
+                "period": {
+                  "start": "2026-08-24",
+                  "end": "2026-08-30"
+                },
+                "filters": {}
+              },
+              "read_only": true
+            },
+            {
+              "query_id": "Q00019",
+              "dataset_id": "mock_retail_v1",
+              "operation": "segments",
+              "request": {
+                "metric_id": "buyers",
+                "dimension_id": "customer_type",
+                "period": {
+                  "start": "2026-08-31",
+                  "end": "2026-09-06"
+                },
+                "filters": {}
+              },
+              "read_only": true
+            }
+          ]
+        }
+      },
+      {
+        "evidence_id": "E0008",
+        "evidence_level": "derived",
+        "source_step": "contribution_analysis",
+        "payload": {
+          "kind": "contribution",
+          "fact": {
+            "target_metric": "buyers",
+            "target_change": -12,
+            "relationship_id": null,
+            "dimension_id": "customer_type",
+            "effects": [
+              {
+                "id": "new",
+                "effect": -7,
+                "role": "aligned_driver",
+                "aligned_share": 0.5833333333333334
+              },
+              {
+                "id": "returning",
+                "effect": -5,
+                "role": "aligned_driver",
+                "aligned_share": 0.4166666666666667
+              }
+            ],
+            "closure_error": 0.0,
+            "closed": true
+          },
+          "scope": {
+            "metric_id": "buyers",
+            "current_period": {
+              "start": "2026-08-31",
+              "end": "2026-09-06"
+            },
+            "baseline_period": {
+              "start": "2026-08-24",
+              "end": "2026-08-30"
+            },
+            "filters": {}
+          },
+          "provenance": [
+            {
+              "query_id": "Q00022",
+              "dataset_id": "mock_retail_v1",
+              "operation": "metric",
+              "request": {
+                "metric_id": "buyers",
+                "period": {
+                  "start": "2026-08-24",
+                  "end": "2026-08-30"
+                },
+                "filters": {}
+              },
+              "read_only": true
+            },
+            {
+              "query_id": "Q00021",
+              "dataset_id": "mock_retail_v1",
+              "operation": "metric",
+              "request": {
+                "metric_id": "buyers",
+                "period": {
+                  "start": "2026-08-31",
+                  "end": "2026-09-06"
+                },
+                "filters": {}
+              },
+              "read_only": true
+            }
+          ]
+        }
+      }
+    ],
+    "warnings": [],
+    "limitations": [],
+    "failed_branches": [],
+    "stop_reason": "target_coverage_reached"
+  }
+}

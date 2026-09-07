@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "business-performance-agent"
+version = "0.1.0"
+description = "Specification-driven analytical agent with deterministic skills and evidence-backed GMV diagnosis"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+bpa = "business_performance_agent.app.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["business_performance_agent", "business_performance_agent.*"]
+namespaces = false
+
+[tool.setuptools.package-data]
+"business_performance_agent.data_contract" = ["*.json"]

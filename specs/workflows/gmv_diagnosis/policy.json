@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "gmv_diagnosis",
+  "anomaly_policy": {
+    "method": "relative_change_threshold",
+    "warning_threshold": 0.1,
+    "critical_threshold": 0.2,
+    "note": "MVP baseline; later calibration should use evaluation and historical volatility."
+  },
+  "diagnosis_policy": {
+    "max_depth": 4,
+    "branch_min_contribution": 0.2,
+    "target_aligned_coverage": 0.8,
+    "retain_secondary_driver_if_contribution_gte": 0.2,
+    "allow_multiple_active_branches": false,
+    "default_behavior": "follow_primary_driver_and_record_secondary_findings"
+  },
+  "execution_policy": {
+    "retry_limit": 1,
+    "allow_partial_completion": true,
+    "block_on_semantic_conflict": true,
+    "block_on_data_quality_failed": true
+  },
+  "evidence_policy": {
+    "core_claim_requires_supported_evidence": true,
+    "unsupported_core_claim_allowed_in_output": false,
+    "allowed_evidence_levels_for_core_claim": [
+      "direct",
+      "derived"
+    ],
+    "stop_at_external_causal_boundary": true
+  },
+  "routing_policy": {
+    "prefer_deterministic_over_llm": true,
+    "agentic_router_must_use_candidate_set": true,
+    "record_routing_rationale": true
+  }
+}

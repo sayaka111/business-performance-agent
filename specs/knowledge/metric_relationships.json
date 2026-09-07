@@ -1,0 +1,125 @@
+{
+  "schema_version": "1.0",
+  "relationship_types": {
+    "exact_multiplicative": "严格乘法恒等关系",
+    "exact_additive": "严格加法恒等关系，可使用 coefficient 表示正负方向",
+    "partition": "互斥且完备的结构划分",
+    "diagnostic": "用于诊断但不保证数学闭合"
+  },
+  "relationships": [
+    {
+      "id": "gross_gmv_orders_aov",
+      "target_metric": "gross_gmv",
+      "type": "exact_multiplicative",
+      "formula": "gross_gmv = orders * aov",
+      "drivers": [
+        "orders",
+        "aov"
+      ]
+    },
+    {
+      "id": "net_gmv_gross_refund",
+      "target_metric": "net_gmv",
+      "type": "exact_additive",
+      "formula": "net_gmv = gross_gmv - refunded_merchandise_amount",
+      "components": [
+        {
+          "metric": "gross_gmv",
+          "coefficient": 1
+        },
+        {
+          "metric": "refunded_merchandise_amount",
+          "coefficient": -1
+        }
+      ]
+    },
+    {
+      "id": "orders_buyers_frequency",
+      "target_metric": "orders",
+      "type": "exact_multiplicative",
+      "formula": "orders = buyers * orders_per_buyer",
+      "drivers": [
+        "buyers",
+        "orders_per_buyer"
+      ]
+    },
+    {
+      "id": "orders_sessions_rate",
+      "target_metric": "orders",
+      "type": "exact_multiplicative",
+      "formula": "orders = sessions * orders_per_session",
+      "drivers": [
+        "sessions",
+        "orders_per_session"
+      ],
+      "availability": "optional",
+      "requirements": [
+        "reliable_session_definition",
+        "reliable_order_session_linkage"
+      ]
+    },
+    {
+      "id": "aov_units_price",
+      "target_metric": "aov",
+      "type": "exact_multiplicative",
+      "formula": "aov = units_per_order * average_realized_unit_price",
+      "drivers": [
+        "units_per_order",
+        "average_realized_unit_price"
+      ]
+    },
+    {
+      "id": "buyers_new_returning",
+      "target_metric": "buyers",
+      "type": "exact_additive",
+      "formula": "buyers = new_buyers + returning_buyers",
+      "components": [
+        {
+          "metric": "new_buyers",
+          "coefficient": 1
+        },
+        {
+          "metric": "returning_buyers",
+          "coefficient": 1
+        }
+      ],
+      "partition_properties": {
+        "mutually_exclusive": true,
+        "collectively_exhaustive": true,
+        "classification_level": "analysis_period"
+      }
+    },
+    {
+      "id": "orders_new_returning",
+      "target_metric": "orders",
+      "type": "exact_additive",
+      "formula": "orders = new_buyer_orders + returning_buyer_orders",
+      "components": [
+        {
+          "metric": "new_buyer_orders",
+          "coefficient": 1
+        },
+        {
+          "metric": "returning_buyer_orders",
+          "coefficient": 1
+        }
+      ],
+      "partition_properties": {
+        "mutually_exclusive": true,
+        "collectively_exhaustive": true,
+        "classification_level": "analysis_period"
+      }
+    },
+    {
+      "id": "session_conversion_diagnostic",
+      "target_metric": "orders",
+      "type": "diagnostic",
+      "description": "Session Conversion Rate 用于解释流量质量或会话到订单的转化表现，但不替代严格关系 orders = sessions * orders_per_session。",
+      "related_metrics": [
+        "sessions",
+        "sessions_with_order",
+        "session_conversion_rate"
+      ]
+    }
+  ]
+}

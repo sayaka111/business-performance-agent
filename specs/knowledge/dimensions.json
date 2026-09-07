@@ -1,0 +1,124 @@
+{
+  "schema_version": "1.0",
+  "dimensions": [
+    {
+      "id": "customer_type",
+      "name_zh": "客户类型",
+      "description": "基于分析周期的购买用户类型。",
+      "values": [
+        "new",
+        "returning"
+      ],
+      "assignment_grain": "customer_period",
+      "partition": {
+        "mutually_exclusive": true,
+        "collectively_exhaustive": true
+      },
+      "contribution_support": {
+        "gross_gmv": true,
+        "net_gmv": true,
+        "orders": true,
+        "buyers": true,
+        "units": true
+      }
+    },
+    {
+      "id": "channel",
+      "name_zh": "渠道",
+      "description": "订单归因渠道。MVP 仅支持单触点互斥归因。",
+      "assignment_grain": "order",
+      "rules": {
+        "attribution_model": "single_touch",
+        "one_order_max_channels": 1,
+        "unattributed_value": "unattributed",
+        "unknown_value": "unknown"
+      },
+      "contribution_support": {
+        "gross_gmv": true,
+        "net_gmv": true,
+        "orders": true,
+        "buyers": false,
+        "units": true
+      }
+    },
+    {
+      "id": "campaign",
+      "name_zh": "营销活动",
+      "description": "订单归因 Campaign。MVP 仅支持每笔订单零个或一个 Campaign。",
+      "assignment_grain": "order",
+      "rules": {
+        "attribution_model": "single_touch",
+        "one_order_max_campaigns": 1,
+        "unattributed_value": "unattributed",
+        "unknown_value": "unknown"
+      },
+      "contribution_support": {
+        "gross_gmv": true,
+        "net_gmv": true,
+        "orders": true,
+        "buyers": false,
+        "units": true
+      }
+    },
+    {
+      "id": "region",
+      "name_zh": "配送地区",
+      "description": "以订单实际配送地区为准，不使用模糊 customer_region。",
+      "assignment_grain": "order",
+      "field_semantics": "order_delivery_region",
+      "partition": {
+        "mutually_exclusive_per_order": true
+      },
+      "contribution_support": {
+        "gross_gmv": true,
+        "net_gmv": true,
+        "orders": true,
+        "buyers": false,
+        "units": true
+      }
+    },
+    {
+      "id": "category",
+      "name_zh": "商品品类",
+      "description": "商品 Item 级品类。一个订单可包含多个 Category，因此 Orders 与 Buyers 不允许直接做严格贡献归因。",
+      "assignment_grain": "order_item",
+      "partition": {
+        "mutually_exclusive_per_item": true,
+        "mutually_exclusive_per_order": false
+      },
+      "contribution_support": {
+        "gross_gmv": true,
+        "net_gmv": true,
+        "orders": false,
+        "buyers": false,
+        "units": true
+      },
+      "descriptive_support": {
+        "orders": true,
+        "buyers": true
+      }
+    },
+    {
+      "id": "product",
+      "name_zh": "商品",
+      "description": "SKU / Product 级维度。一个订单或 Buyer 可对应多个 Product，因此 Orders 与 Buyers 不允许直接做严格贡献归因。",
+      "assignment_grain": "order_item",
+      "partition": {
+        "mutually_exclusive_per_item": true,
+        "mutually_exclusive_per_order": false
+      },
+      "contribution_support": {
+        "gross_gmv": true,
+        "net_gmv": true,
+        "orders": false,
+        "buyers": false,
+        "units": true
+      },
+      "descriptive_support": {
+        "orders": true,
+        "buyers": true
+      }
+    }
+  ],
+  "hard_rule": "Contribution analysis is allowed only when contribution_support[metric_id] == true."
+}

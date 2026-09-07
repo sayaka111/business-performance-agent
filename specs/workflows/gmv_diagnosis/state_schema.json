@@ -1,0 +1,204 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "gmv_diagnosis",
+  "state": {
+    "workflow_status": {
+      "type": "string",
+      "enum": [
+        "initialized",
+        "running",
+        "completed",
+        "completed_no_anomaly",
+        "partial",
+        "blocked",
+        "failed"
+      ]
+    },
+    "target_metric": {
+      "type": "string",
+      "allowed": [
+        "gross_gmv"
+      ]
+    },
+    "current_period": {
+      "type": "object",
+      "required": [
+        "start",
+        "end"
+      ]
+    },
+    "baseline_period": {
+      "type": "object",
+      "required": [
+        "start",
+        "end"
+      ]
+    },
+    "current_node": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "current_metric": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "current_filters": {
+      "type": "object"
+    },
+    "analysis_path": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "node_type": {
+            "type": "string"
+          },
+          "metric_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "dimension_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "segment_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "relationship_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "available_relationships": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "selected_relationship": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "decomposition_result": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "contribution_result": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "selected_driver": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "selected_dimension": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "depth": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "aligned_coverage": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "evidence_id",
+          "evidence_level",
+          "source_step"
+        ],
+        "properties": {
+          "evidence_id": {
+            "type": "string"
+          },
+          "evidence_level": {
+            "type": "string",
+            "enum": [
+              "direct",
+              "derived",
+              "unsupported"
+            ]
+          },
+          "source_step": {
+            "type": "string"
+          },
+          "payload": {}
+        }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "failed_branches": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "retry_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "stop_reason": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "not_anomaly",
+        "max_depth_reached",
+        "below_min_contribution",
+        "target_coverage_reached",
+        "no_valid_relationship",
+        "no_valid_dimension",
+        "data_unavailable",
+        "data_quality_boundary",
+        "evidence_boundary_reached",
+        "semantic_conflict",
+        "execution_failure",
+        "invalid_input"
+      ]
+    }
+  }
+}

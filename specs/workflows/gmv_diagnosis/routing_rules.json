@@ -1,0 +1,165 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "gmv_diagnosis",
+  "node_types": {
+    "skill_node": "调用已定义 Skill",
+    "deterministic_node": "基于结构化规则执行确定性判断",
+    "agentic_router": "在受约束候选集中进行路径选择"
+  },
+  "routing_rules": [
+    {
+      "from": "validate_input",
+      "condition": "input_valid == false",
+      "to": "terminate_invalid_input",
+      "mode": "deterministic"
+    },
+    {
+      "from": "validate_input",
+      "condition": "input_valid == true",
+      "to": "data_quality_guard",
+      "mode": "deterministic"
+    },
+    {
+      "from": "data_quality_guard",
+      "condition": "analysis_allowed == false",
+      "to": "terminate_blocked",
+      "mode": "deterministic"
+    },
+    {
+      "from": "data_quality_guard",
+      "condition": "analysis_allowed == true",
+      "to": "metric_compare",
+      "mode": "deterministic"
+    },
+    {
+      "from": "anomaly_evaluate",
+      "condition": "is_anomaly == false",
+      "to": "complete_no_anomaly",
+      "mode": "deterministic"
+    },
+    {
+      "from": "anomaly_evaluate",
+      "condition": "is_anomaly == true",
+      "to": "decompose_gross_gmv",
+      "mode": "deterministic"
+    },
+    {
+      "from": "decompose_gross_gmv",
+      "condition": "always",
+      "to": "contribution_analysis",
+      "mode": "deterministic",
+      "forced_relationship": "gross_gmv_orders_aov"
+    },
+    {
+      "from": "contribution_analysis",
+      "condition": "first_level_gmv_decomposition",
+      "to": "select_primary_driver",
+      "mode": "deterministic",
+      "selection_rule": "largest_absolute_aligned_effect"
+    },
+    {
+      "from": "select_primary_driver",
+      "condition": "selected_driver == 'orders'",
+      "to": "select_orders_relationship",
+      "mode": "agentic_router",
+      "allowed_relationships": [
+        "orders_buyers_frequency",
+        "orders_new_returning",
+        "orders_sessions_rate"
+      ],
+      "default_relationship": "orders_buyers_frequency"
+    },
+    {
+      "from": "select_primary_driver",
+      "condition": "selected_driver == 'aov'",
+      "to": "decompose_aov",
+      "mode": "deterministic",
+      "forced_relationship": "aov_units_price"
+    },
+    {
+      "from": "select_orders_relationship",
+      "condition": "user_or_parent_context_requests_customer_structure",
+      "to": "metric_decompose",
+      "mode": "agentic_router",
+      "preferred_relationship": "orders_new_returning"
+    },
+    {
+      "from": "select_orders_relationship",
+      "condition": "session_data_available_and_traffic_view_relevant",
+      "to": "metric_decompose",
+      "mode": "agentic_router",
+      "preferred_relationship": "orders_sessions_rate"
+    },
+    {
+      "from": "select_orders_relationship",
+      "condition": "no_specific_context",
+      "to": "metric_decompose",
+      "mode": "deterministic",
+      "preferred_relationship": "orders_buyers_frequency"
+    },
+    {
+      "from": "evaluate_branch",
+      "condition": "stop_condition_met == true",
+      "to": "evidence_validate",
+      "mode": "deterministic"
+    },
+    {
+      "from": "evaluate_branch",
+      "condition": "stop_condition_met == false and valid_dimension_exists == true",
+      "to": "select_next_dimension",
+      "mode": "agentic_router"
+    },
+    {
+      "from": "select_next_dimension",
+      "condition": "dimension_selected",
+      "to": "dimension_drilldown",
+      "mode": "agentic_router",
+      "hard_constraint": "selected dimension must exist in Knowledge and be valid for current metric"
+    },
+    {
+      "from": "dimension_drilldown",
+      "condition": "contribution_supported == true",
+      "to": "contribution_analysis",
+      "mode": "deterministic"
+    },
+    {
+      "from": "dimension_drilldown",
+      "condition": "contribution_supported == false",
+      "to": "evaluate_stop_policy",
+      "mode": "deterministic",
+      "note": "descriptive result only; strict contribution prohibited"
+    },
+    {
+      "from": "evaluate_stop_policy",
+      "condition": "continue_analysis == true",
+      "to": "select_next_relationship_or_dimension",
+      "mode": "agentic_router"
+    },
+    {
+      "from": "evaluate_stop_policy",
+      "condition": "continue_analysis == false",
+      "to": "evidence_validate",
+      "mode": "deterministic"
+    },
+    {
+      "from": "evidence_validate",
+      "condition": "core_claims_validated",
+      "to": "build_result",
+      "mode": "deterministic"
+    },
+    {
+      "from": "build_result",
+      "condition": "always",
+      "to": "complete",
+      "mode": "deterministic"
+    }
+  ],
+  "agentic_router_constraints": [
+    "May only choose from candidates explicitly supplied by Knowledge / routing rules.",
+    "Must not create new metrics, dimensions or decomposition relationships.",
+    "Must prefer deterministic routing when a unique valid path exists.",
+    "Must record selected candidate and routing rationale in state.",
+    "Must respect data availability and contribution applicability.",
+    "Must not cross causal or evidence boundaries."
+  ]
+}

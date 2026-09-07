@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "gmv_diagnosis",
+  "required_fields": [
+    "workflow_id",
+    "workflow_version",
+    "workflow_status",
+    "target",
+    "diagnostic_path",
+    "key_findings",
+    "evidence",
+    "warnings",
+    "limitations",
+    "stop_reason"
+  ],
+  "output": {
+    "workflow_id": "gmv_diagnosis",
+    "workflow_version": "1.0",
+    "workflow_status": "completed | completed_no_anomaly | partial | blocked | failed",
+    "target": {
+      "metric_id": "gross_gmv",
+      "current_value": "number|null",
+      "baseline_value": "number|null",
+      "absolute_change": "number|null",
+      "relative_change": "number|null"
+    },
+    "primary_driver": {
+      "metric_id": "string|null",
+      "effect": "number|null",
+      "aligned_share": "number|null"
+    },
+    "secondary_drivers": [
+      {
+        "metric_id": "string",
+        "effect": "number",
+        "aligned_share": "number"
+      }
+    ],
+    "diagnostic_path": [
+      {
+        "metric_id": "string|null",
+        "relationship_id": "string|null",
+        "dimension_id": "string|null",
+        "segment_id": "string|null"
+      }
+    ],
+    "key_findings": [
+      {
+        "claim_id": "string",
+        "claim": "string",
+        "evidence_level": "direct|derived",
+        "evidence_refs": [
+          "string"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_id": "string",
+        "evidence_level": "direct|derived",
+        "source_step": "string",
+        "payload": {}
+      }
+    ],
+    "warnings": [
+      "string"
+    ],
+    "limitations": [
+      "string"
+    ],
+    "failed_branches": [
+      "object"
+    ],
+    "stop_reason": "string|null"
+  }
+}
