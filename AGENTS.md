@@ -22,7 +22,7 @@ This repository implements a specification-driven Business Performance Agent.
 用户要求经营分析、GMV diagnosis、“使用当前 Agent”、“运行一下 Agent”或“按已有 Workflow 分析”时：
 
 1. 优先调用现有 CLI；不自行取数、重算指标、设计路径或直接调用零散 Skill 代替 Workflow。
-2. 先区分示例运行和真实业务分析。当前只有 Mock Dataset，真实数据请求应明确报告尚未接入，不用示例替代真实数据。
+2. 先区分示例运行和真实业务分析。可使用 Mock 或兼容 Olist 原始表结构的 SQLite；真实分析须指定数据文件，不用示例替代真实数据。
 3. 示例/演示任务可使用 `examples/gmv_input.json` 并明确说明 Mock 周期；用户指定的日期、Metric、Filters 不得静默替换。必需信息缺失且非示例运行时向用户说明缺什么。
 4. 将请求转成现有 JSON Input，用 `--input ... --json` 获取结果。不要依赖 Mock 自然语言解析理解复杂请求。
 5. 读取 `result`、`execution_mode`、`run_id`、`trace_path`，保留状态、警告、限制和停止原因。
@@ -33,7 +33,7 @@ This repository implements a specification-driven Business Performance Agent.
 
 ## How to Run
 
-在此 repository 根目录运行；需要 Python 3.11+。首次使用按 [QUICKSTART.md](QUICKSTART.md) 创建并激活 `.venv`，统一执行 `python -m pip install -e .`。运行时第三方依赖为空；安装用于注册当前源码项目与入口。保留源码目录及冻结规范，当前交付方式为源码目录 + editable 安装。
+在此 repository 根目录运行；需要 Python 3.11+。首次使用按 [QUICKSTART.md](QUICKSTART.md) 创建并激活 `.venv`，执行 `python -m pip install -e .`。基础离线运行无第三方依赖；Gemini 另需安装 `python -m pip install -e ".[gemini]"` 并设置进程环境变量 `GEMINI_API_KEY`。保留源码目录及冻结规范，当前交付方式为源码目录 + editable 安装。
 
 ```text
 python -m business_performance_agent --help
@@ -60,12 +60,23 @@ Windows 可使用已有 PowerShell 入口（依次寻找已激活环境、项目
 
 当 `stop_reason=evidence_boundary_reached`，停止继续分析并说明证据边界。只有 Trace 确认是数据/知识证据边界时，才可表述“当前 Agent 已分析到内部数据可证明的最深层级”。如果路由理由是 `llm_provider_not_configured`，必须说明缺少 LLM 导致多候选未选择，不能声称穷尽证据，不能由 Codex 接管选路或偷偷换 Mock LLM 重跑。
 
-## Mock / Real Status
+## Runtime Modes / Data Status
 
-- Dataset 始终是 `MockDatasetAdapter`（`mock_retail_v1`），没有真实数据库、文件数据导入或 Session 数据。
+- 不带 `--database` 使用 `MockDatasetAdapter`（`mock_retail_v1`）；带参数使用 Olist 原始表专用 `SQLiteDatasetAdapter`（`olist_raw_sqlite_v1`），只读访问本地数据，不代表生产数据库接入。
 - 两个 Mock 完整周期：2026-08-24～2026-08-30、2026-08-31～2026-09-06。它们是固定 fixture，不能冒充用户的“本周”。
-- 不带 `--mock-llm`：LLM 未配置，确定性节点仍可运行；带参数：离线 `MockLLMClient`，不调用真实模型。
-- `execution_mode` 是 CLI 应用元数据，不属于业务 Output Schema。任何模式下不得把结果描述为真实经营分析。
+- `--mock-llm` 使用离线 Mock；`--gemini` 使用真实 Gemini；两者均不带时 LLM 未配置，确定性节点仍可运行，多候选节点可能停止。
+- SQLite 必须显式提供输入或问题。数据质量不足可合法 blocked，不得修改业务口径使其通过。范围见 [Data Sources](docs/DATA_SOURCES.md)。
+- Gemini 报告失败会回退为基于既有结果的确定性 Markdown；这不补救意图、路由或数据质量失败。Trace 记录 renderer、provider error code 与 retry count。
+- `execution_mode` 是 CLI 元数据，不属于业务 Output Schema。根据其数据和模型标记说明实际模式，不把 Mock 结果描述为真实经营分析。
+
+SQLite 示例（数据库与 Gemini 配置先按 Quick Start 准备）：
+
+```text
+python -m business_performance_agent --database data/olist_raw.db --input examples/olist_input.json --mock-llm --json
+python -m business_performance_agent --database data/olist_raw.db --input examples/olist_input.json --gemini --json
+```
+
+`run.ps1` 不传递 SQLite、Gemini 或模型参数，这些模式使用 Python CLI。全量测试在设置 `GEMINI_API_KEY` 时可能调用真实 API；纯离线验证使用 Quick Start 中隔离密钥的测试命令。
 
 ## Failure Behavior
 

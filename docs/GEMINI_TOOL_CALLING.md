@@ -1,11 +1,11 @@
 # Gemini Tool Calling — module 1
 
 此入口只验证真实 Gemini 调用本地指标字典工具，不是完整 GMV 诊断，不读取经营数据。
-原 GMV CLI 仍使用 Mock；本模块通过后再接入数据库和 Workflow。
+主 GMV CLI 已支持 SQLite + Gemini，见 [Quick Start](../QUICKSTART.md)。本页是独立指标工具演示，其工具循环与重试策略不属于 GMV Workflow。
 
 ## Run
 
-使用已经能运行 test_gemini.py 的同一个终端和 Python 环境，在项目根目录执行：
+在已配置 Gemini 密钥的 Python 环境中，从项目根目录执行：
 
 ```powershell
 python -m pip install -e ".[gemini]"

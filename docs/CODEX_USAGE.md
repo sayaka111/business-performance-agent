@@ -1,106 +1,78 @@
-# Codex → Existing Agent 使用说明
+# Codex → Business Performance Agent
 
-操作规则入口：[AGENTS.md](../AGENTS.md)。此文档记录现有调用契约，不新增业务 Schema。
+将 repository 根目录作为项目打开，按 [AGENTS.md](../AGENTS.md) 操作。Codex 是可选的开发/操作界面，CLI 可独立运行。分析必须调用现有 Runtime，不由 Codex 自行重算指标或补写因果解释。
 
-## 打开方式
+## Actual entry points
 
-将 repository 根目录作为 Codex 项目打开。根目录 `AGENTS.md` 为项目操作索引。官方说明指出指令在运行开始时发现；没有可识别项目根目录时仅检查当前目录，因此从此文件夹开始最明确。已有会话未加载新文件时可重新打开项目任务，或明确让 Codex 阅读该文件。[官方 AGENTS.md 文档](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
+`python -m business_performance_agent` → `app/cli.py` → `Runtime.run`。没有 HTTP API。环境和可选 SDK 安装见 [QUICKSTART](../QUICKSTART.md)。
 
-## 已核对的实际入口
-
-`business_performance_agent/__main__.py` → `app/cli.py:main` → `Runtime(...).run(raw)`。没有 HTTP API。首次使用按 [QUICKSTART](../QUICKSTART.md) 创建并激活 Python 3.11+ 环境，执行 `python -m pip install -e .`。没有第三方运行时依赖；保留源码与规范目录。Windows 的 `run.ps1` 优先使用已激活环境或项目 `.venv`，不要求安装 Codex Python。
-
-| Python CLI | PowerShell 入口 | 作用 |
+| Python CLI | 用途 | run.ps1 对应 |
 |---|---|---|
-| `--input PATH` | `-InputFile PATH` | 读取 UTF-8 JSON（允许 BOM） |
-| `--question TEXT` | `-Question TEXT` | JSON 文本或有限自然语言解析；与 input 互斥 |
-| `--mock-llm` | `-MockLLM` | 离线候选选择替身；无真实模型调用 |
-| `--json` | `-Json` | stdout 只输出一个 JSON 对象 |
-| `--help` | 使用 Python 入口 | 显示真实参数 |
-| `python -m unittest discover -s tests -v` | `-Test` | 全部 tests |
+| `--input PATH` | UTF-8 JSON，允许 BOM | `-InputFile` |
+| `--question TEXT` | JSON 文本或自然语言；与 input 互斥 | `-Question` |
+| `--mock-llm` | 离线 Mock Provider | `-MockLLM` |
+| `--gemini` | Gemini Provider，与 mock-llm 互斥 | 不支持，用 Python CLI |
+| `--model MODEL_ID` | 覆盖 Gemini 模型，要求 gemini | 不支持，用 Python CLI |
+| `--database PATH` | 只读 Olist SQLite，要求显式输入 | 不支持，用 Python CLI |
+| `--json` | 输出结构化 JSON | `-Json` |
+| `--help` | 查看真实参数 | 用 Python CLI |
 
-不传 input/question 时原入口使用示例输入；Codex 常规调用应显式传入文件，避免误用默认周期。不添加新的 intent 字段、路径选择字段、数据源切换参数或 Policy 覆盖参数。
+无 database 时使用 Mock；无 Provider 标志时 LLM 未配置。默认输入仅供 Mock 演示，常规操作显式传文件。不要发明 `--mapping`、Policy 覆盖参数或新的输入字段。
 
-## 结构化请求
+## Mode selection
 
-复用 [examples/gmv_input.json](../examples/gmv_input.json)：
-
-```json
-{
-  "metric_id": "gross_gmv",
-  "current_period": {"start": "2026-08-31", "end": "2026-09-06"},
-  "baseline_period": {"start": "2026-08-24", "end": "2026-08-30"},
-  "filters": {},
-  "context": {}
-}
+```bash
+python -m business_performance_agent --input examples/gmv_input.json --mock-llm --json
+python -m business_performance_agent --database data/olist_raw.db --input examples/olist_input.json --mock-llm --json
+python -m business_performance_agent --database data/olist_raw.db --input examples/olist_input.json --gemini --json
 ```
 
-实际校验来自 `models/schemas.py:WorkflowInput.parse`。目标仅 gross_gmv，日期必须有效且 baseline 早于 current；filters 使用已有维度 ID 与字符串值。可选 context 只接受 `customer_structure`、`traffic_view`、`preferred_dimension`；只能表达用户已有上下文，不能为了改变路径而伪造上下文。`intent` 不在当前输入字段中，传入会被 Runtime 判定 invalid_input。
+第二、三条要求先准备兼容数据库，第三条还要求 SDK 和 `GEMINI_API_KEY`。实际源是 Olist 历史公开数据，不是生产数据库；质量检查可能 blocked。原始导入、映射和限制见 [DATA_SOURCES](DATA_SOURCES.md)。不静默切换真实/Mock 模式或替换用户周期。
 
-用户明确要求 Demo / 运行当前示例时，说明 Mock 后可直接使用上述请求；真实业务任务不能把用户日期替换为 fixture。当前真实数据源尚未接入，需先完成独立数据接入开发。
+## Workflow input
 
-## 稳定调用与读取
+输入是 `metric_id`、`current_period`、`baseline_period`、`filters`，可选 `context`，参见 [Mock 输入](../examples/gmv_input.json) 与 [Olist 周期输入](../examples/olist_input.json)。
+
+当前目标仅 `gross_gmv`；日期有效且 baseline 早于 current。Filters 使用 Knowledge 中的维度 ID 和字符串值。Context 仅接受 `customer_structure`、`traffic_view`、`preferred_dimension`，不能为改变路径而伪造上下文。`intent` 不是合法输入字段。
+
+只有明确的示例请求才使用 synthetic 固定周期。自然语言解析需要 Provider，Mock parser 仅是有限的离线替身，不具备通用语义理解能力。
+
+## Read result and trace
 
 ```powershell
-# 在下载/解压后的项目根目录执行；无需使用作者机器的绝对路径。
-$agentJson = .\run.ps1 -InputFile .\examples\gmv_input.json -MockLLM -Json
+$agentJson = python -m business_performance_agent --input examples/gmv_input.json --mock-llm --json
 $agentExit = $LASTEXITCODE
 if ($agentJson) {
     $agentOutput = ($agentJson -join "`n") | ConvertFrom-Json
     $agentOutput.execution_mode
     $agentOutput.result.workflow_status
-    $agentOutput.result.target
     $agentOutput.result.key_findings
     $agentOutput.result.stop_reason
     $agentOutput.trace_path
 }
 ```
 
-其他具备 Python 的环境等价命令：
+输出含 `run_id`、`result`、`trace_path`、`execution_mode`。Mock 数据标识 `mock_retail_v1`、`real_business_data=false`；SQLite 标识 `olist_raw_sqlite_v1`、`production_database=false`。Provider 为 mock、gemini 或 unconfigured。
 
-```text
-python -m business_performance_agent --input examples/gmv_input.json --mock-llm --json
-```
+Gemini 模式还提供 report、`llm_requests_succeeded` 和 `report_rendering`。配置 Gemini 并不保证实际调用；唯一候选或无 Claim 时可不调用。核心结论以 `result` 为准，必须保留 Evidence 引用、警告和限制；Trace 中 `final_structured_result` 应与其一致。
 
-JSON 外层保留原 `run_id`、`result`、`trace_path`，包含应用层 `execution_mode`：
+报告生成后 Trace 记录 `report_renderer=gemini/deterministic_fallback`、`provider_error_code` 和报告 `retry_count`。SDK 不重试，应用最多重试一次。报告回退不改变业务结果，不证明模型调用成功，也不能代替失败的路由或意图解析。
 
-```json
-{
-  "dataset": "mock",
-  "dataset_id": "mock_retail_v1",
-  "llm": "mock",
-  "real_business_data": false
-}
-```
+## Failure handling
 
-不带 mock-llm 时 `llm="unconfigured"`，其余相同。此元数据由 CLI 实际装配模式产生，用户输入不能覆盖；业务 `result` 和 Runtime Trace 不改写。Trace 的 `final_structured_result` 应与返回的 `result` 完全相等。应用模式在 CLI 输出中；Trace 格式保持独立，脱离 CLI 的日志可从数据 provenance 与 router_decisions 核实模式。
-
-`result` 完整复用冻结 `output_schema.json`：workflow_status、target、primary_driver、secondary_drivers、diagnostic_path、key_findings、evidence、warnings、limitations、failed_branches、stop_reason 等。不得创建替代结果定义；展示时保留 Evidence 引用与限制。无 `--json` 时首行也会明确标记 MOCK DATA / 非真实经营数据。
-
-## 失败与边界
-
-| 情况 | 真实行为 / Codex 处理 |
+| 情况 | 操作 |
 |---|---|
-| 完成、非异常、partial、证据边界停止 | CLI 可退出 0；继续检查业务状态和 stop_reason，不凭退出码声称全部成功 |
-| Workflow blocked / failed | 退出 1，仍有 JSON 与 Trace；展示 warnings、limitations、failed_branches |
-| 参数互斥、文件不存在、无效 JSON、未配置 LLM 的自然语言问题 | 退出 2，stderr 错误，无本次业务输出；不尝试解析终端错误为报告 |
-| 未配置 LLM，多候选无法选择 | 可能 completed + evidence_boundary_reached；Trace 中 `llm_provider_not_configured` 是准确原因，Codex 不接管路由 |
-| 不支持的输入字段/指标 | Runtime 返回 invalid_input；只修正输入表达，不改变用户目标、不改业务定义 |
-| 非 Mock 完整周期、数据缺失 | 报告数据限制；不换日期或造数据 |
-| semantic_mapping_missing / semantic_conflict | 报告映射缺失或冲突并停止；不猜字段 |
-| 真实数据库或真实模型请求 | 当前未接入；说明需要相应 Adapter / Provider 开发，不能把 Mock 说成 Real |
-| 竞争、市场、用户心理等外部因果 | 不支持；不绕过 Evidence Boundary 自己完成解释 |
+| 退出 0 | 仍检查 workflow_status / stop_reason，可能 partial 或边界终止 |
+| Workflow blocked / failed，退出 1 | 读取结果和 Trace，展示 failed_branches、warnings、limitations |
+| 参数/路径/解析错误，通常退出 2 | 不把终端错误当报告；Gemini intent 失败可能有独立 Trace，无业务结果 |
+| `llm_provider_not_configured` | 说明缺少 Provider，不接管路由或偷偷换 Mock |
+| 缺失字段/不兼容 Schema/semantic conflict | 核对数据契约，不猜字段、不删单补值或改变冻结口径 |
+| 429 / 503 / 504 | 视为 Provider 暂时性故障，保留有限重试和报告回退记录，不反复重跑完整 E2E |
+| 外部竞争、市场、心理因果 | 没有证据时不提供解释或强业务动作 |
 
-## 三种任务示例
+新 Workflow、Adapter 或指标属于开发任务，按用户授权和冻结规范处理；运行请求不自行扩展业务范围。
 
-1. **使用 Agent**：“用当前示例诊断 GMV 异常。” → 说明 Mock 周期，运行上述命令，从 result 转述数值与引用，附本次 run_id / trace_path。
-2. **修改 Agent**：“Add a new retention analysis skill.” → 按开发任务检查规范和授权范围，实施必要改动与验证；不将它识别为 GMV 分析请求。
-3. **当前无法处理**：“分析竞品降价为什么影响我们的 GMV。” → 当前无外部竞品数据与因果能力，说明不能证明；不编造竞争故事，不自动新增 Skill。
+## Tests
 
-## Smoke test
-
-```text
-python -m unittest discover -s tests -p test_cli_integration.py -v
-```
-
-测试通过真正的 `python -m business_performance_agent` 子进程验证输入、原 Runtime、JSON、Mock 标识、失败状态与 Trace，并比较运行前后规范文件哈希。完整测试另运行 `run.ps1 -Test`。这是入口集成测试，不是 Eval，也不宣称测试了新 Codex 会话的实际指令加载或自然语言任务分类准确率。
+入口验证：`python -m unittest discover -s tests -p test_cli_integration.py -v`。
+完整离线及可选 live 测试见 [Testing](../QUICKSTART.md#testing)。`run.ps1 -Test` 执行测试发现，若环境已有 Key 也可能执行 live 测试；要求离线时使用文档中的隔离子进程命令。
