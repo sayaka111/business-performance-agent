@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from pathlib import Path
+import os
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -22,3 +23,8 @@ class ReadOnlyPolicy:
     max_rows: int = 10000
     table_allowlist: tuple[str, ...] = ('mock_order_items',)
     column_allowlist: tuple[str, ...] = ()
+
+@dataclass(frozen=True)
+class GeminiSettings:
+    model: str = field(default_factory=lambda: os.environ.get('GEMINI_MODEL', 'gemini-3.8-flash'))
+    timeout_ms: int = 60000

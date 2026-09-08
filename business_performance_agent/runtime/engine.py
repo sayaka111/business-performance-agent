@@ -13,6 +13,7 @@ class Runtime:
     """One explicit node per iteration; state and each transition are persisted."""
     def __init__(self, knowledge, query, definition, settings, llm_client=None):
         self.knowledge,self.query,self.definition,self.settings = knowledge,query,definition,settings
+        self.llm_client=llm_client
         self.router = Router(definition,ConstrainedRouter(llm_client))
 
     def run(self, raw):
@@ -59,6 +60,13 @@ class Runtime:
         s = self.state
         self.trace.update(warnings=s.warnings,limitations=s.limitations,evidence=s.evidence,
                           stop_reason=s.stop_reason,final_structured_result=self.final_result,state=asdict(s))
+        if hasattr(self.query.adapter,'operations'):
+            self.trace['data_source']={'backend':'SQLite','dataset_id':self.query.adapter.mapping['dataset_id'],
+                                       'database':str(self.query.adapter.path),'production_database':False,
+                                       'database_sha256':self.query.adapter.fingerprint}
+            self.trace['query_operations']=self.query.adapter.operations
+            self.trace['semantic_queries']=self.query.calls
+        if hasattr(self.llm_client,'events'): self.trace['llm_events']=self.llm_client.events
         self.settings.logs.mkdir(parents=True,exist_ok=True)
         self.trace_path = self.settings.logs/(self.trace['run_id']+'.json')
         temporary = self.trace_path.with_suffix('.tmp')

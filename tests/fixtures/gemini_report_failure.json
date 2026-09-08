@@ -1,0 +1,35 @@
+{
+  "fixture_source": "synthetic_sqlite_fixture",
+  "observed_failure": "HTTP 503 in report rendering",
+  "model": "gemini-3.8-flash",
+  "purpose": "report",
+  "payload": {
+    "claims": [
+      {
+        "claim_id": "C0001",
+        "variants": [
+          "gross_gmv 从 1000.0 变为 700.0，变化 -300.0（-30.00%）。"
+        ]
+      },
+      {
+        "claim_id": "C0004",
+        "variants": [
+          "在 gross_gmv 的本层分解中，orders 是最大同向内部贡献项：effect=-300，占本层同向贡献 100.00%。"
+        ]
+      },
+      {
+        "claim_id": "C0006",
+        "variants": [
+          "在 orders 的本层分解中，buyers 是最大同向内部贡献项：effect=-3，占本层同向贡献 100.00%。"
+        ]
+      }
+    ]
+  },
+  "schema": {
+    "type": "object",
+    "required": [
+      "selections"
+    ],
+    "additionalProperties": false
+  }
+}

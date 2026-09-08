@@ -84,6 +84,8 @@ python -m unittest discover -s tests -v
 
 环境创建、安装与排错见 [QUICKSTART.md](QUICKSTART.md)。当前采用完整源码目录 + editable 安装，需保留 `specs/`。Codex 是可选的开发 / 操作集成，见 [使用说明](docs/CODEX_USAGE.md) 与 [AGENTS.md](AGENTS.md)。
 
+独立的真实 Gemini 指标定义工具实验见 [Gemini Tool Calling](docs/GEMINI_TOOL_CALLING.md)。它尚未接入 GMV Workflow，也不查询数据库。
+
 ## Example
 
 **Mock / synthetic example，非真实经营数据。** 以下请求使用固定示例周期，来自 [gmv_input.json](examples/gmv_input.json)：

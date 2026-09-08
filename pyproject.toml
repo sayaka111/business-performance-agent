@@ -10,6 +10,9 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
 
+[project.optional-dependencies]
+gemini = ["google-genai>=1.0,<3"]
+
 [project.scripts]
 bpa = "business_performance_agent.app.cli:main"
 

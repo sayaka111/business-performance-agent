@@ -1,4 +1,4 @@
-include README.md QUICKSTART.md AGENTS.md .gitignore .gitattributes run.ps1 pyproject.toml
+include .env.example README.md QUICKSTART.md AGENTS.md .gitignore .gitattributes run.ps1 pyproject.toml
 recursive-include business_performance_agent *.py *.json
 recursive-include specs *.md *.json
 recursive-include docs *.md

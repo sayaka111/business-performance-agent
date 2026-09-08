@@ -8,3 +8,9 @@ logs/*.tmp
 .env.*
 build/
 dist/
+
+!.env.example
+
+# Local source databases
+/data/*.db
+/data/*.db-*
