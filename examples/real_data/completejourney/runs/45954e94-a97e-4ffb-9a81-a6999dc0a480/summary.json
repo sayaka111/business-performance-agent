@@ -1,0 +1,47 @@
+{
+  "run_id": "45954e94-a97e-4ffb-9a81-a6999dc0a480",
+  "mode": "mock",
+  "passed": true,
+  "scenarios": [
+    {
+      "scenario": "overall",
+      "checks": {
+        "no_unsupported_core_claim": true,
+        "root_decomposition": true,
+        "category_path": false,
+        "unsupported_stops": false
+      },
+      "error": null
+    },
+    {
+      "scenario": "drivers",
+      "checks": {
+        "no_unsupported_core_claim": true,
+        "root_decomposition": true,
+        "category_path": false,
+        "unsupported_stops": false
+      },
+      "error": null
+    },
+    {
+      "scenario": "category",
+      "checks": {
+        "no_unsupported_core_claim": true,
+        "root_decomposition": true,
+        "category_path": true,
+        "unsupported_stops": false
+      },
+      "error": null
+    },
+    {
+      "scenario": "unsupported_channel",
+      "checks": {
+        "no_unsupported_core_claim": true,
+        "root_decomposition": false,
+        "category_path": false,
+        "unsupported_stops": true
+      },
+      "error": null
+    }
+  ]
+}

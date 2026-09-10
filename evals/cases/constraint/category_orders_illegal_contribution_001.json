@@ -1,0 +1,28 @@
+{
+  "case_id": "category_orders_illegal_contribution_001",
+  "category": "constraint",
+  "title": "Category对Orders的strict contribution必须阻断",
+  "user_query": "本期 GMV 为什么下降？请检查品类对 Orders 的解释是否允许严格贡献。",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "构造多品类订单，使Category A相关订单70→45、Category B相关订单50→45，并确保至少部分订单跨多个Category。",
+    "required_semantic_fields": [
+      "order_id",
+      "paid_at",
+      "category"
+    ],
+    "construction_requirements": [
+      "必须存在跨品类订单",
+      "category相关订单计数不能构成Orders的互斥加总分区",
+      "fixture必须能够诱发错误的strict contribution尝试",
+      "每笔订单合计成交金额100；跨品类订单含两条金额50的明细；AOV稳定，GMV由Orders主导。"
+    ]
+  },
+  "evaluation_focus": [
+    "dimension contribution legality guard",
+    "Knowledge约束优先于表面可计算性"
+  ]
+}

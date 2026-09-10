@@ -1,0 +1,4999 @@
+{
+  "run_id": "bce0b813-fb05-4b5a-a2c8-9fe9120322da",
+  "workflow_id": "gmv_diagnosis",
+  "workflow_version": "1.0",
+  "input": {
+    "metric_id": "gross_gmv",
+    "current_period": {
+      "start": "2017-12-01",
+      "end": "2017-12-31"
+    },
+    "baseline_period": {
+      "start": "2017-01-01",
+      "end": "2017-01-31"
+    },
+    "filters": {},
+    "context": {
+      "preferred_dimension": "channel"
+    }
+  },
+  "nodes_executed": [
+    "validate_input",
+    "data_quality_guard",
+    "terminate_blocked",
+    "evidence_validate",
+    "build_result",
+    "complete"
+  ],
+  "skills_called": [
+    {
+      "node": "data_quality_guard",
+      "skill": "data_quality_guard",
+      "attempt": 0,
+      "input": {
+        "analysis_scope": {
+          "metrics": [
+            "gross_gmv"
+          ],
+          "dimensions": [
+            "channel"
+          ],
+          "current_period": {
+            "start": "2017-12-01",
+            "end": "2017-12-31"
+          },
+          "baseline_period": {
+            "start": "2017-01-01",
+            "end": "2017-01-31"
+          },
+          "filters": {}
+        }
+      },
+      "output": {
+        "status": "blocked",
+        "result": {
+          "analysis_allowed": false,
+          "issues": [
+            {
+              "type": "missing_fields",
+              "severity": "blocked",
+              "detail": "Required semantic mappings missing: channel"
+            },
+            {
+              "type": "unknown_channel",
+              "severity": "warning",
+              "detail": "channel unknown/unattributed share=1; values retained. No frozen high-share cutoff exists."
+            },
+            {
+              "type": "dataset_limitation",
+              "severity": "warning",
+              "detail": "Complete Journey public historical receipts; not a production real-time system."
+            },
+            {
+              "type": "dataset_limitation",
+              "severity": "warning",
+              "detail": "gross_gmv is retailer-received merchandise sales value, not customer out-of-pocket payment or shelf/list price."
+            },
+            {
+              "type": "dataset_limitation",
+              "severity": "warning",
+              "detail": "Transaction validity is approved at source-contract level; no physical payment_success column."
+            },
+            {
+              "type": "dataset_limitation",
+              "severity": "warning",
+              "detail": "household_id represents households, not individual customers; buyer/frequency counts use household entities."
+            },
+            {
+              "type": "dataset_limitation",
+              "severity": "warning",
+              "detail": "Refund lifecycle is unobserved; net_gmv and refund analysis unavailable."
+            },
+            {
+              "type": "dataset_limitation",
+              "severity": "warning",
+              "detail": "Quantity units/scales unresolved; units, UPO and realized unit price unavailable."
+            },
+            {
+              "type": "dataset_limitation",
+              "severity": "warning",
+              "detail": "channel, region, campaign and lifecycle customer_type unavailable; no proxy dimensions."
+            },
+            {
+              "type": "dataset_limitation",
+              "severity": "warning",
+              "detail": "Dataset first purchase is left-censored and not lifecycle first purchase."
+            },
+            {
+              "type": "dataset_limitation",
+              "severity": "warning",
+              "detail": "Calendar dates retain source clock with unknown timezone; 2018-01 is incomplete."
+            }
+          ],
+          "checks": {
+            "period_completeness": {
+              "current_period": true,
+              "baseline_period": true
+            },
+            "metric_coverage": {
+              "missing_fields": [
+                "channel"
+              ],
+              "null_share": {
+                "merchandise_amount": 0.0,
+                "order_id": 0.0,
+                "order_item_id": 0.0,
+                "paid_at": 0.0,
+                "payment_success": 0
+              }
+            },
+            "duplicate_integrity": {
+              "duplicate_item_ids": 0
+            },
+            "join_coverage": {
+              "channel": 0.0
+            },
+            "unknown_share": {
+              "channel": 1.0
+            },
+            "comparison_consistency": true,
+            "optional_capability_availability": {
+              "sessions": false
+            },
+            "dataset_source_contract": {
+              "transaction_validity": "completed_purchase_receipts",
+              "approval_reference": "User: Resume Phase 3 — Resolve Gate A; dataset-specific semantic approval",
+              "contract_id": "completejourney_v1",
+              "limitations": [
+                "Complete Journey public historical receipts; not a production real-time system.",
+                "gross_gmv is retailer-received merchandise sales value, not customer out-of-pocket payment or shelf/list price.",
+                "Transaction validity is approved at source-contract level; no physical payment_success column.",
+                "household_id represents households, not individual customers; buyer/frequency counts use household entities.",
+                "Refund lifecycle is unobserved; net_gmv and refund analysis unavailable.",
+                "Quantity units/scales unresolved; units, UPO and realized unit price unavailable.",
+                "channel, region, campaign and lifecycle customer_type unavailable; no proxy dimensions.",
+                "Dataset first purchase is left-censored and not lifecycle first purchase.",
+                "Calendar dates retain source clock with unknown timezone; 2018-01 is incomplete."
+              ]
+            }
+          }
+        },
+        "reason": "data_quality_boundary",
+        "warnings": [
+          "unknown_channel",
+          "dataset_limitation",
+          "dataset_limitation",
+          "dataset_limitation",
+          "dataset_limitation",
+          "dataset_limitation",
+          "dataset_limitation",
+          "dataset_limitation",
+          "dataset_limitation",
+          "dataset_limitation"
+        ],
+        "limitations": [
+          "Required semantic mappings missing: channel",
+          "channel unknown/unattributed share=1; values retained. No frozen high-share cutoff exists.",
+          "Complete Journey public historical receipts; not a production real-time system.",
+          "gross_gmv is retailer-received merchandise sales value, not customer out-of-pocket payment or shelf/list price.",
+          "Transaction validity is approved at source-contract level; no physical payment_success column.",
+          "household_id represents households, not individual customers; buyer/frequency counts use household entities.",
+          "Refund lifecycle is unobserved; net_gmv and refund analysis unavailable.",
+          "Quantity units/scales unresolved; units, UPO and realized unit price unavailable.",
+          "channel, region, campaign and lifecycle customer_type unavailable; no proxy dimensions.",
+          "Dataset first purchase is left-censored and not lifecycle first purchase.",
+          "Calendar dates retain source clock with unknown timezone; 2018-01 is incomplete."
+        ]
+      }
+    }
+  ],
+  "router_decisions": [
+    {
+      "from": "validate_input",
+      "to": "data_quality_guard",
+      "mode": "deterministic",
+      "rationale": "workflow_node_result"
+    },
+    {
+      "from": "data_quality_guard",
+      "to": "terminate_blocked",
+      "mode": "deterministic",
+      "rationale": "workflow_node_result"
+    },
+    {
+      "from": "terminate_blocked",
+      "to": "evidence_validate",
+      "mode": "deterministic",
+      "rationale": "workflow_node_result"
+    },
+    {
+      "from": "evidence_validate",
+      "to": "build_result",
+      "mode": "deterministic",
+      "rationale": "workflow_node_result"
+    },
+    {
+      "from": "build_result",
+      "to": "complete",
+      "mode": "deterministic",
+      "rationale": "workflow_node_result"
+    }
+  ],
+  "state_snapshots": [
+    {
+      "workflow_status": "running",
+      "target_metric": "gross_gmv",
+      "current_period": {
+        "start": "2017-12-01",
+        "end": "2017-12-31"
+      },
+      "baseline_period": {
+        "start": "2017-01-01",
+        "end": "2017-01-31"
+      },
+      "current_node": "data_quality_guard",
+      "current_metric": "gross_gmv",
+      "current_filters": {},
+      "analysis_path": [],
+      "available_relationships": [],
+      "selected_relationship": null,
+      "decomposition_result": null,
+      "contribution_result": null,
+      "selected_driver": null,
+      "selected_dimension": null,
+      "depth": 0,
+      "aligned_coverage": 0.0,
+      "evidence": [],
+      "warnings": [],
+      "limitations": [],
+      "failed_branches": [],
+      "retry_count": 0,
+      "stop_reason": null
+    },
+    {
+      "workflow_status": "running",
+      "target_metric": "gross_gmv",
+      "current_period": {
+        "start": "2017-12-01",
+        "end": "2017-12-31"
+      },
+      "baseline_period": {
+        "start": "2017-01-01",
+        "end": "2017-01-31"
+      },
+      "current_node": "terminate_blocked",
+      "current_metric": "gross_gmv",
+      "current_filters": {},
+      "analysis_path": [],
+      "available_relationships": [],
+      "selected_relationship": null,
+      "decomposition_result": null,
+      "contribution_result": null,
+      "selected_driver": null,
+      "selected_dimension": null,
+      "depth": 0,
+      "aligned_coverage": 0.0,
+      "evidence": [],
+      "warnings": [
+        "unknown_channel",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation"
+      ],
+      "limitations": [
+        "Required semantic mappings missing: channel",
+        "channel unknown/unattributed share=1; values retained. No frozen high-share cutoff exists.",
+        "Complete Journey public historical receipts; not a production real-time system.",
+        "gross_gmv is retailer-received merchandise sales value, not customer out-of-pocket payment or shelf/list price.",
+        "Transaction validity is approved at source-contract level; no physical payment_success column.",
+        "household_id represents households, not individual customers; buyer/frequency counts use household entities.",
+        "Refund lifecycle is unobserved; net_gmv and refund analysis unavailable.",
+        "Quantity units/scales unresolved; units, UPO and realized unit price unavailable.",
+        "channel, region, campaign and lifecycle customer_type unavailable; no proxy dimensions.",
+        "Dataset first purchase is left-censored and not lifecycle first purchase.",
+        "Calendar dates retain source clock with unknown timezone; 2018-01 is incomplete."
+      ],
+      "failed_branches": [],
+      "retry_count": 0,
+      "stop_reason": null
+    },
+    {
+      "workflow_status": "blocked",
+      "target_metric": "gross_gmv",
+      "current_period": {
+        "start": "2017-12-01",
+        "end": "2017-12-31"
+      },
+      "baseline_period": {
+        "start": "2017-01-01",
+        "end": "2017-01-31"
+      },
+      "current_node": "evidence_validate",
+      "current_metric": "gross_gmv",
+      "current_filters": {},
+      "analysis_path": [],
+      "available_relationships": [],
+      "selected_relationship": null,
+      "decomposition_result": null,
+      "contribution_result": null,
+      "selected_driver": null,
+      "selected_dimension": null,
+      "depth": 0,
+      "aligned_coverage": 0.0,
+      "evidence": [],
+      "warnings": [
+        "unknown_channel",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation"
+      ],
+      "limitations": [
+        "Required semantic mappings missing: channel",
+        "channel unknown/unattributed share=1; values retained. No frozen high-share cutoff exists.",
+        "Complete Journey public historical receipts; not a production real-time system.",
+        "gross_gmv is retailer-received merchandise sales value, not customer out-of-pocket payment or shelf/list price.",
+        "Transaction validity is approved at source-contract level; no physical payment_success column.",
+        "household_id represents households, not individual customers; buyer/frequency counts use household entities.",
+        "Refund lifecycle is unobserved; net_gmv and refund analysis unavailable.",
+        "Quantity units/scales unresolved; units, UPO and realized unit price unavailable.",
+        "channel, region, campaign and lifecycle customer_type unavailable; no proxy dimensions.",
+        "Dataset first purchase is left-censored and not lifecycle first purchase.",
+        "Calendar dates retain source clock with unknown timezone; 2018-01 is incomplete.",
+        "Analysis stopped at terminate_blocked: data_quality_boundary."
+      ],
+      "failed_branches": [
+        {
+          "node": "terminate_blocked",
+          "metric_id": "gross_gmv",
+          "filters": {},
+          "reason": "data_quality_boundary"
+        }
+      ],
+      "retry_count": 0,
+      "stop_reason": "data_quality_boundary"
+    },
+    {
+      "workflow_status": "blocked",
+      "target_metric": "gross_gmv",
+      "current_period": {
+        "start": "2017-12-01",
+        "end": "2017-12-31"
+      },
+      "baseline_period": {
+        "start": "2017-01-01",
+        "end": "2017-01-31"
+      },
+      "current_node": "build_result",
+      "current_metric": "gross_gmv",
+      "current_filters": {},
+      "analysis_path": [],
+      "available_relationships": [],
+      "selected_relationship": null,
+      "decomposition_result": null,
+      "contribution_result": null,
+      "selected_driver": null,
+      "selected_dimension": null,
+      "depth": 0,
+      "aligned_coverage": 0.0,
+      "evidence": [],
+      "warnings": [
+        "unknown_channel",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation"
+      ],
+      "limitations": [
+        "Required semantic mappings missing: channel",
+        "channel unknown/unattributed share=1; values retained. No frozen high-share cutoff exists.",
+        "Complete Journey public historical receipts; not a production real-time system.",
+        "gross_gmv is retailer-received merchandise sales value, not customer out-of-pocket payment or shelf/list price.",
+        "Transaction validity is approved at source-contract level; no physical payment_success column.",
+        "household_id represents households, not individual customers; buyer/frequency counts use household entities.",
+        "Refund lifecycle is unobserved; net_gmv and refund analysis unavailable.",
+        "Quantity units/scales unresolved; units, UPO and realized unit price unavailable.",
+        "channel, region, campaign and lifecycle customer_type unavailable; no proxy dimensions.",
+        "Dataset first purchase is left-censored and not lifecycle first purchase.",
+        "Calendar dates retain source clock with unknown timezone; 2018-01 is incomplete.",
+        "Analysis stopped at terminate_blocked: data_quality_boundary."
+      ],
+      "failed_branches": [
+        {
+          "node": "terminate_blocked",
+          "metric_id": "gross_gmv",
+          "filters": {},
+          "reason": "data_quality_boundary"
+        }
+      ],
+      "retry_count": 0,
+      "stop_reason": "data_quality_boundary"
+    },
+    {
+      "workflow_status": "blocked",
+      "target_metric": "gross_gmv",
+      "current_period": {
+        "start": "2017-12-01",
+        "end": "2017-12-31"
+      },
+      "baseline_period": {
+        "start": "2017-01-01",
+        "end": "2017-01-31"
+      },
+      "current_node": "complete",
+      "current_metric": "gross_gmv",
+      "current_filters": {},
+      "analysis_path": [],
+      "available_relationships": [],
+      "selected_relationship": null,
+      "decomposition_result": null,
+      "contribution_result": null,
+      "selected_driver": null,
+      "selected_dimension": null,
+      "depth": 0,
+      "aligned_coverage": 0.0,
+      "evidence": [],
+      "warnings": [
+        "unknown_channel",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation",
+        "dataset_limitation"
+      ],
+      "limitations": [
+        "Required semantic mappings missing: channel",
+        "channel unknown/unattributed share=1; values retained. No frozen high-share cutoff exists.",
+        "Complete Journey public historical receipts; not a production real-time system.",
+        "gross_gmv is retailer-received merchandise sales value, not customer out-of-pocket payment or shelf/list price.",
+        "Transaction validity is approved at source-contract level; no physical payment_success column.",
+        "household_id represents households, not individual customers; buyer/frequency counts use household entities.",
+        "Refund lifecycle is unobserved; net_gmv and refund analysis unavailable.",
+        "Quantity units/scales unresolved; units, UPO and realized unit price unavailable.",
+        "channel, region, campaign and lifecycle customer_type unavailable; no proxy dimensions.",
+        "Dataset first purchase is left-censored and not lifecycle first purchase.",
+        "Calendar dates retain source clock with unknown timezone; 2018-01 is incomplete.",
+        "Analysis stopped at terminate_blocked: data_quality_boundary."
+      ],
+      "failed_branches": [
+        {
+          "node": "terminate_blocked",
+          "metric_id": "gross_gmv",
+          "filters": {},
+          "reason": "data_quality_boundary"
+        }
+      ],
+      "retry_count": 0,
+      "stop_reason": "data_quality_boundary"
+    }
+  ],
+  "spec_fingerprints": {
+    "C:\\Users\\ASUS\\Desktop\\经营分析agent\\specs\\knowledge\\metrics.json": "7f7544ea95a36896cb5d8aa9235cf33cfc371c798a8f1bca35fb2b546b652dbb",
+    "C:\\Users\\ASUS\\Desktop\\经营分析agent\\specs\\knowledge\\metric_relationships.json": "b5a052b8e2c04b6bdad8a1bca4342b6227627edc916acd95bf919a5362e6b22c",
+    "C:\\Users\\ASUS\\Desktop\\经营分析agent\\specs\\knowledge\\dimensions.json": "216b1fb49a6382874c06a18361f42ad482c56d1b6917ccf5ada688a3e72cd29b",
+    "C:\\Users\\ASUS\\Desktop\\经营分析agent\\specs\\knowledge\\business_rules.json": "959c00c5d6fc34245207da3919b8f4a53ed6889779b7a0ba65afaf7b30adac78",
+    "C:\\Users\\ASUS\\Desktop\\经营分析agent\\specs\\workflows\\gmv_diagnosis\\workflow.md": "bb8f5230ce6626fe273e78398076562ae03a2f0e324de9834acdab67ca69acb6",
+    "C:\\Users\\ASUS\\Desktop\\经营分析agent\\specs\\workflows\\gmv_diagnosis\\state_schema.json": "54b23fb9f3847ec0d0245d5bc8a76c33eff843e4e47ad2e72c8aa43563112fa3",
+    "C:\\Users\\ASUS\\Desktop\\经营分析agent\\specs\\workflows\\gmv_diagnosis\\routing_rules.json": "81b217c29ab27a67aae40b28958326eca87c96699c92aab49efd25d6aa7012f3",
+    "C:\\Users\\ASUS\\Desktop\\经营分析agent\\specs\\workflows\\gmv_diagnosis\\policy.json": "38d73a08e2b5a0678def06b63d6e6ed05b07d42714508d60d7ddb5b782b9ae9a",
+    "C:\\Users\\ASUS\\Desktop\\经营分析agent\\specs\\workflows\\gmv_diagnosis\\output_schema.json": "7109524f4eba86ea5c00baf4f8cf35c63e09d19d945d7ce9ddbf6309962dc106"
+  },
+  "warnings": [
+    "unknown_channel",
+    "dataset_limitation",
+    "dataset_limitation",
+    "dataset_limitation",
+    "dataset_limitation",
+    "dataset_limitation",
+    "dataset_limitation",
+    "dataset_limitation",
+    "dataset_limitation",
+    "dataset_limitation"
+  ],
+  "limitations": [
+    "Required semantic mappings missing: channel",
+    "channel unknown/unattributed share=1; values retained. No frozen high-share cutoff exists.",
+    "Complete Journey public historical receipts; not a production real-time system.",
+    "gross_gmv is retailer-received merchandise sales value, not customer out-of-pocket payment or shelf/list price.",
+    "Transaction validity is approved at source-contract level; no physical payment_success column.",
+    "household_id represents households, not individual customers; buyer/frequency counts use household entities.",
+    "Refund lifecycle is unobserved; net_gmv and refund analysis unavailable.",
+    "Quantity units/scales unresolved; units, UPO and realized unit price unavailable.",
+    "channel, region, campaign and lifecycle customer_type unavailable; no proxy dimensions.",
+    "Dataset first purchase is left-censored and not lifecycle first purchase.",
+    "Calendar dates retain source clock with unknown timezone; 2018-01 is incomplete.",
+    "Analysis stopped at terminate_blocked: data_quality_boundary."
+  ],
+  "evidence": [],
+  "stop_reason": "data_quality_boundary",
+  "final_structured_result": {
+    "workflow_id": "gmv_diagnosis",
+    "workflow_version": "1.0",
+    "workflow_status": "blocked",
+    "target": {
+      "metric_id": "gross_gmv",
+      "current_value": null,
+      "baseline_value": null,
+      "absolute_change": null,
+      "relative_change": null
+    },
+    "primary_driver": {
+      "metric_id": null,
+      "effect": null,
+      "aligned_share": null
+    },
+    "secondary_drivers": [],
+    "diagnostic_path": [],
+    "key_findings": [],
+    "evidence": [],
+    "warnings": [
+      "unknown_channel",
+      "dataset_limitation"
+    ],
+    "limitations": [
+      "Required semantic mappings missing: channel",
+      "channel unknown/unattributed share=1; values retained. No frozen high-share cutoff exists.",
+      "Complete Journey public historical receipts; not a production real-time system.",
+      "gross_gmv is retailer-received merchandise sales value, not customer out-of-pocket payment or shelf/list price.",
+      "Transaction validity is approved at source-contract level; no physical payment_success column.",
+      "household_id represents households, not individual customers; buyer/frequency counts use household entities.",
+      "Refund lifecycle is unobserved; net_gmv and refund analysis unavailable.",
+      "Quantity units/scales unresolved; units, UPO and realized unit price unavailable.",
+      "channel, region, campaign and lifecycle customer_type unavailable; no proxy dimensions.",
+      "Dataset first purchase is left-censored and not lifecycle first purchase.",
+      "Calendar dates retain source clock with unknown timezone; 2018-01 is incomplete.",
+      "Analysis stopped at terminate_blocked: data_quality_boundary."
+    ],
+    "failed_branches": [
+      {
+        "node": "terminate_blocked",
+        "metric_id": "gross_gmv",
+        "filters": {},
+        "reason": "data_quality_boundary"
+      }
+    ],
+    "stop_reason": "data_quality_boundary"
+  },
+  "state": {
+    "workflow_status": "blocked",
+    "target_metric": "gross_gmv",
+    "current_period": {
+      "start": "2017-12-01",
+      "end": "2017-12-31"
+    },
+    "baseline_period": {
+      "start": "2017-01-01",
+      "end": "2017-01-31"
+    },
+    "current_node": "complete",
+    "current_metric": "gross_gmv",
+    "current_filters": {},
+    "analysis_path": [],
+    "available_relationships": [],
+    "selected_relationship": null,
+    "decomposition_result": null,
+    "contribution_result": null,
+    "selected_driver": null,
+    "selected_dimension": null,
+    "depth": 0,
+    "aligned_coverage": 0.0,
+    "evidence": [],
+    "warnings": [
+      "unknown_channel",
+      "dataset_limitation",
+      "dataset_limitation",
+      "dataset_limitation",
+      "dataset_limitation",
+      "dataset_limitation",
+      "dataset_limitation",
+      "dataset_limitation",
+      "dataset_limitation",
+      "dataset_limitation"
+    ],
+    "limitations": [
+      "Required semantic mappings missing: channel",
+      "channel unknown/unattributed share=1; values retained. No frozen high-share cutoff exists.",
+      "Complete Journey public historical receipts; not a production real-time system.",
+      "gross_gmv is retailer-received merchandise sales value, not customer out-of-pocket payment or shelf/list price.",
+      "Transaction validity is approved at source-contract level; no physical payment_success column.",
+      "household_id represents households, not individual customers; buyer/frequency counts use household entities.",
+      "Refund lifecycle is unobserved; net_gmv and refund analysis unavailable.",
+      "Quantity units/scales unresolved; units, UPO and realized unit price unavailable.",
+      "channel, region, campaign and lifecycle customer_type unavailable; no proxy dimensions.",
+      "Dataset first purchase is left-censored and not lifecycle first purchase.",
+      "Calendar dates retain source clock with unknown timezone; 2018-01 is incomplete.",
+      "Analysis stopped at terminate_blocked: data_quality_boundary."
+    ],
+    "failed_branches": [
+      {
+        "node": "terminate_blocked",
+        "metric_id": "gross_gmv",
+        "filters": {},
+        "reason": "data_quality_boundary"
+      }
+    ],
+    "retry_count": 0,
+    "stop_reason": "data_quality_boundary"
+  },
+  "data_source": {
+    "backend": "SQLite",
+    "dataset_id": "completejourney_v1",
+    "database": "C:\\Users\\ASUS\\Desktop\\经营分析agent\\data\\processed\\completejourney\\completejourney.sqlite",
+    "production_database": false,
+    "database_sha256": "ff2002fff3cc5a69e139d920f8849d5f115b88850a025f6f6b54177cd580affa"
+  },
+  "query_operations": [
+    {
+      "query_id": "SQL00001",
+      "sql": "SELECT \"basket_id\", \"category\", \"household_id\", \"order_item_id\", \"paid_date\", \"product_id\", \"sales_value\" FROM \"order_items\"",
+      "parameters": [],
+      "read_only": true,
+      "status": "success",
+      "returned_rows": 1469307
+    },
+    {
+      "query_id": "SQL00002",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00003",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00004",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00005",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00006",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00007",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00008",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00009",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00010",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00011",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00012",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00013",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00014",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00015",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00016",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00017",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00018",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00019",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00020",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00021",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00022",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00023",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00024",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00025",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00026",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00027",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00028",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00029",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00030",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00031",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00032",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00033",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00034",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00035",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00036",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00037",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00038",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00039",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00040",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00041",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00042",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00043",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00044",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00045",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00046",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00047",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00048",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00049",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00050",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00051",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00052",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00053",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00054",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00055",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00056",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00057",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00058",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00059",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00060",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00061",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00062",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00063",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00064",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00065",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00066",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00067",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00068",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00069",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00070",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00071",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00072",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00073",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00074",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00075",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00076",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00077",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00078",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00079",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00080",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00081",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00082",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00083",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00084",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00085",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00086",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00087",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00088",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00089",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00090",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00091",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00092",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00093",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00094",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00095",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00096",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00097",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00098",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00099",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00100",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00101",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00102",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00103",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00104",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00105",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00106",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00107",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00108",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00109",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00110",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00111",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00112",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00113",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00114",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00115",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00116",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00117",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00118",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00119",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00120",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00121",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00122",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00123",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00124",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00125",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00126",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00127",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00128",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00129",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00130",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00131",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00132",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00133",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00134",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00135",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00136",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00137",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00138",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00139",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00140",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00141",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00142",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00143",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00144",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00145",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00146",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00147",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00148",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00149",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00150",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00151",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00152",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00153",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00154",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00155",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00156",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00157",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00158",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00159",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00160",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00161",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00162",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00163",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00164",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00165",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00166",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00167",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00168",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00169",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00170",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00171",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00172",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00173",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00174",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00175",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00176",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00177",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00178",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00179",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00180",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00181",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00182",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00183",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00184",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00185",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00186",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00187",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00188",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00189",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00190",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00191",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00192",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00193",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00194",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00195",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00196",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00197",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00198",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00199",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00200",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00201",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00202",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00203",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00204",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00205",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00206",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00207",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00208",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00209",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00210",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00211",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00212",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00213",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00214",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00215",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00216",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00217",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00218",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00219",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00220",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00221",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00222",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00223",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00224",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00225",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00226",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00227",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00228",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00229",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00230",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00231",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00232",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00233",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00234",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00235",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00236",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00237",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00238",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00239",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00240",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00241",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00242",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00243",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00244",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00245",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00246",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00247",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00248",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00249",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00250",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00251",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00252",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00253",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00254",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00255",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00256",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00257",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00258",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00259",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00260",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00261",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00262",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00263",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00264",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00265",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00266",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00267",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00268",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00269",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00270",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00271",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00272",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00273",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00274",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00275",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00276",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00277",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00278",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00279",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00280",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00281",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00282",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00283",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00284",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00285",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00286",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00287",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00288",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00289",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00290",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00291",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00292",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00293",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00294",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00295",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00296",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00297",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00298",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00299",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00300",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00301",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00302",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00303",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00304",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00305",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00306",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00307",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00308",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00309",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00310",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00311",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00312",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00313",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00314",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00315",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00316",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00317",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00318",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00319",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00320",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00321",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00322",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00323",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00324",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00325",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00326",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00327",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00328",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00329",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00330",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00331",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00332",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00333",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00334",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00335",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00336",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00337",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00338",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00339",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00340",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00341",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00342",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00343",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00344",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00345",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00346",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00347",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00348",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00349",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00350",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00351",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00352",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00353",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00354",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00355",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00356",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00357",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00358",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00359",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00360",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00361",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00362",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00363",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00364",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00365",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00366",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00367",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00368",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00369",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00370",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00371",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00372",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00373",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00374",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00375",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00376",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00377",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00378",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00379",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00380",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00381",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00382",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00383",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00384",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00385",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00386",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00387",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00388",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00389",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00390",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00391",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00392",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00393",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00394",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00395",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00396",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00397",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00398",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00399",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00400",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00401",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00402",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00403",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00404",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00405",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00406",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00407",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00408",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00409",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00410",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00411",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00412",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00413",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00414",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00415",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00416",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00417",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00418",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00419",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00420",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00421",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00422",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00423",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00424",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00425",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00426",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00427",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00428",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00429",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00430",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00431",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00432",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00433",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00434",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00435",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00436",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00437",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00438",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00439",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00440",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00441",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00442",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00443",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00444",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00445",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00446",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00447",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00448",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00449",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00450",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00451",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00452",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00453",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00454",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00455",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00456",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00457",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00458",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00459",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00460",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00461",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00462",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00463",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00464",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00465",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00466",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00467",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00468",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00469",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00470",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00471",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00472",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00473",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00474",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00475",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00476",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00477",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00478",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00479",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00480",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00481",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00482",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00483",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00484",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00485",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00486",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00487",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00488",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00489",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00490",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00491",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00492",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00493",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00494",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00495",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00496",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00497",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00498",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00499",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00500",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00501",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00502",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00503",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00504",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00505",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00506",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00507",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00508",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00509",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00510",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00511",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00512",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00513",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00514",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00515",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00516",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00517",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00518",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00519",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00520",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00521",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00522",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00523",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00524",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00525",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00526",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00527",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00528",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00529",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00530",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00531",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00532",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00533",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00534",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00535",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00536",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00537",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00538",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00539",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00540",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00541",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00542",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00543",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00544",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00545",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00546",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00547",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00548",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00549",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00550",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00551",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00552",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00553",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00554",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00555",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00556",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00557",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00558",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00559",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00560",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00561",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00562",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00563",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00564",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00565",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00566",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00567",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00568",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00569",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00570",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00571",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00572",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00573",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00574",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00575",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00576",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00577",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00578",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00579",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00580",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00581",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00582",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00583",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00584",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00585",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00586",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00587",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00588",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00589",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00590",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00591",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00592",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00593",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00594",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00595",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00596",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00597",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00598",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00599",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00600",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00601",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00602",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00603",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00604",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00605",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00606",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00607",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00608",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00609",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00610",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00611",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00612",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00613",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00614",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00615",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    },
+    {
+      "query_id": "SQL00616",
+      "operation": "cache_read",
+      "source_query_id": "SQL00001",
+      "read_only": true,
+      "status": "success"
+    }
+  ],
+  "semantic_queries": [
+    {
+      "query_id": "Q00001",
+      "dataset_id": "completejourney_v1",
+      "backend": "SQLite",
+      "operation": "quality",
+      "request": {
+        "metrics": [
+          "gross_gmv"
+        ],
+        "dimensions": [
+          "channel"
+        ],
+        "current_period": {
+          "start": "2017-12-01",
+          "end": "2017-12-31"
+        },
+        "baseline_period": {
+          "start": "2017-01-01",
+          "end": "2017-01-31"
+        },
+        "filters": {}
+      },
+      "read_only": true,
+      "sql_query_ids": [
+        "SQL00616"
+      ]
+    }
+  ],
+  "report_renderer": "deterministic_fallback",
+  "provider_error_code": null,
+  "retry_count": 0,
+  "execution_mode": {
+    "llm": "mock",
+    "data_origin": "public_historical",
+    "dataset_id": "completejourney_v1",
+    "production_database": false
+  },
+  "rendered_report": "# GMV 诊断报告\n\n- GMV 诊断状态：blocked\n- 停止原因：data_quality_boundary\n\n## 警告\n\n- unknown_channel\n- dataset_limitation\n\n## 限制\n\n- Required semantic mappings missing: channel\n- channel unknown/unattributed share=1; values retained. No frozen high-share cutoff exists.\n- Complete Journey public historical receipts; not a production real-time system.\n- gross_gmv is retailer-received merchandise sales value, not customer out-of-pocket payment or shelf/list price.\n- Transaction validity is approved at source-contract level; no physical payment_success column.\n- household_id represents households, not individual customers; buyer/frequency counts use household entities.\n- Refund lifecycle is unobserved; net_gmv and refund analysis unavailable.\n- Quantity units/scales unresolved; units, UPO and realized unit price unavailable.\n- channel, region, campaign and lifecycle customer_type unavailable; no proxy dimensions.\n- Dataset first purchase is left-censored and not lifecycle first purchase.\n- Calendar dates retain source clock with unknown timezone; 2018-01 is incomplete.\n- Analysis stopped at terminate_blocked: data_quality_boundary."
+}

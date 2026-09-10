@@ -1,0 +1,99 @@
+{
+  "benchmark_id": "round_06_mixed_provider_live_completion",
+  "timestamp": "2026-09-10T05:46:59.631848+00:00",
+  "timestamp_kind": "archive_time; original run timestamp unavailable",
+  "source_run_id": "52bfe4d8-c811-4a1f-a63b-9ef24f6583bb",
+  "source_summary_sha256": "2109a2c14adbb72b9d114d0e2f126e6b599ffac78167ca3e48c23f231b72ebe4",
+  "agent_version": "0.1.0",
+  "git_commit": null,
+  "git_commit_scope": "archive checkout; not an assertion of historical run revision",
+  "eval_manifest_sha256_at_archive": "10486c891ead679a99cbdef35a559d005b8d2ce26b07fc61264ae7ad8b6eb5f3",
+  "historical_manifest_hash": null,
+  "mode": "live_mixed_gemini_deepseek",
+  "case_count": 20,
+  "cases_executed": 20,
+  "passed": 9,
+  "failed": 11,
+  "review_required": 0,
+  "metrics": {
+    "Calculation Accuracy": {
+      "numerator": 16,
+      "denominator": 19,
+      "value": 0.8421052631578947
+    },
+    "Workflow Path Accuracy": {
+      "numerator": 11,
+      "denominator": 20,
+      "value": 0.55
+    },
+    "Primary Driver Accuracy": {
+      "numerator": 8,
+      "denominator": 13,
+      "value": 0.6153846153846154
+    },
+    "Correct Stop Rate": {
+      "numerator": 19,
+      "denominator": 20,
+      "value": 0.95
+    },
+    "First-Level Driver Accuracy": {
+      "numerator": 8,
+      "denominator": 10,
+      "value": 0.8
+    },
+    "Nested Driver Accuracy": {
+      "numerator": 3,
+      "denominator": 4,
+      "value": 0.75
+    },
+    "Routing Validity": {
+      "numerator": 10,
+      "denominator": 10,
+      "value": 1.0
+    },
+    "Evidence Coverage": {
+      "numerator": 48,
+      "denominator": 48,
+      "value": 1.0
+    },
+    "Unsupported Claim Rate": {
+      "numerator": 0,
+      "denominator": 48,
+      "value": 0.0
+    },
+    "Required Claim Coverage": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "Overall Case Pass Rate": {
+      "numerator": 9,
+      "denominator": 20,
+      "value": 0.45
+    }
+  },
+  "failed_cases": [
+    "holdout_aov_price_down_units_offset_001",
+    "holdout_category_multi_driver_001",
+    "holdout_channel_multi_driver_001",
+    "holdout_channel_unknown_share_high_001",
+    "holdout_dimension_zero_baseline_001",
+    "holdout_evidence_boundary_channel_002",
+    "holdout_explicit_category_intent_001",
+    "holdout_explicit_channel_intent_001",
+    "holdout_explicit_orders_category_illegal_001",
+    "holdout_region_gmv_drilldown_001",
+    "holdout_requested_dimension_unavailable_001"
+  ],
+  "expected_leakage": "PASS",
+  "spec_integrity": {
+    "unchanged": true,
+    "holdout_manifest_sha256": "7049b0358e1d0bd3268bdac7789ffb0cabc883bccefe719c0397485647a7826c"
+  },
+  "notes": "Continuation of 192f066a-461f-4e9e-ae82-e51f75cf1c18; new DeepSeek run cde00ed0-50e6-44b0-8d84-2a52163d099a. Existing Gemini grades retained. No business logic, Cases, Expected, fixtures or graders changed. Single-attempt DeepSeek smoke passed before continuation and is excluded from provider metrics.",
+  "artifact_sha256": {
+    "summary.json": "86d5e5a4b1c7a3a2fefe6047aa0c7ebf2d96914dedbe028841838499db0b5ccf",
+    "summary.md": "899abb901e9ca2652fad0f2ade4eafa87f16b37042a9fe328638fb6ebe6d30fa",
+    "failures.md": "f1a38dd539d1310d7acb5f98eb73607f26e4930aa29969e14eddfa3861cbd2f4"
+  }
+}

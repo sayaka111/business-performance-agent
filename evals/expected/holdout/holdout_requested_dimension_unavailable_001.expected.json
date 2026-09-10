@@ -1,0 +1,20 @@
+{
+  "case_id": "holdout_requested_dimension_unavailable_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "selected_dimension": "channel",
+    "required_behaviors": [
+      "do not guess channel mapping",
+      "report dimension unavailable",
+      "preserve valid overall diagnosis"
+    ],
+    "allowed_statuses": [
+      "warning",
+      "partial",
+      "blocked"
+    ]
+  },
+  "forbidden": {
+    "claims": []
+  }
+}

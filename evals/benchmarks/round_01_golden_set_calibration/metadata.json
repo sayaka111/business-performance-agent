@@ -1,0 +1,84 @@
+{
+  "benchmark_id": "round_01_golden_set_calibration",
+  "timestamp": "2026-09-09T14:01:24.288194+00:00",
+  "timestamp_kind": "archive_time; original run timestamp unavailable",
+  "source_run_id": "8b2add8a-dfde-45ba-af47-f752ecae70fe",
+  "source_summary_sha256": "9fdc6fbea79b5c76614f721a148adf26e4c12b65b6ca7b12c075417bc6744a7a",
+  "agent_version": "0.1.0",
+  "git_commit": null,
+  "git_commit_scope": "archive checkout; not an assertion of historical run revision",
+  "eval_manifest_sha256_at_archive": "10486c891ead679a99cbdef35a559d005b8d2ce26b07fc61264ae7ad8b6eb5f3",
+  "historical_manifest_hash": null,
+  "mode": "offline",
+  "case_count": 12,
+  "cases_executed": 11,
+  "passed": 4,
+  "failed": 3,
+  "review_required": 5,
+  "metrics": {
+    "Calculation Accuracy": {
+      "numerator": 4,
+      "denominator": 6,
+      "value": 0.6666666666666666
+    },
+    "Workflow Path Accuracy": {
+      "numerator": 3,
+      "denominator": 6,
+      "value": 0.5
+    },
+    "Primary Driver Accuracy": {
+      "numerator": 2,
+      "denominator": 5,
+      "value": 0.4
+    },
+    "Correct Stop Rate": {
+      "numerator": 7,
+      "denominator": 7,
+      "value": 1.0
+    },
+    "Routing Validity": {
+      "numerator": 4,
+      "denominator": 4,
+      "value": 1.0
+    },
+    "Evidence Coverage": {
+      "numerator": 18,
+      "denominator": 18,
+      "value": 1.0
+    },
+    "Unsupported Claim Rate": {
+      "numerator": 0,
+      "denominator": 18,
+      "value": 0.0
+    },
+    "Required Claim Coverage": {
+      "numerator": 2,
+      "denominator": 4,
+      "value": 0.5
+    },
+    "Overall Case Pass Rate": {
+      "numerator": 4,
+      "denominator": 12,
+      "value": 0.3333333333333333
+    }
+  },
+  "failed_cases": [
+    "channel_gmv_drilldown_001",
+    "category_gmv_contribution_001",
+    "evidence_boundary_paid_search_001"
+  ],
+  "expected_leakage": "PASS",
+  "spec_integrity": {
+    "business_logic_changed": false,
+    "knowledge_changed": false,
+    "skill_semantics_changed": false,
+    "workflow_semantics_changed": false,
+    "basis": "recorded integrity checks in completed evaluation rounds"
+  },
+  "notes": "Golden Set calibration: five cases required correction. Historical Case/Expected revisions are not reconstructed from the current Golden Set.",
+  "artifact_sha256": {
+    "summary.json": "5d1b8a48dc7f49e550d4318fa88300f9d178a06d756b44bce55fe1305cbc3703",
+    "summary.md": "0a6918c88bebae634cfcee4013f7f1afdc87123e811f35671514fcf4511df140",
+    "failures.md": "99cb2172413fd532af1ed18406a7071dd4bf35711839d1c7aa0ce2fd20cf41c4"
+  }
+}

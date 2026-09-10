@@ -1,0 +1,29 @@
+{
+  "case_id": "holdout_region_gmv_drilldown_001",
+  "category": "dimension",
+  "title": "Region维度定位GMV拖累",
+  "user_query": "这次GMV下滑主要是哪个地区的问题？",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "Region South 6000→3900, East 5000→4800, North 4000→4100，总变化=-2200。",
+    "required_semantic_fields": [
+      "order_id",
+      "paid_at",
+      "merchandise_amount",
+      "region"
+    ],
+    "construction_requirements": [
+      "region按订单交付区域互斥",
+      "South=-2100",
+      "East=-200",
+      "North=+100"
+    ]
+  },
+  "evaluation_focus": [
+    "new dimension generalization",
+    "region contribution"
+  ]
+}

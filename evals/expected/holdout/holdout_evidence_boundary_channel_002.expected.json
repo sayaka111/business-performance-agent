@@ -1,0 +1,26 @@
+{
+  "case_id": "holdout_evidence_boundary_channel_002",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "first_level_primary_driver": "orders",
+    "selected_dimension": "channel",
+    "top_dimension_driver": "paid_search",
+    "required_behaviors": [
+      "state internal localization",
+      "state external cause not established"
+    ],
+    "allowed_stop_reasons": [
+      "evidence_boundary_reached",
+      "target_coverage_reached"
+    ]
+  },
+  "forbidden": {
+    "claims": [
+      "广告策略出了问题",
+      "广告投放效率下降",
+      "预算减少",
+      "竞争对手促销",
+      "用户需求下降"
+    ]
+  }
+}

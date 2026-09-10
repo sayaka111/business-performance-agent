@@ -1,0 +1,94 @@
+{
+  "benchmark_id": "round_02_pre_fix_baseline",
+  "timestamp": "2026-09-09T14:01:24.352048+00:00",
+  "timestamp_kind": "archive_time; original run timestamp unavailable",
+  "source_run_id": "7bcf5d5d-a82b-4307-83b8-a9f8dbbf4f8d",
+  "source_summary_sha256": "7db45f98493c433fd4468eec3a1a18964545be823ee38d5e23dd431b8d8de6a3",
+  "agent_version": "0.1.0",
+  "git_commit": null,
+  "git_commit_scope": "archive checkout; not an assertion of historical run revision",
+  "eval_manifest_sha256_at_archive": "10486c891ead679a99cbdef35a559d005b8d2ce26b07fc61264ae7ad8b6eb5f3",
+  "historical_manifest_hash": null,
+  "mode": "offline",
+  "case_count": 12,
+  "cases_executed": 12,
+  "passed": 9,
+  "failed": 3,
+  "review_required": 0,
+  "metrics": {
+    "Calculation Accuracy": {
+      "numerator": 9,
+      "denominator": 11,
+      "value": 0.8181818181818182
+    },
+    "Workflow Path Accuracy": {
+      "numerator": 8,
+      "denominator": 11,
+      "value": 0.7272727272727273
+    },
+    "Primary Driver Accuracy": {
+      "numerator": 7,
+      "denominator": 10,
+      "value": 0.7
+    },
+    "Correct Stop Rate": {
+      "numerator": 12,
+      "denominator": 12,
+      "value": 1.0
+    },
+    "First-Level Driver Accuracy": {
+      "numerator": 8,
+      "denominator": 8,
+      "value": 1.0
+    },
+    "Nested Driver Accuracy": {
+      "numerator": 4,
+      "denominator": 4,
+      "value": 1.0
+    },
+    "Routing Validity": {
+      "numerator": 9,
+      "denominator": 9,
+      "value": 1.0
+    },
+    "Evidence Coverage": {
+      "numerator": 34,
+      "denominator": 34,
+      "value": 1.0
+    },
+    "Unsupported Claim Rate": {
+      "numerator": 0,
+      "denominator": 34,
+      "value": 0.0
+    },
+    "Required Claim Coverage": {
+      "numerator": 2,
+      "denominator": 4,
+      "value": 0.5
+    },
+    "Overall Case Pass Rate": {
+      "numerator": 9,
+      "denominator": 12,
+      "value": 0.75
+    }
+  },
+  "failed_cases": [
+    "channel_gmv_drilldown_001",
+    "category_gmv_contribution_001",
+    "evidence_boundary_paid_search_001"
+  ],
+  "expected_leakage": "PASS",
+  "spec_integrity": {
+    "business_logic_changed": false,
+    "knowledge_changed": false,
+    "skill_semantics_changed": false,
+    "workflow_semantics_changed": false,
+    "basis": "recorded integrity checks in completed evaluation rounds"
+  },
+  "notes": "Pre-fix baseline using corrected GMV-entry Golden Set. Three dimension/evidence failures remain. No Agent changes between Round 1 and Round 2.",
+  "artifact_sha256": {
+    "summary.json": "80efa1727b91d7d77e7b48d1fa2c63cd42ca30d09c7c8dab2bb9a22fbf7262ab",
+    "summary.md": "446a8ddf1a8069db66addd9d6c4441e7fab327b9c2f1c1ccc9625ff55f987d9b",
+    "failures.md": "47a125f7202b69feb5b2128b054689be6fb360f8fe8436cc319424533f8fee9a"
+  }
+}

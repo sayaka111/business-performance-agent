@@ -1,0 +1,21 @@
+{
+  "case_id": "missing_paid_at_001",
+  "expected": {
+    "data_quality_status": "blocked",
+    "workflow_status": "blocked",
+    "allowed_stop_reasons": [
+      "data_quality_boundary",
+      "semantic_conflict"
+    ],
+    "required_claims": [
+      "无法按照paid_at口径完成周期归属"
+    ]
+  },
+  "forbidden": {
+    "relationships": [],
+    "claims": [
+      "自动使用created_at替代paid_at",
+      "自动使用delivered_at替代paid_at"
+    ]
+  }
+}

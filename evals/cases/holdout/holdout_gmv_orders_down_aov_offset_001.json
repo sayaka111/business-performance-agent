@@ -1,0 +1,30 @@
+{
+  "case_id": "holdout_gmv_orders_down_aov_offset_001",
+  "category": "decomposition",
+  "title": "Orders下降但AOV上升形成对冲",
+  "user_query": "GMV为什么还是跌了？有没有哪个指标其实在对冲？",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "基期 Orders=100, AOV=100, GMV=10000；本期 Orders=70, AOV=120, GMV=8400。",
+    "required_semantic_fields": [
+      "order_id",
+      "customer_id",
+      "paid_at",
+      "merchandise_amount",
+      "quantity"
+    ],
+    "construction_requirements": [
+      "基期订单=100",
+      "本期订单=70",
+      "基期AOV=100",
+      "本期AOV=120"
+    ]
+  },
+  "evaluation_focus": [
+    "direction-aligned contribution",
+    "offsetting driver"
+  ]
+}

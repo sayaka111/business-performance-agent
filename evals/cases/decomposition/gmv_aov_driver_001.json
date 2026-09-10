@@ -1,0 +1,32 @@
+{
+  "case_id": "gmv_aov_driver_001",
+  "category": "decomposition",
+  "title": "GMV下降，AOV为主要驱动",
+  "user_query": "本期 GMV 为什么下降？",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "生成 synthetic SQLite fixture：基期 Orders=100、AOV=100、GMV=10000；本期 Orders=98、AOV=80、GMV=7840。",
+    "required_semantic_fields": [
+      "order_id",
+      "customer_id",
+      "paid_at",
+      "merchandise_amount",
+      "quantity"
+    ],
+    "construction_requirements": [
+      "基期有效订单数=100",
+      "本期有效订单数=98",
+      "基期gross_gmv=10000",
+      "本期gross_gmv=7840",
+      "后续AOV拆解所需quantity与成交单价字段可用"
+    ]
+  },
+  "evaluation_focus": [
+    "GMV第一层拆解",
+    "AOV分支选择",
+    "不能误走Orders主分支"
+  ]
+}

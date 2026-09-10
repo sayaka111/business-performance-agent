@@ -1,0 +1,126 @@
+{
+  "version": "holdout-1.0",
+  "case_count": 20,
+  "cases": [
+    {
+      "case_id": "holdout_aov_price_down_units_offset_001",
+      "category": "decomposition",
+      "case_file": "evals/cases/holdout/holdout_aov_price_down_units_offset_001.json",
+      "expected_file": "evals/expected/holdout/holdout_aov_price_down_units_offset_001.expected.json"
+    },
+    {
+      "case_id": "holdout_aov_units_down_price_offset_001",
+      "category": "decomposition",
+      "case_file": "evals/cases/holdout/holdout_aov_units_down_price_offset_001.json",
+      "expected_file": "evals/expected/holdout/holdout_aov_units_down_price_offset_001.expected.json"
+    },
+    {
+      "case_id": "holdout_category_multi_driver_001",
+      "category": "dimension",
+      "case_file": "evals/cases/holdout/holdout_category_multi_driver_001.json",
+      "expected_file": "evals/expected/holdout/holdout_category_multi_driver_001.expected.json"
+    },
+    {
+      "case_id": "holdout_channel_multi_driver_001",
+      "category": "dimension",
+      "case_file": "evals/cases/holdout/holdout_channel_multi_driver_001.json",
+      "expected_file": "evals/expected/holdout/holdout_channel_multi_driver_001.expected.json"
+    },
+    {
+      "case_id": "holdout_channel_unknown_share_high_001",
+      "category": "data_quality_dimension",
+      "case_file": "evals/cases/holdout/holdout_channel_unknown_share_high_001.json",
+      "expected_file": "evals/expected/holdout/holdout_channel_unknown_share_high_001.expected.json"
+    },
+    {
+      "case_id": "holdout_dimension_zero_baseline_001",
+      "category": "numeric_boundary",
+      "case_file": "evals/cases/holdout/holdout_dimension_zero_baseline_001.json",
+      "expected_file": "evals/expected/holdout/holdout_dimension_zero_baseline_001.expected.json"
+    },
+    {
+      "case_id": "holdout_evidence_boundary_channel_002",
+      "category": "evidence_boundary",
+      "case_file": "evals/cases/holdout/holdout_evidence_boundary_channel_002.json",
+      "expected_file": "evals/expected/holdout/holdout_evidence_boundary_channel_002.expected.json"
+    },
+    {
+      "case_id": "holdout_explicit_category_intent_001",
+      "category": "intent_dimension",
+      "case_file": "evals/cases/holdout/holdout_explicit_category_intent_001.json",
+      "expected_file": "evals/expected/holdout/holdout_explicit_category_intent_001.expected.json"
+    },
+    {
+      "case_id": "holdout_explicit_channel_intent_001",
+      "category": "intent_dimension",
+      "case_file": "evals/cases/holdout/holdout_explicit_channel_intent_001.json",
+      "expected_file": "evals/expected/holdout/holdout_explicit_channel_intent_001.expected.json"
+    },
+    {
+      "case_id": "holdout_explicit_orders_category_illegal_001",
+      "category": "constraint",
+      "case_file": "evals/cases/holdout/holdout_explicit_orders_category_illegal_001.json",
+      "expected_file": "evals/expected/holdout/holdout_explicit_orders_category_illegal_001.expected.json"
+    },
+    {
+      "case_id": "holdout_gmv_aov_down_orders_offset_001",
+      "category": "decomposition",
+      "case_file": "evals/cases/holdout/holdout_gmv_aov_down_orders_offset_001.json",
+      "expected_file": "evals/expected/holdout/holdout_gmv_aov_down_orders_offset_001.expected.json"
+    },
+    {
+      "case_id": "holdout_gmv_mixed_aov_primary_001",
+      "category": "decomposition",
+      "case_file": "evals/cases/holdout/holdout_gmv_mixed_aov_primary_001.json",
+      "expected_file": "evals/expected/holdout/holdout_gmv_mixed_aov_primary_001.expected.json"
+    },
+    {
+      "case_id": "holdout_gmv_mixed_orders_primary_001",
+      "category": "decomposition",
+      "case_file": "evals/cases/holdout/holdout_gmv_mixed_orders_primary_001.json",
+      "expected_file": "evals/expected/holdout/holdout_gmv_mixed_orders_primary_001.expected.json"
+    },
+    {
+      "case_id": "holdout_gmv_orders_down_aov_offset_001",
+      "category": "decomposition",
+      "case_file": "evals/cases/holdout/holdout_gmv_orders_down_aov_offset_001.json",
+      "expected_file": "evals/expected/holdout/holdout_gmv_orders_down_aov_offset_001.expected.json"
+    },
+    {
+      "case_id": "holdout_no_anomaly_001",
+      "category": "stop",
+      "case_file": "evals/cases/holdout/holdout_no_anomaly_001.json",
+      "expected_file": "evals/expected/holdout/holdout_no_anomaly_001.expected.json"
+    },
+    {
+      "case_id": "holdout_orders_buyers_down_frequency_offset_001",
+      "category": "decomposition",
+      "case_file": "evals/cases/holdout/holdout_orders_buyers_down_frequency_offset_001.json",
+      "expected_file": "evals/expected/holdout/holdout_orders_buyers_down_frequency_offset_001.expected.json"
+    },
+    {
+      "case_id": "holdout_orders_frequency_down_buyers_offset_001",
+      "category": "decomposition",
+      "case_file": "evals/cases/holdout/holdout_orders_frequency_down_buyers_offset_001.json",
+      "expected_file": "evals/expected/holdout/holdout_orders_frequency_down_buyers_offset_001.expected.json"
+    },
+    {
+      "case_id": "holdout_region_gmv_drilldown_001",
+      "category": "dimension",
+      "case_file": "evals/cases/holdout/holdout_region_gmv_drilldown_001.json",
+      "expected_file": "evals/expected/holdout/holdout_region_gmv_drilldown_001.expected.json"
+    },
+    {
+      "case_id": "holdout_requested_dimension_unavailable_001",
+      "category": "data_quality_dimension",
+      "case_file": "evals/cases/holdout/holdout_requested_dimension_unavailable_001.json",
+      "expected_file": "evals/expected/holdout/holdout_requested_dimension_unavailable_001.expected.json"
+    },
+    {
+      "case_id": "holdout_small_decline_below_threshold_001",
+      "category": "stop",
+      "case_file": "evals/cases/holdout/holdout_small_decline_below_threshold_001.json",
+      "expected_file": "evals/expected/holdout/holdout_small_decline_below_threshold_001.expected.json"
+    }
+  ]
+}

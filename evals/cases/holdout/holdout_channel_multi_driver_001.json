@@ -1,0 +1,32 @@
+{
+  "case_id": "holdout_channel_multi_driver_001",
+  "category": "dimension",
+  "title": "多个渠道同时变化并存在对冲",
+  "user_query": "GMV掉在哪些渠道？按影响大小排一下。",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "Channel GMV: baseline Paid Search=5000, Organic=4000, Direct=3000, Affiliate=2000；current 3500, 3200, 3400, 1400。总变化=-2500。",
+    "required_semantic_fields": [
+      "order_id",
+      "paid_at",
+      "merchandise_amount",
+      "channel"
+    ],
+    "construction_requirements": [
+      "channel单触点互斥",
+      "Paid Search effect=-1500",
+      "Organic=-800",
+      "Direct=+400",
+      "Affiliate=-600",
+      "总变化=-2500"
+    ]
+  },
+  "evaluation_focus": [
+    "dimension contribution ranking",
+    "offsetting segment",
+    "closure"
+  ]
+}

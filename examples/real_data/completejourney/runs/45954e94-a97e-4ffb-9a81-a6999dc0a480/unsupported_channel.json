@@ -1,0 +1,89 @@
+{
+  "scenario": "unsupported_channel",
+  "user_query": "按渠道分析GMV。当前周期2017-12-01至2017-12-31，基期2017-01-01至2017-01-31。",
+  "execution_mode": {
+    "llm": "mock",
+    "data_origin": "public_historical",
+    "dataset_id": "completejourney_v1",
+    "production_database": false
+  },
+  "capability_contract": "data/contracts/completejourney.json",
+  "parsed_input": {
+    "metric_id": "gross_gmv",
+    "current_period": {
+      "start": "2017-12-01",
+      "end": "2017-12-31"
+    },
+    "baseline_period": {
+      "start": "2017-01-01",
+      "end": "2017-01-31"
+    },
+    "filters": {},
+    "context": {
+      "preferred_dimension": "channel"
+    }
+  },
+  "run_id": "bce0b813-fb05-4b5a-a2c8-9fe9120322da",
+  "result": {
+    "workflow_id": "gmv_diagnosis",
+    "workflow_version": "1.0",
+    "workflow_status": "blocked",
+    "target": {
+      "metric_id": "gross_gmv",
+      "current_value": null,
+      "baseline_value": null,
+      "absolute_change": null,
+      "relative_change": null
+    },
+    "primary_driver": {
+      "metric_id": null,
+      "effect": null,
+      "aligned_share": null
+    },
+    "secondary_drivers": [],
+    "diagnostic_path": [],
+    "key_findings": [],
+    "evidence": [],
+    "warnings": [
+      "unknown_channel",
+      "dataset_limitation"
+    ],
+    "limitations": [
+      "Required semantic mappings missing: channel",
+      "channel unknown/unattributed share=1; values retained. No frozen high-share cutoff exists.",
+      "Complete Journey public historical receipts; not a production real-time system.",
+      "gross_gmv is retailer-received merchandise sales value, not customer out-of-pocket payment or shelf/list price.",
+      "Transaction validity is approved at source-contract level; no physical payment_success column.",
+      "household_id represents households, not individual customers; buyer/frequency counts use household entities.",
+      "Refund lifecycle is unobserved; net_gmv and refund analysis unavailable.",
+      "Quantity units/scales unresolved; units, UPO and realized unit price unavailable.",
+      "channel, region, campaign and lifecycle customer_type unavailable; no proxy dimensions.",
+      "Dataset first purchase is left-censored and not lifecycle first purchase.",
+      "Calendar dates retain source clock with unknown timezone; 2018-01 is incomplete.",
+      "Analysis stopped at terminate_blocked: data_quality_boundary."
+    ],
+    "failed_branches": [
+      {
+        "node": "terminate_blocked",
+        "metric_id": "gross_gmv",
+        "filters": {},
+        "reason": "data_quality_boundary"
+      }
+    ],
+    "stop_reason": "data_quality_boundary"
+  },
+  "trace_path": "C:\\Users\\ASUS\\Desktop\\经营分析agent\\examples\\real_data\\completejourney\\runs\\45954e94-a97e-4ffb-9a81-a6999dc0a480\\traces\\bce0b813-fb05-4b5a-a2c8-9fe9120322da.json",
+  "report": "# GMV 诊断报告\n\n- GMV 诊断状态：blocked\n- 停止原因：data_quality_boundary\n\n## 警告\n\n- unknown_channel\n- dataset_limitation\n\n## 限制\n\n- Required semantic mappings missing: channel\n- channel unknown/unattributed share=1; values retained. No frozen high-share cutoff exists.\n- Complete Journey public historical receipts; not a production real-time system.\n- gross_gmv is retailer-received merchandise sales value, not customer out-of-pocket payment or shelf/list price.\n- Transaction validity is approved at source-contract level; no physical payment_success column.\n- household_id represents households, not individual customers; buyer/frequency counts use household entities.\n- Refund lifecycle is unobserved; net_gmv and refund analysis unavailable.\n- Quantity units/scales unresolved; units, UPO and realized unit price unavailable.\n- channel, region, campaign and lifecycle customer_type unavailable; no proxy dimensions.\n- Dataset first purchase is left-censored and not lifecycle first purchase.\n- Calendar dates retain source clock with unknown timezone; 2018-01 is incomplete.\n- Analysis stopped at terminate_blocked: data_quality_boundary.",
+  "report_metadata": {
+    "report_renderer": "deterministic_fallback",
+    "provider_error_code": null,
+    "retry_count": 0
+  },
+  "provider_events": [],
+  "checks": {
+    "no_unsupported_core_claim": true,
+    "root_decomposition": false,
+    "category_path": false,
+    "unsupported_stops": true
+  }
+}

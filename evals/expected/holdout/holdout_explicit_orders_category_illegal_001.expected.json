@@ -1,0 +1,17 @@
+{
+  "case_id": "holdout_explicit_orders_category_illegal_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "first_level_primary_driver": "orders",
+    "required_behaviors": [
+      "block strict orders x category contribution",
+      "may provide descriptive comparison only"
+    ],
+    "hard_constraint_expected": true
+  },
+  "forbidden": {
+    "claims": [
+      "各品类对订单下降贡献百分比"
+    ]
+  }
+}

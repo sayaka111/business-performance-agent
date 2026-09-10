@@ -1,0 +1,29 @@
+{
+  "case_id": "holdout_requested_dimension_unavailable_001",
+  "category": "data_quality_dimension",
+  "title": "用户请求Channel但数据源不提供Channel",
+  "user_query": "按渠道看看GMV为什么跌。",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "构造可完成GMV总体分析的数据，但fixture故意缺失channel语义字段且没有可安全映射替代列。",
+    "required_semantic_fields": [
+      "order_id",
+      "customer_id",
+      "paid_at",
+      "merchandise_amount",
+      "quantity"
+    ],
+    "construction_requirements": [
+      "不得提供channel候选列",
+      "总体GMV分析仍可运行"
+    ]
+  },
+  "evaluation_focus": [
+    "requested dimension unavailable",
+    "no schema guessing",
+    "partial completion or limitation"
+  ]
+}

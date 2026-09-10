@@ -1,0 +1,79 @@
+{
+  "version": "1.0",
+  "description": "Business Performance Agent Eval golden set v1. Cases and expected ground truth are intentionally stored separately.",
+  "case_count": 12,
+  "cases": [
+    {
+      "case_id": "gmv_orders_driver_001",
+      "category": "decomposition",
+      "case_file": "evals/cases/decomposition/gmv_orders_driver_001.json",
+      "expected_file": "evals/expected/decomposition/gmv_orders_driver_001.expected.json"
+    },
+    {
+      "case_id": "gmv_aov_driver_001",
+      "category": "decomposition",
+      "case_file": "evals/cases/decomposition/gmv_aov_driver_001.json",
+      "expected_file": "evals/expected/decomposition/gmv_aov_driver_001.expected.json"
+    },
+    {
+      "case_id": "orders_buyers_driver_001",
+      "category": "decomposition",
+      "case_file": "evals/cases/decomposition/orders_buyers_driver_001.json",
+      "expected_file": "evals/expected/decomposition/orders_buyers_driver_001.expected.json"
+    },
+    {
+      "case_id": "orders_frequency_driver_001",
+      "category": "decomposition",
+      "case_file": "evals/cases/decomposition/orders_frequency_driver_001.json",
+      "expected_file": "evals/expected/decomposition/orders_frequency_driver_001.expected.json"
+    },
+    {
+      "case_id": "aov_units_driver_001",
+      "category": "decomposition",
+      "case_file": "evals/cases/decomposition/aov_units_driver_001.json",
+      "expected_file": "evals/expected/decomposition/aov_units_driver_001.expected.json"
+    },
+    {
+      "case_id": "aov_price_driver_001",
+      "category": "decomposition",
+      "case_file": "evals/cases/decomposition/aov_price_driver_001.json",
+      "expected_file": "evals/expected/decomposition/aov_price_driver_001.expected.json"
+    },
+    {
+      "case_id": "channel_gmv_drilldown_001",
+      "category": "dimension",
+      "case_file": "evals/cases/dimension/channel_gmv_drilldown_001.json",
+      "expected_file": "evals/expected/dimension/channel_gmv_drilldown_001.expected.json"
+    },
+    {
+      "case_id": "category_gmv_contribution_001",
+      "category": "dimension",
+      "case_file": "evals/cases/dimension/category_gmv_contribution_001.json",
+      "expected_file": "evals/expected/dimension/category_gmv_contribution_001.expected.json"
+    },
+    {
+      "case_id": "category_orders_illegal_contribution_001",
+      "category": "constraint",
+      "case_file": "evals/cases/constraint/category_orders_illegal_contribution_001.json",
+      "expected_file": "evals/expected/constraint/category_orders_illegal_contribution_001.expected.json"
+    },
+    {
+      "case_id": "zero_baseline_001",
+      "category": "numeric_boundary",
+      "case_file": "evals/cases/numeric_boundary/zero_baseline_001.json",
+      "expected_file": "evals/expected/numeric_boundary/zero_baseline_001.expected.json"
+    },
+    {
+      "case_id": "missing_paid_at_001",
+      "category": "data_quality",
+      "case_file": "evals/cases/data_quality/missing_paid_at_001.json",
+      "expected_file": "evals/expected/data_quality/missing_paid_at_001.expected.json"
+    },
+    {
+      "case_id": "evidence_boundary_paid_search_001",
+      "category": "evidence_boundary",
+      "case_file": "evals/cases/evidence_boundary/evidence_boundary_paid_search_001.json",
+      "expected_file": "evals/expected/evidence_boundary/evidence_boundary_paid_search_001.expected.json"
+    }
+  ]
+}

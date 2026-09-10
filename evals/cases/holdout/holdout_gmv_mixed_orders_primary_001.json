@@ -1,0 +1,32 @@
+{
+  "case_id": "holdout_gmv_mixed_orders_primary_001",
+  "category": "decomposition",
+  "title": "GMV双因素下降，Orders略高于AOV",
+  "user_query": "8月GMV掉了不少，主要是订单还是客单价？",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "构造GMV由Orders和AOV共同下降驱动，Orders贡献略高。基期 Orders=200, AOV=80, GMV=16000；本期 Orders=170, AOV=70, GMV=11900。",
+    "required_semantic_fields": [
+      "order_id",
+      "customer_id",
+      "paid_at",
+      "merchandise_amount",
+      "quantity"
+    ],
+    "construction_requirements": [
+      "基期有效订单=200",
+      "本期有效订单=170",
+      "基期GMV=16000",
+      "本期GMV=11900",
+      "fixture必须让Orders effect绝对值略高于AOV effect"
+    ]
+  },
+  "evaluation_focus": [
+    "close-call first-level driver",
+    "symmetric multiplicative decomposition",
+    "avoid choosing by raw percentage only"
+  ]
+}

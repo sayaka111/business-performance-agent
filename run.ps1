@@ -1,4 +1,4 @@
-param([switch]$Test, [switch]$Json, [switch]$MockLLM, [string]$InputFile, [string]$Question)
+param([switch]$Test, [switch]$Json, [switch]$MockLLM, [string]$InputFile, [string]$Question, [switch]$Gemini, [string]$Database, [string]$Mapping, [string]$Model)
 $ErrorActionPreference = 'Stop'
 $env:PYTHONUTF8 = '1'
 $taskPython = $null
@@ -20,6 +20,10 @@ try {
     if ($Test) { & $taskPython -m unittest discover -s tests -v }
     else {
         $taskArgs = @('-m', 'business_performance_agent')
+        if ($Gemini) { $taskArgs += '--gemini' }
+        if ($Database) { $taskArgs += @('--database', $Database) }
+        if ($Mapping) { $taskArgs += @('--mapping', $Mapping) }
+        if ($Model) { $taskArgs += @('--model', $Model) }
         if ($Json) { $taskArgs += '--json' }
         if ($MockLLM) { $taskArgs += '--mock-llm' }
         if ($InputFile) { $taskArgs += @('--input', $InputFile) }

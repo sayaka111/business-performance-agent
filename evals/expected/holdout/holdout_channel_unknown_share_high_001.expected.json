@@ -1,0 +1,16 @@
+{
+  "case_id": "holdout_channel_unknown_share_high_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "selected_dimension": "channel",
+    "required_behaviors": [
+      "preserve unknown segment",
+      "emit warning_or_limitation",
+      "avoid overconfident full attribution"
+    ],
+    "strict_contribution_allowed": true
+  },
+  "forbidden": {
+    "claims": []
+  }
+}

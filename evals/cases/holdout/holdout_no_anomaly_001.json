@@ -1,0 +1,26 @@
+{
+  "case_id": "holdout_no_anomaly_001",
+  "category": "stop",
+  "title": "核心GMV变化不足异常阈值",
+  "user_query": "看看8月经营有没有明显异常。",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "基期GMV=10000，本期GMV=10400，相对变化+4%，低于当前warning阈值。",
+    "required_semantic_fields": [
+      "order_id",
+      "paid_at",
+      "merchandise_amount"
+    ],
+    "construction_requirements": [
+      "GMV相对变化约+4%",
+      "不制造其它显著异常"
+    ]
+  },
+  "evaluation_focus": [
+    "anomaly threshold",
+    "early stop"
+  ]
+}

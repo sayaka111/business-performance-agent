@@ -1,0 +1,88 @@
+{
+  "dataset_id": "completejourney_v1",
+  "table": "order_items",
+  "data_origin": "public_historical",
+  "semantic_mapping": {
+    "order_item_id": "order_item_id",
+    "order_id": "basket_id",
+    "paid_at": "paid_date",
+    "customer_id": "household_id",
+    "product": "product_id",
+    "category": "category",
+    "merchandise_amount": "sales_value",
+    "valid_order_item_merchandise_amount": "sales_value"
+  },
+  "capabilities": {
+    "sessions": false
+  },
+  "complete_periods": [
+    {
+      "start": "2017-01-01",
+      "end": "2017-01-31"
+    },
+    {
+      "start": "2017-02-01",
+      "end": "2017-02-28"
+    },
+    {
+      "start": "2017-03-01",
+      "end": "2017-03-31"
+    },
+    {
+      "start": "2017-04-01",
+      "end": "2017-04-30"
+    },
+    {
+      "start": "2017-05-01",
+      "end": "2017-05-31"
+    },
+    {
+      "start": "2017-06-01",
+      "end": "2017-06-30"
+    },
+    {
+      "start": "2017-07-01",
+      "end": "2017-07-31"
+    },
+    {
+      "start": "2017-08-01",
+      "end": "2017-08-31"
+    },
+    {
+      "start": "2017-09-01",
+      "end": "2017-09-30"
+    },
+    {
+      "start": "2017-10-01",
+      "end": "2017-10-31"
+    },
+    {
+      "start": "2017-11-01",
+      "end": "2017-11-30"
+    },
+    {
+      "start": "2017-12-01",
+      "end": "2017-12-31"
+    }
+  ],
+  "source_contract": {
+    "transaction_validity": "completed_purchase_receipts",
+    "approval_reference": "User: Resume Phase 3 — Resolve Gate A; dataset-specific semantic approval",
+    "contract_id": "completejourney_v1",
+    "limitations": [
+      "Complete Journey public historical receipts; not a production real-time system.",
+      "gross_gmv is retailer-received merchandise sales value, not customer out-of-pocket payment or shelf/list price.",
+      "Transaction validity is approved at source-contract level; no physical payment_success column.",
+      "household_id represents households, not individual customers; buyer/frequency counts use household entities.",
+      "Refund lifecycle is unobserved; net_gmv and refund analysis unavailable.",
+      "Quantity units/scales unresolved; units, UPO and realized unit price unavailable.",
+      "channel, region, campaign and lifecycle customer_type unavailable; no proxy dimensions.",
+      "Dataset first purchase is left-censored and not lifecycle first purchase.",
+      "Calendar dates retain source clock with unknown timezone; 2018-01 is incomplete."
+    ]
+  },
+  "read_limits": {
+    "max_rows": 1500000,
+    "query_timeout": 60
+  }
+}

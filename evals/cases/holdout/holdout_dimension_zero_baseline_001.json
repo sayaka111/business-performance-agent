@@ -1,0 +1,28 @@
+{
+  "case_id": "holdout_dimension_zero_baseline_001",
+  "category": "numeric_boundary",
+  "title": "新渠道基期为0，本期有GMV",
+  "user_query": "这个新渠道本月贡献怎么样？",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "New Partner渠道基期GMV=0，本期=1500；其它渠道共同变化使总GMV可比较。",
+    "required_semantic_fields": [
+      "order_id",
+      "paid_at",
+      "merchandise_amount",
+      "channel"
+    ],
+    "construction_requirements": [
+      "New Partner baseline=0",
+      "current=1500",
+      "relative change for segment undefined"
+    ]
+  },
+  "evaluation_focus": [
+    "dimension zero denominator",
+    "absolute contribution still valid"
+  ]
+}

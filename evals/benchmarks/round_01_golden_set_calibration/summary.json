@@ -1,0 +1,254 @@
+{
+  "run_id": "8b2add8a-dfde-45ba-af47-f752ecae70fe",
+  "mode": "offline",
+  "live_api_used": false,
+  "expected_leakage": "PASS",
+  "leakage_audit": [
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/gmv_orders_driver_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/gmv_aov_driver_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/orders_buyers_driver_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/aov_units_driver_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/aov_price_driver_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/channel_gmv_drilldown_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/category_gmv_contribution_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/category_orders_illegal_contribution_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/zero_baseline_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/missing_paid_at_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/evidence_boundary_paid_search_001.json"
+    }
+  ],
+  "total_cases": 12,
+  "executed_cases": 11,
+  "passed_cases": 4,
+  "failed_cases": 3,
+  "review_required_cases": 5,
+  "framework_error_cases": 0,
+  "hard_constraint_violations": 0,
+  "metrics": {
+    "Calculation Accuracy": {
+      "numerator": 4,
+      "denominator": 6,
+      "value": 0.6666666666666666
+    },
+    "Workflow Path Accuracy": {
+      "numerator": 3,
+      "denominator": 6,
+      "value": 0.5
+    },
+    "Primary Driver Accuracy": {
+      "numerator": 2,
+      "denominator": 5,
+      "value": 0.4
+    },
+    "Correct Stop Rate": {
+      "numerator": 7,
+      "denominator": 7,
+      "value": 1.0
+    },
+    "Routing Validity": {
+      "numerator": 4,
+      "denominator": 4,
+      "value": 1.0
+    },
+    "Evidence Coverage": {
+      "numerator": 18,
+      "denominator": 18,
+      "value": 1.0
+    },
+    "Unsupported Claim Rate": {
+      "numerator": 0,
+      "denominator": 18,
+      "value": 0.0
+    },
+    "Required Claim Coverage": {
+      "numerator": 2,
+      "denominator": 4,
+      "value": 0.5
+    },
+    "Overall Case Pass Rate": {
+      "numerator": 4,
+      "denominator": 12,
+      "value": 0.3333333333333333
+    }
+  },
+  "status": "PARTIAL",
+  "cases": [
+    {
+      "case_id": "gmv_orders_driver_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "gmv_aov_driver_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "orders_buyers_driver_001",
+      "execution_status": "completed",
+      "overall_pass": false,
+      "failures": [
+        "CalculationGrader: baseline_orders: expected 120, observed '<not observed>'",
+        "CalculationGrader: current_orders: expected 92, observed '<not observed>'",
+        "CalculationGrader: delta_orders: expected -28, observed '<not observed>'",
+        "CalculationGrader: buyers_effect: expected -23.5, observed '<not observed>'",
+        "CalculationGrader: orders_per_buyer_effect: expected -4.5, observed '<not observed>'",
+        "CalculationGrader: No contribution observed for orders / relationship; required closure cannot be assessed",
+        "WorkflowPathGrader: relationship_orders_buyers_frequency: expected True, observed False",
+        "WorkflowPathGrader: target_metric: expected 'orders', observed 'gross_gmv'",
+        "PrimaryDriverGrader: primary_driver: expected 'buyers', observed None"
+      ],
+      "review_required": [
+        "Frozen gmv_diagnosis accepts ['gross_gmv'], but Case/Expected requests orders; no substitute workflow or retargeting was used."
+      ]
+    },
+    {
+      "case_id": "orders_frequency_driver_001",
+      "execution_status": "review_required",
+      "overall_pass": false,
+      "failures": [],
+      "review_required": [
+        "Impossible active-buyer constraint: Orders=90, distinct Buyers=100; every buyer needs at least one valid order with one customer identity."
+      ]
+    },
+    {
+      "case_id": "aov_units_driver_001",
+      "execution_status": "completed",
+      "overall_pass": false,
+      "failures": [
+        "CalculationGrader: baseline_aov: expected 100, observed '<not observed>'",
+        "CalculationGrader: current_aov: expected 75, observed '<not observed>'",
+        "CalculationGrader: delta_aov: expected -25, observed '<not observed>'",
+        "CalculationGrader: units_effect: expected -25, observed '<not observed>'",
+        "CalculationGrader: price_effect: expected 0, observed '<not observed>'",
+        "CalculationGrader: No contribution observed for aov / relationship; required closure cannot be assessed",
+        "WorkflowPathGrader: relationship_aov_units_price: expected True, observed False",
+        "WorkflowPathGrader: target_metric: expected 'aov', observed 'gross_gmv'",
+        "PrimaryDriverGrader: primary_driver: expected 'units_per_order', observed None"
+      ],
+      "review_required": [
+        "Frozen gmv_diagnosis accepts ['gross_gmv'], but Case/Expected requests aov; no substitute workflow or retargeting was used."
+      ]
+    },
+    {
+      "case_id": "aov_price_driver_001",
+      "execution_status": "completed",
+      "overall_pass": false,
+      "failures": [
+        "CalculationGrader: baseline_aov: expected 100, observed '<not observed>'",
+        "CalculationGrader: current_aov: expected 80, observed '<not observed>'",
+        "CalculationGrader: delta_aov: expected -20, observed '<not observed>'",
+        "CalculationGrader: units_effect: expected 0, observed '<not observed>'",
+        "CalculationGrader: price_effect: expected -20, observed '<not observed>'",
+        "CalculationGrader: No contribution observed for aov / relationship; required closure cannot be assessed",
+        "WorkflowPathGrader: relationship_aov_units_price: expected True, observed False",
+        "WorkflowPathGrader: target_metric: expected 'aov', observed 'gross_gmv'",
+        "PrimaryDriverGrader: primary_driver: expected 'average_realized_unit_price', observed None"
+      ],
+      "review_required": [
+        "Frozen gmv_diagnosis accepts ['gross_gmv'], but Case/Expected requests aov; no substitute workflow or retargeting was used."
+      ]
+    },
+    {
+      "case_id": "channel_gmv_drilldown_001",
+      "execution_status": "completed",
+      "overall_pass": false,
+      "failures": [
+        "CalculationGrader: paid_search_effect: expected -2000, observed '<not observed>'",
+        "CalculationGrader: organic_effect: expected 0, observed '<not observed>'",
+        "CalculationGrader: direct_effect: expected 0, observed '<not observed>'",
+        "CalculationGrader: No contribution observed for gross_gmv / channel; required closure cannot be assessed",
+        "WorkflowPathGrader: Required gross_gmv × channel analytical path was not executed",
+        "PrimaryDriverGrader: top_dimension_driver: expected 'paid_search', observed '<not observed>'"
+      ],
+      "review_required": []
+    },
+    {
+      "case_id": "category_gmv_contribution_001",
+      "execution_status": "completed",
+      "overall_pass": false,
+      "failures": [
+        "CalculationGrader: category_a_effect: expected -2000, observed '<not observed>'",
+        "CalculationGrader: category_b_effect: expected 0, observed '<not observed>'",
+        "CalculationGrader: No contribution observed for gross_gmv / category; required closure cannot be assessed",
+        "WorkflowPathGrader: Required gross_gmv × category analytical path was not executed",
+        "PrimaryDriverGrader: top_dimension_driver: expected 'category_a', observed '<not observed>'"
+      ],
+      "review_required": []
+    },
+    {
+      "case_id": "category_orders_illegal_contribution_001",
+      "execution_status": "completed",
+      "overall_pass": false,
+      "failures": [
+        "WorkflowPathGrader: target_metric: expected 'orders', observed 'gross_gmv'",
+        "WorkflowPathGrader: Required orders × category analytical path was not executed"
+      ],
+      "review_required": [
+        "Frozen gmv_diagnosis accepts ['gross_gmv'], but Case/Expected requests orders; no substitute workflow or retargeting was used."
+      ]
+    },
+    {
+      "case_id": "zero_baseline_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "missing_paid_at_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "evidence_boundary_paid_search_001",
+      "execution_status": "completed",
+      "overall_pass": false,
+      "failures": [
+        "WorkflowPathGrader: Required orders × channel analytical path was not executed",
+        "PrimaryDriverGrader: top_dimension_driver: expected 'paid_search', observed '<not observed>'",
+        "EvidenceGrader: Required claim not communicated: Orders下降主要集中在Paid Search",
+        "EvidenceGrader: Required claim not communicated: 现有数据不足以判断Paid Search下降的进一步外部原因"
+      ],
+      "review_required": []
+    }
+  ]
+}

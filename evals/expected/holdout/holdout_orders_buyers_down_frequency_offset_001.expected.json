@@ -1,0 +1,18 @@
+{
+  "case_id": "holdout_orders_buyers_down_frequency_offset_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "required_relationships": [
+      "gross_gmv_orders_aov",
+      "orders_buyers_frequency"
+    ],
+    "first_level_primary_driver": "orders",
+    "nested_primary_driver": "buyers",
+    "required_behaviors": [
+      "identify orders_per_buyer as offsetting nested driver"
+    ]
+  },
+  "forbidden": {
+    "claims": []
+  }
+}

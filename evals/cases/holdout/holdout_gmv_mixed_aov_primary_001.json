@@ -1,0 +1,30 @@
+{
+  "case_id": "holdout_gmv_mixed_aov_primary_001",
+  "category": "decomposition",
+  "title": "GMV双因素下降，AOV略高于Orders",
+  "user_query": "这个月GMV下滑，订单和客单价分别贡献多少？",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "基期 Orders=200, AOV=80, GMV=16000；本期 Orders=175, AOV=68, GMV=11900，使AOV贡献略高。",
+    "required_semantic_fields": [
+      "order_id",
+      "customer_id",
+      "paid_at",
+      "merchandise_amount",
+      "quantity"
+    ],
+    "construction_requirements": [
+      "基期订单=200",
+      "本期订单=175",
+      "基期GMV=16000",
+      "本期GMV=11900"
+    ]
+  },
+  "evaluation_focus": [
+    "close-call first-level driver",
+    "contribution closure"
+  ]
+}

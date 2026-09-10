@@ -1,0 +1,16 @@
+{
+  "case_id": "holdout_no_anomaly_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "anomaly": false,
+    "allowed_stop_reasons": [
+      "not_anomaly"
+    ],
+    "required_behaviors": [
+      "do not launch unnecessary deep drilldown"
+    ]
+  },
+  "forbidden": {
+    "claims": []
+  }
+}

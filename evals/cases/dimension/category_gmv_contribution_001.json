@@ -1,0 +1,29 @@
+{
+  "case_id": "category_gmv_contribution_001",
+  "category": "dimension",
+  "title": "Category对GMV贡献分析合法",
+  "user_query": "哪个品类对 GMV 下滑贡献最大？",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "构造Category A GMV 6000→4000、Category B 4000→4000，总GMV 10000→8000。",
+    "required_semantic_fields": [
+      "order_id",
+      "paid_at",
+      "merchandise_amount",
+      "category"
+    ],
+    "construction_requirements": [
+      "Category A基期GMV=6000、本期=4000",
+      "Category B两期GMV均=4000",
+      "GMV按category可加总闭合"
+    ]
+  },
+  "evaluation_focus": [
+    "Category × gross_gmv strict contribution允许",
+    "top driver识别",
+    "闭合"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "case_id": "holdout_small_decline_below_threshold_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "anomaly": false,
+    "allowed_stop_reasons": [
+      "not_anomaly"
+    ]
+  },
+  "forbidden": {
+    "claims": []
+  }
+}

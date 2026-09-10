@@ -1,0 +1,31 @@
+{
+  "dataset_id": "canonical_synthetic_v1",
+  "table": "order_items",
+  "data_origin": "synthetic",
+  "semantic_mapping": {
+    "order_id": "order_id",
+    "order_item_id": "order_item_id",
+    "customer_id": "customer_id",
+    "paid_at": "paid_at",
+    "payment_success": "payment_success",
+    "merchandise_amount": "merchandise_amount",
+    "valid_order_item_merchandise_amount": "merchandise_amount",
+    "quantity": "quantity",
+    "first_valid_paid_at": "first_valid_paid_at",
+    "original_order_paid_at": "paid_at",
+    "refund_status": "refund_status",
+    "refunded_merchandise_amount": "refunded_merchandise_amount",
+    "confirmed_refunded_merchandise_amount": "refunded_merchandise_amount",
+    "channel": "channel",
+    "campaign": "campaign",
+    "category": "category",
+    "product": "product",
+    "region": "region",
+    "order_delivery_region": "region"
+  },
+  "capabilities": {
+    "reliable_session_definition": false,
+    "reliable_order_session_linkage": false
+  },
+  "complete_periods": []
+}

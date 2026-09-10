@@ -1,0 +1,26 @@
+{
+  "case_id": "orders_buyers_driver_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "required_relationships": [
+      "gross_gmv_orders_aov",
+      "orders_buyers_frequency"
+    ],
+    "expected_values": {
+      "baseline_orders": 120,
+      "current_orders": 92,
+      "delta_orders": -28,
+      "buyers_effect": -23.5,
+      "orders_per_buyer_effect": -4.5
+    },
+    "closure_required": true,
+    "first_level_primary_driver": "orders",
+    "nested_primary_driver": "buyers",
+    "nested_metric": "orders",
+    "contribution_metric": "orders"
+  },
+  "forbidden": {
+    "relationships": [],
+    "claims": []
+  }
+}

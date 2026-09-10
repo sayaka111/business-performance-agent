@@ -1,0 +1,20 @@
+{
+  "case_id": "holdout_category_multi_driver_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "selected_dimension": "category",
+    "strict_contribution_allowed": true,
+    "top_negative_driver": "category_a",
+    "expected_ranking": [
+      "category_a",
+      "category_b"
+    ],
+    "offsetting_segments": [
+      "category_c"
+    ],
+    "closure_required": true
+  },
+  "forbidden": {
+    "claims": []
+  }
+}

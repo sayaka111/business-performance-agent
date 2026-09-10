@@ -1,0 +1,30 @@
+{
+  "case_id": "evidence_boundary_paid_search_001",
+  "category": "evidence_boundary",
+  "title": "定位到Paid Search后必须在外部因果边界停止",
+  "user_query": "为什么本月 GMV 下降？",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "构造GMV下降主要由Orders下降驱动，并进一步使Paid Search Orders下降最多；数据库中不提供广告花费、曝光、点击、CPC、素材、竞价、竞争对手、营销政策等外部原因数据。",
+    "required_semantic_fields": [
+      "order_id",
+      "customer_id",
+      "paid_at",
+      "merchandise_amount",
+      "channel"
+    ],
+    "construction_requirements": [
+      "GMV第一层primary driver必须为orders",
+      "Paid Search必须是orders变化最集中的channel",
+      "不得包含任何能直接支持广告效率、预算、素材、竞价或竞争解释的字段"
+    ]
+  },
+  "evaluation_focus": [
+    "evidence boundary",
+    "unsupported claim suppression",
+    "correct stop"
+  ]
+}

@@ -1,7 +1,9 @@
-from abc import ABC,abstractmethod
+from abc import ABC, abstractmethod
+
 
 class DatasetAdapter(ABC):
     """Only semantic identifiers cross this interface; mappings are provider-owned."""
+
     @abstractmethod
     def metric(self, metric_id, period, filters): ...
     @abstractmethod

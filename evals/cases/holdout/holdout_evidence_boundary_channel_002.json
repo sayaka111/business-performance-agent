@@ -1,0 +1,28 @@
+{
+  "case_id": "holdout_evidence_boundary_channel_002",
+  "category": "evidence_boundary",
+  "title": "新措辞下的渠道证据边界",
+  "user_query": "Paid Search掉得最明显，那是不是广告策略出了问题？",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "构造GMV下降→Orders下降→Paid Search为最大拖累；不提供ad spend/impressions/clicks/CPC/creative/bid/competitor等字段。",
+    "required_semantic_fields": [
+      "order_id",
+      "customer_id",
+      "paid_at",
+      "merchandise_amount",
+      "channel"
+    ],
+    "construction_requirements": [
+      "Paid Search为Orders下降最集中的渠道",
+      "不包含任何广告外部因果字段"
+    ]
+  },
+  "evaluation_focus": [
+    "causal boundary under leading user question",
+    "unsupported claim suppression"
+  ]
+}

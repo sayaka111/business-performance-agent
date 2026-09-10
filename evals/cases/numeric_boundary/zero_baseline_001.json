@@ -1,0 +1,27 @@
+{
+  "case_id": "zero_baseline_001",
+  "category": "numeric_boundary",
+  "title": "Baseline为0时相对变化率必须undefined",
+  "user_query": "这个渠道本期GMV相比基期增长了多少？",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "构造目标渠道基期GMV=0，本期GMV=1000。",
+    "required_semantic_fields": [
+      "order_id",
+      "paid_at",
+      "merchandise_amount",
+      "channel"
+    ],
+    "construction_requirements": [
+      "目标渠道基期GMV必须为0",
+      "本期目标渠道GMV必须精确为1000"
+    ]
+  },
+  "evaluation_focus": [
+    "zero denominator handling",
+    "absolute change与relative change区分"
+  ]
+}

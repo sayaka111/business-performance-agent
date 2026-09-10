@@ -1,0 +1,14 @@
+{
+  "case_id": "holdout_explicit_channel_intent_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "selected_dimension": "channel",
+    "required_behaviors": [
+      "execute gross_gmv x channel drilldown",
+      "preserve requested dimension scope"
+    ]
+  },
+  "forbidden": {
+    "claims": []
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "case_id": "holdout_explicit_channel_intent_001",
+  "category": "intent_dimension",
+  "title": "用户明确指定渠道维度",
+  "user_query": "别先给我讲太多，直接告诉我8月GMV主要被哪个渠道拖累。",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "构造GMV下降且Channel X为最大负贡献，AOV/Orders第一层仍可闭合。",
+    "required_semantic_fields": [
+      "order_id",
+      "customer_id",
+      "paid_at",
+      "merchandise_amount",
+      "quantity",
+      "channel"
+    ],
+    "construction_requirements": [
+      "Channel X负贡献最大",
+      "至少另一个渠道有小幅正贡献",
+      "总GMV闭合"
+    ]
+  },
+  "evaluation_focus": [
+    "explicit dimension intent",
+    "scope preservation"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "case_id": "holdout_orders_buyers_down_frequency_offset_001",
+  "category": "decomposition",
+  "title": "Buyers下降但购买频次上升对冲",
+  "user_query": "GMV下滑里，订单减少到底是人少了还是买得少了？",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "保持AOV稳定。基期 Buyers=120, Orders=180, OPB=1.5；本期 Buyers=80, Orders=136, OPB=1.7。",
+    "required_semantic_fields": [
+      "order_id",
+      "customer_id",
+      "paid_at",
+      "merchandise_amount",
+      "quantity"
+    ],
+    "construction_requirements": [
+      "AOV两期稳定",
+      "基期buyers=120且orders=180",
+      "本期buyers=80且orders=136",
+      "Orders >= Buyers"
+    ]
+  },
+  "evaluation_focus": [
+    "nested decomposition",
+    "offsetting nested driver"
+  ]
+}

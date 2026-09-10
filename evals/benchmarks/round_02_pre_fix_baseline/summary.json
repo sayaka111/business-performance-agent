@@ -1,0 +1,225 @@
+{
+  "run_id": "7bcf5d5d-a82b-4307-83b8-a9f8dbbf4f8d",
+  "mode": "offline",
+  "live_api_used": false,
+  "expected_leakage": "PASS",
+  "leakage_audit": [
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/gmv_orders_driver_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/gmv_aov_driver_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/orders_buyers_driver_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/orders_frequency_driver_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/aov_units_driver_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/aov_price_driver_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/channel_gmv_drilldown_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/category_gmv_contribution_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/category_orders_illegal_contribution_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/zero_baseline_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/missing_paid_at_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/evidence_boundary_paid_search_001.json"
+    }
+  ],
+  "total_cases": 12,
+  "executed_cases": 12,
+  "passed_cases": 9,
+  "failed_cases": 3,
+  "review_required_cases": 0,
+  "framework_error_cases": 0,
+  "hard_constraint_violations": 0,
+  "metrics": {
+    "Calculation Accuracy": {
+      "numerator": 9,
+      "denominator": 11,
+      "value": 0.8181818181818182
+    },
+    "Workflow Path Accuracy": {
+      "numerator": 8,
+      "denominator": 11,
+      "value": 0.7272727272727273
+    },
+    "Primary Driver Accuracy": {
+      "numerator": 7,
+      "denominator": 10,
+      "value": 0.7
+    },
+    "Correct Stop Rate": {
+      "numerator": 12,
+      "denominator": 12,
+      "value": 1.0
+    },
+    "First-Level Driver Accuracy": {
+      "numerator": 8,
+      "denominator": 8,
+      "value": 1.0
+    },
+    "Nested Driver Accuracy": {
+      "numerator": 4,
+      "denominator": 4,
+      "value": 1.0
+    },
+    "Routing Validity": {
+      "numerator": 9,
+      "denominator": 9,
+      "value": 1.0
+    },
+    "Evidence Coverage": {
+      "numerator": 34,
+      "denominator": 34,
+      "value": 1.0
+    },
+    "Unsupported Claim Rate": {
+      "numerator": 0,
+      "denominator": 34,
+      "value": 0.0
+    },
+    "Required Claim Coverage": {
+      "numerator": 2,
+      "denominator": 4,
+      "value": 0.5
+    },
+    "Overall Case Pass Rate": {
+      "numerator": 9,
+      "denominator": 12,
+      "value": 0.75
+    }
+  },
+  "status": "SUCCESS",
+  "cases": [
+    {
+      "case_id": "gmv_orders_driver_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "gmv_aov_driver_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "orders_buyers_driver_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "orders_frequency_driver_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "aov_units_driver_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "aov_price_driver_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "channel_gmv_drilldown_001",
+      "execution_status": "completed",
+      "overall_pass": false,
+      "failures": [
+        "CalculationGrader: paid_search_effect: expected -2000, observed '<not observed>'",
+        "CalculationGrader: organic_effect: expected 0, observed '<not observed>'",
+        "CalculationGrader: direct_effect: expected 0, observed '<not observed>'",
+        "CalculationGrader: No contribution observed for gross_gmv / channel; required closure cannot be assessed",
+        "WorkflowPathGrader: Required gross_gmv × channel analytical path was not executed",
+        "PrimaryDriverGrader: top_dimension_driver: expected 'paid_search', observed '<not observed>'"
+      ],
+      "review_required": []
+    },
+    {
+      "case_id": "category_gmv_contribution_001",
+      "execution_status": "completed",
+      "overall_pass": false,
+      "failures": [
+        "CalculationGrader: category_a_effect: expected -2000, observed '<not observed>'",
+        "CalculationGrader: category_b_effect: expected 0, observed '<not observed>'",
+        "CalculationGrader: No contribution observed for gross_gmv / category; required closure cannot be assessed",
+        "WorkflowPathGrader: Required gross_gmv × category analytical path was not executed",
+        "PrimaryDriverGrader: top_dimension_driver: expected 'category_a', observed '<not observed>'"
+      ],
+      "review_required": []
+    },
+    {
+      "case_id": "category_orders_illegal_contribution_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "zero_baseline_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "missing_paid_at_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "evidence_boundary_paid_search_001",
+      "execution_status": "completed",
+      "overall_pass": false,
+      "failures": [
+        "WorkflowPathGrader: Required orders × channel analytical path was not executed",
+        "PrimaryDriverGrader: top_dimension_driver: expected 'paid_search', observed '<not observed>'",
+        "EvidenceGrader: Required claim not communicated: Orders下降主要集中在Paid Search",
+        "EvidenceGrader: Required claim not communicated: 现有数据不足以判断Paid Search下降的进一步外部原因"
+      ],
+      "review_required": []
+    }
+  ]
+}

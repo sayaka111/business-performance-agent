@@ -1,0 +1,23 @@
+{
+  "case_id": "channel_gmv_drilldown_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "selected_dimension": "channel",
+    "strict_contribution_allowed": true,
+    "top_negative_driver": "paid_search",
+    "expected_values": {
+      "paid_search_effect": -2000,
+      "organic_effect": 0,
+      "direct_effect": 0,
+      "delta_gmv": -2000
+    },
+    "closure_required": true
+  },
+  "forbidden": {
+    "relationships": [],
+    "claims": [
+      "广告投放效率恶化",
+      "广告质量下降"
+    ]
+  }
+}

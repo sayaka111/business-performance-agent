@@ -1,91 +1,485 @@
-# Business Performance Agent — Codex operator guide
+# Business Performance Agent — Codex Operator Contract
 
-## Repository Purpose
+## 1. Repository Purpose
 
-This repository implements a specification-driven Business Performance Agent.
-当前核心 Workflow：`gmv_diagnosis`。Codex 是 Agent operator / development interface；经营分析由现有 Runtime 执行。
+This repository implements a specification-driven **Business Performance Agent**.
 
-## Source of Truth
+Current core workflow: `gmv_diagnosis`.
 
-此文件仅是操作入口，不是第二套业务 Specification。详细定义以以下冻结资产为准（统一保存在 specs/）：
+Codex is the repository operator / development interface. Business analysis is executed by the existing Runtime, not improvised by Codex.
 
-- [Product Scope](specs/product_scope.md)
-- [Knowledge](specs/knowledge/README.md)：同目录四个 JSON 定义指标、公式、关系、维度与业务规则。
-- [Skills](specs/skills/README.md)：同目录七个 Skill 规范。
-- [Workflow](specs/workflows/gmv_diagnosis/workflow.md)：同目录 `state_schema.json`、`routing_rules.json`、`policy.json`、`output_schema.json`。
-- [System Contract](specs/system_contract.md)
+---
 
-普通运行任务不得修改 Knowledge、指标定义/关系、Dimension/Business Rules、冻结 Workflow 或 Stop Policy。开发任务也只修改用户授权范围；发现真实规范冲突时列明冲突并暂停冲突部分，不自行覆盖业务定义。
+## 2. Source of Truth
 
-## When to Invoke the Agent
+This file is an operator contract, not a second business specification.
 
-用户要求经营分析、GMV diagnosis、“使用当前 Agent”、“运行一下 Agent”或“按已有 Workflow 分析”时：
+Frozen business semantics live under `specs/`:
 
-1. 优先调用现有 CLI；不自行取数、重算指标、设计路径或直接调用零散 Skill 代替 Workflow。
-2. 先区分示例运行和真实业务分析。可使用 Mock 或兼容 Olist 原始表结构的 SQLite；真实分析须指定数据文件，不用示例替代真实数据。
-3. 示例/演示任务可使用 `examples/gmv_input.json` 并明确说明 Mock 周期；用户指定的日期、Metric、Filters 不得静默替换。必需信息缺失且非示例运行时向用户说明缺什么。
-4. 将请求转成现有 JSON Input，用 `--input ... --json` 获取结果。不要依赖 Mock 自然语言解析理解复杂请求。
-5. 读取 `result`、`execution_mode`、`run_id`、`trace_path`，保留状态、警告、限制和停止原因。
+- `specs/product_scope.md`
+- `specs/knowledge/README.md`
+- `specs/knowledge/*.json`
+- `specs/skills/README.md`
+- `specs/workflows/gmv_diagnosis/workflow.md`
+- `specs/workflows/gmv_diagnosis/*.json`
+- `specs/system_contract.md`
 
-## When NOT to Invoke the Agent
+Repository behavior, CLI usage, data-source rules, and Eval conventions are documented in:
 
-修改代码、增加 Skill、调整 Workflow、接数据库、接真实 LLM、修改报告格式属于开发任务；架构问答按项目代码解释，不触发经营诊断。开发验证可以运行测试或示例，但不能把验证结果当作用户的真实经营分析。
+- `QUICKSTART.md`
+- `docs/CODEX_USAGE.md`
+- `docs/DATA_SOURCES.md`
+- `evals/README.md`
 
-## How to Run
+### Frozen-by-default rule
 
-在此 repository 根目录运行；需要 Python 3.11+。首次使用按 [QUICKSTART.md](QUICKSTART.md) 创建并激活 `.venv`，执行 `python -m pip install -e .`。基础离线运行无第三方依赖；Gemini 另需安装 `python -m pip install -e ".[gemini]"` 并设置进程环境变量 `GEMINI_API_KEY`。保留源码目录及冻结规范，当前交付方式为源码目录 + editable 安装。
+Unless the user explicitly authorizes a semantic change, do **not** modify:
+
+- Knowledge
+- metric definitions or relationships
+- dimensions or `contribution_support`
+- business rules
+- Skill mathematical semantics
+- frozen Workflow semantics
+- Stop Policy
+- Evidence Boundary
+
+If a task appears to require changing frozen semantics, identify the conflict and stop that part of the task instead of silently redefining the business model.
+
+---
+
+## 3. Default Codex Task Protocol
+
+For every development task:
+
+1. Inspect the relevant existing implementation first.
+2. Reuse the current abstraction and conventions.
+3. Make the **smallest compatible change**.
+4. Do not broaden scope beyond the user request.
+5. Do not create a parallel subsystem when an existing one can be extended.
+6. Run targeted tests for the changed area.
+7. Run regression tests when the change can affect shared behavior.
+8. Report what changed, what was tested, and any unresolved issue.
+9. Stop after the requested task. Do not continue into adjacent optimization unless explicitly asked.
+
+### Scope discipline
+
+Prefer:
+
+```text
+inspect relevant files
+→ implement minimal change
+→ test
+→ report
+```
+
+Avoid:
+
+```text
+re-architect unrelated modules
+→ add speculative abstractions
+→ add future features
+→ continue fixing beyond requested scope
+```
+
+---
+
+## 4. What Future Task Prompts May Omit
+
+Future prompts may assume this file is in force.
+
+They do **not** need to repeat permanent rules such as:
+
+- preserve frozen business semantics;
+- prefer minimal changes;
+- do not alter Eval data to improve scores;
+- do not leak Expected into Agent execution;
+- keep Provider failures separate from Agent failures;
+- do not expose API keys;
+- do not run paid/live APIs unless explicitly requested;
+- do not automatically add RAG / Reviewer / Multi-Agent;
+- run relevant tests;
+- stop after the requested task.
+
+A normal future prompt only needs:
+
+```text
+Objective
+Allowed scope
+Task-specific constraints
+Acceptance criteria
+Stop condition
+```
+
+---
+
+## 5. Running Business Analysis
+
+When the user asks to:
+
+- diagnose GMV;
+- use the current Agent;
+- run the existing Workflow;
+- perform business analysis through this repository;
+
+use the existing Runtime / CLI.
+
+Do not replace the Workflow with ad-hoc Codex analysis or direct calls to isolated Skills.
+
+### Runtime rules
+
+1. Distinguish demo / synthetic runs from real business analysis.
+2. Real analysis requires an explicit real/user-supplied data source and semantic mapping.
+3. Do not silently replace user periods, metrics, filters, or data with Mock fixtures.
+4. Convert supported requests into the existing Runtime input schema.
+5. Read and preserve:
+   - `result`
+   - `execution_mode`
+   - `run_id`
+   - `trace_path`
+   - warnings
+   - limitations
+   - workflow status
+   - stop reason
+
+Input schema and CLI details are authoritative in `docs/CODEX_USAGE.md`.
+
+### Basic commands
 
 ```text
 python -m business_performance_agent --help
 python -m business_performance_agent --input examples/gmv_input.json --json
 python -m business_performance_agent --input examples/gmv_input.json --mock-llm --json
 python -m unittest discover -s tests -v
-python -m unittest discover -s tests -p test_cli_integration.py -v
 ```
 
-Windows 可使用已有 PowerShell 入口（依次寻找已激活环境、项目 `.venv`、PATH Python）：
+Use the existing `python -m` / `run.ps1` entrypoints. Do not create another wrapper unless explicitly requested.
 
-```powershell
-.\run.ps1 -InputFile .\examples\gmv_input.json -MockLLM -Json
-.\run.ps1 -Test
-```
+---
 
-已有 `python -m` / `run.ps1` 足够，不新建 wrapper。输入是 `metric_id`、`current_period`、`baseline_period`、`filters`，可选 `context`；**不接受 `intent` 字段**。参数、合法输入、输出外层和失败码见 [Codex Usage](docs/CODEX_USAGE.md)。
+## 6. Runtime Authority and Evidence Boundary
 
-## Runtime Authority / Evidence Boundary
+The Agent structured output (`result`) is the authoritative analytical result.
 
-运行任务的 Agent structured output（`result`）是分析结论的 authoritative source。Codex 只总结、格式化、解释字段和展示 Trace；核心结论引用 `key_findings.evidence_refs` 对应的 direct / derived Evidence，不增加外部原因、跨层贡献比例或强业务动作。
+Codex may:
 
-允许转述有证据的“Orders 是 GMV 下降的主要内部驱动”；无证据时不补充“因为竞品加大广告投放”。
+- summarize;
+- format;
+- explain fields;
+- surface Trace information.
 
-当 `stop_reason=evidence_boundary_reached`，停止继续分析并说明证据边界。只有 Trace 确认是数据/知识证据边界时，才可表述“当前 Agent 已分析到内部数据可证明的最深层级”。如果路由理由是 `llm_provider_not_configured`，必须说明缺少 LLM 导致多候选未选择，不能声称穷尽证据，不能由 Codex 接管选路或偷偷换 Mock LLM 重跑。
+Codex must **not** add:
 
-## Runtime Modes / Data Status
+- unsupported external causes;
+- causal claims not supported by current evidence;
+- cross-layer contribution claims not produced by the Runtime;
+- strong business actions not grounded in the result.
 
-- 不带 `--database` 使用 `MockDatasetAdapter`（`mock_retail_v1`）；带参数使用 Olist 原始表专用 `SQLiteDatasetAdapter`（`olist_raw_sqlite_v1`），只读访问本地数据，不代表生产数据库接入。
-- 两个 Mock 完整周期：2026-08-24～2026-08-30、2026-08-31～2026-09-06。它们是固定 fixture，不能冒充用户的“本周”。
-- `--mock-llm` 使用离线 Mock；`--gemini` 使用真实 Gemini；两者均不带时 LLM 未配置，确定性节点仍可运行，多候选节点可能停止。
-- SQLite 必须显式提供输入或问题。数据质量不足可合法 blocked，不得修改业务口径使其通过。范围见 [Data Sources](docs/DATA_SOURCES.md)。
-- Gemini 报告失败会回退为基于既有结果的确定性 Markdown；这不补救意图、路由或数据质量失败。Trace 记录 renderer、provider error code 与 retry count。
-- `execution_mode` 是 CLI 元数据，不属于业务 Output Schema。根据其数据和模型标记说明实际模式，不把 Mock 结果描述为真实经营分析。
+Example:
 
-SQLite 示例（数据库与 Gemini 配置先按 Quick Start 准备）：
+Allowed:
 
 ```text
-python -m business_performance_agent --database data/olist_raw.db --input examples/olist_input.json --mock-llm --json
-python -m business_performance_agent --database data/olist_raw.db --input examples/olist_input.json --gemini --json
+Orders are the primary internal driver of the GMV decline.
 ```
 
-`run.ps1` 不传递 SQLite、Gemini 或模型参数，这些模式使用 Python CLI。全量测试在设置 `GEMINI_API_KEY` 时可能调用真实 API；纯离线验证使用 Quick Start 中隔离密钥的测试命令。
+Not allowed without evidence:
 
-## Failure Behavior
+```text
+Competitors increased advertising, causing our GMV decline.
+```
 
-先报告真实失败原因；可以只读检查配置、代码和 Trace。输入不支持、缺数据、缺 semantic mapping、blocked/failed、LLM/Dataset 未配置时，明确补充项；不得绕过 Runtime 或修改冻结定义使其“成功”。
+If `stop_reason=evidence_boundary_reached`, preserve that boundary.
 
-退出码 0 仍可能是 partial 或边界停止，必须读 `result.workflow_status` 和 `stop_reason`。退出码 1 的 blocked/failed 仍有 JSON；输入文件/参数错误通常退出码 2，stderr 有原因，不生成虚构业务结果。没有新 run_id 时不得用旧日志假装本次成功。
+If analysis stops because an LLM/provider is unavailable, do not claim the Agent exhausted the available evidence.
 
-## Usage Examples
+---
 
-- “Use the Business Performance Agent to diagnose the GMV anomaly.” → 确认周期和数据范围；示例任务使用现有 fixture，构造合法 JSON，运行 CLI，返回带 Mock 标识的结果与 Trace。
-- “Add a new retention analysis skill.” → 开发任务；检查授权范围及规范，不自动执行 GMV 诊断，不擅自扩展冻结业务范围。
-- “分析竞品降价为什么影响我们的 GMV。” → 当前 Agent 无竞品数据或因果能力；说明无法证明该外部因果，不自行编造解释。
+## 7. Data and Runtime Modes
+
+Data-source truth comes from Runtime metadata, especially `data_origin`.
+
+Do not describe synthetic / mock / public historical data as live production business data.
+
+Current repository may use:
+
+- `MockDatasetAdapter`
+- configured SQLite data
+- real LLM providers
+- Mock LLM
+
+A valid blocked / partial result is acceptable when data quality, mapping, or evidence is insufficient.
+
+Do not weaken business rules or semantic requirements to force a successful result.
+
+---
+
+## 8. LLM Provider Rules
+
+LLM providers are infrastructure, not business logic.
+
+The Workflow must not depend on provider-specific SDK details.
+
+Current provider integrations may include Mock, Gemini, DeepSeek, and future compatible providers. Use the existing provider abstraction rather than creating duplicate business flows.
+
+### Secrets
+
+API keys must:
+
+- come from environment variables or approved local configuration;
+- never be hardcoded;
+- never be committed;
+- never appear in Trace, logs, Eval results, reports, screenshots, or examples.
+
+Typical environment variables include:
+
+```text
+GEMINI_API_KEY
+DEEPSEEK_API_KEY
+```
+
+### Provider behavior
+
+Provider failures such as:
+
+```text
+429
+timeout
+5xx
+authentication failure
+connection failure
+```
+
+must remain distinct from Agent business failures.
+
+Do not classify Provider failures as:
+
+```text
+Calculation Error
+Workflow Error
+Business Rule Error
+```
+
+Do not silently switch providers during Eval unless the task explicitly requests failover or continuation.
+
+### Live API policy
+
+Ordinary tests are offline.
+
+Real API calls require:
+
+1. explicit user intent;
+2. the corresponding API key;
+3. the repository's explicit live-test / live-eval path.
+
+Do not run paid Live Eval automatically after implementation.
+
+---
+
+## 9. Eval Invariants
+
+Eval integrity is permanent unless the user explicitly asks to calibrate or redesign the Eval itself.
+
+### Expected leakage protection
+
+Execution order must remain:
+
+```text
+Case
+→ Fixture
+→ Agent Execution
+→ Actual Result saved
+→ Expected loaded
+→ Grading
+```
+
+The Agent must never receive:
+
+- Expected;
+- correct driver;
+- correct path;
+- grader output;
+- case answer;
+- special hints derived from Expected.
+
+Never add `case_id`-specific behavior to Runtime or Workflow.
+
+### Golden / Holdout integrity
+
+Do not modify:
+
+```text
+evals/cases/
+evals/expected/
+```
+
+to improve Agent scores unless the user explicitly asks for Eval calibration.
+
+When an Eval fails, first classify the failure:
+
+```text
+Agent bug
+Eval/Expected issue
+Fixture issue
+Grader/infrastructure issue
+Provider failure
+```
+
+Do not automatically "fix until green."
+
+### Benchmark history
+
+- `evals/results/` is for transient run output.
+- fixed benchmark snapshots / history are append-only.
+- do not overwrite prior benchmark rounds.
+- preserve pre-fix and post-fix lineage.
+
+### Provider-aware Eval
+
+Provider interruption must be recorded separately from gradable Agent results.
+
+Do not include Provider-interrupted cases in deterministic calculation/workflow accuracy as though the Agent produced a wrong answer.
+
+### Eval stop behavior
+
+After an Eval run:
+
+```text
+save results
+→ summarize failures
+→ report metrics
+→ stop
+```
+
+Do not automatically modify the Agent after seeing results unless the user explicitly asked for an Eval-and-fix cycle.
+
+---
+
+## 10. Testing Rules
+
+Use the narrowest useful tests first.
+
+For shared/runtime changes, finish with:
+
+```text
+python -m unittest discover -s tests -v
+```
+
+Ordinary test discovery must remain offline.
+
+Live tests must be opt-in and require the relevant environment flag / API key defined by the repository.
+
+Do not make CI depend on paid external APIs.
+
+### Regression discipline
+
+A change is not complete merely because the new test passes.
+
+Check for regression in existing behavior when modifying:
+
+- Runtime
+- routing
+- Workflow orchestration
+- provider integration
+- structured output handling
+- Dataset adapters
+- Eval framework
+
+---
+
+## 11. Failure and Stop Behavior
+
+Report the real failure reason first.
+
+Allowed actions include read-only inspection of:
+
+- configuration;
+- code;
+- Trace;
+- result files.
+
+Do not bypass Runtime or frozen rules to manufacture success.
+
+Remember:
+
+- exit code `0` can still mean partial / boundary stop;
+- blocked / failed runs may still contain valid JSON;
+- input/argument errors may exit separately;
+- without a new `run_id`, do not reuse an old run as proof of current success.
+
+---
+
+## 12. Architecture Restraint
+
+Do not add the following merely because they are common Agent patterns:
+
+- Reviewer
+- Multi-Agent
+- RAG
+- Memory
+- MCP
+- automatic provider failover
+- model router
+- cost router
+- new framework layers
+
+Add them only when:
+
+1. the user explicitly requests them; or
+2. Eval evidence demonstrates a concrete failure mode they are intended to solve.
+
+Prefer deterministic Python / SQL / rules for:
+
+- calculations;
+- contribution analysis;
+- legality checks;
+- schema validation;
+- unique-path routing;
+- stop-policy enforcement.
+
+Use LLMs only where ambiguity or language generation actually requires them.
+
+---
+
+## 13. Development Task Reporting
+
+For normal development work, the final report should be concise.
+
+Default format:
+
+```text
+STATUS
+CHANGES
+TESTS
+UNRESOLVED / NONE
+```
+
+For Eval tasks, also include the relevant metrics / failed cases.
+
+For provider tasks, also include exact smoke-test / live-eval commands when requested.
+
+Do not produce a long architectural essay unless the user asks for one.
+
+---
+
+## 14. Examples
+
+### "Use the Business Performance Agent to diagnose the GMV anomaly."
+
+Use the existing Runtime and data source, preserve Runtime result / warnings / Trace, and do not invent external causes.
+
+### "Add DeepSeek support."
+
+Inspect the current provider abstraction, make the smallest compatible provider change, preserve Agent semantics and Eval data, add tests, and stop after reporting.
+
+### "Run the Holdout Eval."
+
+Run the existing Eval framework, preserve leakage controls, report failures, and stop. Do not auto-fix the Agent.
+
+### "Add a retention analysis skill."
+
+This is a semantic/product expansion. Inspect the frozen specs and only proceed within explicit user authorization.
+
+### "Why did competitor pricing hurt our GMV?"
+
+If the current data and Agent do not contain competitor evidence, state that the causal claim cannot be established from the current system.

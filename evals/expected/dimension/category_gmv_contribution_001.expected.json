@@ -1,0 +1,19 @@
+{
+  "case_id": "category_gmv_contribution_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "selected_dimension": "category",
+    "strict_contribution_allowed": true,
+    "top_negative_driver": "category_a",
+    "expected_values": {
+      "category_a_effect": -2000,
+      "category_b_effect": 0,
+      "delta_gmv": -2000
+    },
+    "closure_required": true
+  },
+  "forbidden": {
+    "relationships": [],
+    "claims": []
+  }
+}

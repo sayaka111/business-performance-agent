@@ -1,0 +1,28 @@
+{
+  "case_id": "missing_paid_at_001",
+  "category": "data_quality",
+  "title": "关键paid_at缺失时必须阻断周期分析",
+  "user_query": "为什么本期 GMV 相比基期下降？",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "构造订单表包含created_at、delivered_at等时间字段，但paid_at缺失或无法映射；不得提供可安全替代的支付时间字段。",
+    "required_semantic_fields": [
+      "order_id",
+      "customer_id",
+      "merchandise_amount"
+    ],
+    "construction_requirements": [
+      "paid_at语义字段必须不可解析",
+      "至少存在created_at和delivered_at以测试系统是否错误猜测替代字段",
+      "不要提供能通过名称直接推断为支付时间的其它列"
+    ]
+  },
+  "evaluation_focus": [
+    "data_quality_guard",
+    "schema semantic boundary",
+    "Knowledge immutability"
+  ]
+}

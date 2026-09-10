@@ -1,0 +1,26 @@
+{
+  "case_id": "holdout_small_decline_below_threshold_001",
+  "category": "stop",
+  "title": "GMV小幅下降但不足异常阈值",
+  "user_query": "GMV好像掉了一点，需要继续查吗？",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "基期GMV=10000，本期GMV=9400，变化-6%，低于warning 10%基线。",
+    "required_semantic_fields": [
+      "order_id",
+      "paid_at",
+      "merchandise_amount"
+    ],
+    "construction_requirements": [
+      "GMV相对变化=-6%",
+      "无其它强制异常信号"
+    ]
+  },
+  "evaluation_focus": [
+    "negative but non-anomalous",
+    "avoid over-analysis"
+  ]
+}

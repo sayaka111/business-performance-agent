@@ -1,0 +1,29 @@
+{
+  "case_id": "holdout_channel_unknown_share_high_001",
+  "category": "data_quality_dimension",
+  "title": "Unknown Channel占比高时降低结论强度",
+  "user_query": "按渠道帮我定位一下GMV下降。",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "构造总GMV下降，其中Unknown/Unattributed占本期GMV 45%，Paid Search是已知渠道最大拖累。",
+    "required_semantic_fields": [
+      "order_id",
+      "paid_at",
+      "merchandise_amount",
+      "channel"
+    ],
+    "construction_requirements": [
+      "保留unknown/unattributed",
+      "unknown share约45%",
+      "不能过滤unknown后假装闭合"
+    ]
+  },
+  "evaluation_focus": [
+    "data quality warning",
+    "dimension uncertainty",
+    "unknown preservation"
+  ]
+}

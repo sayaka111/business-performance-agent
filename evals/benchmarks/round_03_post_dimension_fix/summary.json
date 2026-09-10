@@ -1,0 +1,207 @@
+{
+  "run_id": "4c98ee0c-ec72-4776-a273-676b276326e4",
+  "mode": "offline",
+  "live_api_used": false,
+  "expected_leakage": "PASS",
+  "leakage_audit": [
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/gmv_orders_driver_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/gmv_aov_driver_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/orders_buyers_driver_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/orders_frequency_driver_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/aov_units_driver_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/aov_price_driver_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/channel_gmv_drilldown_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/category_gmv_contribution_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/category_orders_illegal_contribution_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/zero_baseline_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/missing_paid_at_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/evidence_boundary_paid_search_001.json"
+    }
+  ],
+  "total_cases": 12,
+  "executed_cases": 12,
+  "passed_cases": 12,
+  "failed_cases": 0,
+  "review_required_cases": 0,
+  "framework_error_cases": 0,
+  "hard_constraint_violations": 0,
+  "metrics": {
+    "Calculation Accuracy": {
+      "numerator": 11,
+      "denominator": 11,
+      "value": 1.0
+    },
+    "Workflow Path Accuracy": {
+      "numerator": 11,
+      "denominator": 11,
+      "value": 1.0
+    },
+    "Primary Driver Accuracy": {
+      "numerator": 10,
+      "denominator": 10,
+      "value": 1.0
+    },
+    "Correct Stop Rate": {
+      "numerator": 12,
+      "denominator": 12,
+      "value": 1.0
+    },
+    "First-Level Driver Accuracy": {
+      "numerator": 8,
+      "denominator": 8,
+      "value": 1.0
+    },
+    "Nested Driver Accuracy": {
+      "numerator": 4,
+      "denominator": 4,
+      "value": 1.0
+    },
+    "Routing Validity": {
+      "numerator": 11,
+      "denominator": 11,
+      "value": 1.0
+    },
+    "Evidence Coverage": {
+      "numerator": 35,
+      "denominator": 35,
+      "value": 1.0
+    },
+    "Unsupported Claim Rate": {
+      "numerator": 0,
+      "denominator": 35,
+      "value": 0.0
+    },
+    "Required Claim Coverage": {
+      "numerator": 4,
+      "denominator": 4,
+      "value": 1.0
+    },
+    "Overall Case Pass Rate": {
+      "numerator": 12,
+      "denominator": 12,
+      "value": 1.0
+    }
+  },
+  "status": "SUCCESS",
+  "cases": [
+    {
+      "case_id": "gmv_orders_driver_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "gmv_aov_driver_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "orders_buyers_driver_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "orders_frequency_driver_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "aov_units_driver_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "aov_price_driver_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "channel_gmv_drilldown_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "category_gmv_contribution_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "category_orders_illegal_contribution_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "zero_baseline_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "missing_paid_at_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "evidence_boundary_paid_search_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    }
+  ]
+}

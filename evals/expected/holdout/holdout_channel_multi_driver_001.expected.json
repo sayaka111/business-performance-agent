@@ -1,0 +1,24 @@
+{
+  "case_id": "holdout_channel_multi_driver_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "selected_dimension": "channel",
+    "strict_contribution_allowed": true,
+    "top_negative_driver": "paid_search",
+    "expected_ranking": [
+      "paid_search",
+      "organic",
+      "affiliate"
+    ],
+    "offsetting_segments": [
+      "direct"
+    ],
+    "closure_required": true
+  },
+  "forbidden": {
+    "claims": [
+      "广告效率下降",
+      "广告预算减少"
+    ]
+  }
+}

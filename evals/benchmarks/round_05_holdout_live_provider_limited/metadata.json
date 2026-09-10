@@ -1,0 +1,142 @@
+{
+  "benchmark_id": "round_05_holdout_live_provider_limited",
+  "timestamp": "2026-09-09T18:36:40.020300+00:00",
+  "timestamp_kind": "archive_time; original run timestamp unavailable",
+  "source_run_id": "192f066a-461f-4e9e-ae82-e51f75cf1c18",
+  "source_summary_sha256": "d9b082339cdc96bd491457b648aa5f42970853df75629f247bbc1d9ac06fbef4",
+  "agent_version": "0.1.0",
+  "git_commit": null,
+  "git_commit_scope": "archive checkout; not an assertion of historical run revision",
+  "eval_manifest_sha256_at_archive": "10486c891ead679a99cbdef35a559d005b8d2ce26b07fc61264ae7ad8b6eb5f3",
+  "historical_manifest_hash": null,
+  "mode": "live_gemini",
+  "case_count": 20,
+  "cases_executed": 3,
+  "passed": 1,
+  "failed": 1,
+  "review_required": 18,
+  "metrics": {
+    "Calculation Accuracy": {
+      "numerator": 1,
+      "denominator": 2,
+      "value": 0.5
+    },
+    "Workflow Path Accuracy": {
+      "numerator": 1,
+      "denominator": 2,
+      "value": 0.5
+    },
+    "Primary Driver Accuracy": {
+      "numerator": 1,
+      "denominator": 2,
+      "value": 0.5
+    },
+    "Correct Stop Rate": {
+      "numerator": 2,
+      "denominator": 2,
+      "value": 1.0
+    },
+    "First-Level Driver Accuracy": {
+      "numerator": 1,
+      "denominator": 1,
+      "value": 1.0
+    },
+    "Nested Driver Accuracy": {
+      "numerator": 1,
+      "denominator": 1,
+      "value": 1.0
+    },
+    "Routing Validity": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "Evidence Coverage": {
+      "numerator": 6,
+      "denominator": 6,
+      "value": 1.0
+    },
+    "Unsupported Claim Rate": {
+      "numerator": 0,
+      "denominator": 6,
+      "value": 0.0
+    },
+    "Required Claim Coverage": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "Overall Case Pass Rate": {
+      "numerator": 1,
+      "denominator": 2,
+      "value": 0.5
+    },
+    "Intent Accuracy": {
+      "numerator": 1,
+      "denominator": 2,
+      "value": 0.5
+    }
+  },
+  "failed_cases": [
+    "holdout_category_multi_driver_001"
+  ],
+  "expected_leakage": "PASS",
+  "spec_integrity": {
+    "business_logic_changed": false,
+    "knowledge_changed": false,
+    "skill_semantics_changed": false,
+    "workflow_semantics_changed": false,
+    "holdout_manifest_sha256": "7049b0358e1d0bd3268bdac7789ffb0cabc883bccefe719c0397485647a7826c",
+    "agent_source_sha256": {
+      "business_performance_agent\\__init__.py": "931dc6edbcdf2f825affe65e5cb2858ebf178f51ca20e38609291fb1f7a51304",
+      "business_performance_agent\\__main__.py": "4c02a1cd4952f8c4ba1338059c179c68f9e227e7234d83cdc54b9c5093986f8d",
+      "business_performance_agent\\app\\cli.py": "eb19bbe2332384ee2aacd4ae9e0d6ac53d052c53c323709aa6158b98d798f5e2",
+      "business_performance_agent\\app\\__init__.py": "65708e93f9ca9c4c62b0fbb0b7a60d6775d73abf2987a95f02da01b2de77cbef",
+      "business_performance_agent\\config\\settings.py": "deb961f410f59cb1cd6e19462800d11aa95e7556a7c7652df77b78473974b567",
+      "business_performance_agent\\config\\__init__.py": "e07a3c89d88cbcb9d7f040eddc9f10f1a200383b9301ac32a460d443d2663d91",
+      "business_performance_agent\\data_contract\\adapter.py": "fa674b5c9bbabe5d8b1407fa4843cf81fa8a8d12cae16f43acbdbe93a6675435",
+      "business_performance_agent\\data_contract\\mock_adapter.py": "b670a22c94ccac4105f13928c5924d39e08f906f9a9ea92b9c2bc49f50ad411e",
+      "business_performance_agent\\data_contract\\mock_schema_mapping.json": "e7bce71d05956746e3ce4437ad107092696ee7d9b4e57a20a6d90f04ab31f277",
+      "business_performance_agent\\data_contract\\record_adapter.py": "d141393739e3b9ef04977d9e5104ef6cee1b76b80c1d70dc974e054fd38aff89",
+      "business_performance_agent\\data_contract\\sqlite_adapter.py": "749586718eec828bce2df148168f8f4a27bbb4920d73d7eac4c4c83292a4feaf",
+      "business_performance_agent\\data_contract\\sql_utils.py": "ce2e17748b79ca1746b5fb1abe4adc2c5b1cf9bf3bfe246689f061a5d7ba02ee",
+      "business_performance_agent\\data_contract\\__init__.py": "8a927136f15f0626cc4aa76598a906baed176924a30c46779d6c6e84a1d8d686",
+      "business_performance_agent\\llm\\client.py": "a63be04bb185f9f4649cc09ab0f697a181523d3d8c98a60b7d2644fe0c989f2a",
+      "business_performance_agent\\llm\\constrained_router.py": "6447a011ce3324f04bd5711972292cca9548868c0ebdac9a13c12dcd16d6542b",
+      "business_performance_agent\\llm\\gemini_client.py": "9eb1d32aef2cb6bf519ab7b8ec40e87bfc4e72ceaa6f9ab89179cfc1c3d31454",
+      "business_performance_agent\\llm\\intent_parser.py": "cb39d3c0fec020736ef9c27b3d63dbd86fdc16c87504f04a8772c6595d872311",
+      "business_performance_agent\\llm\\report_generator.py": "3500bfa5d6e1f6457e6fbf118705c0caac434d4541faae93277b154ced2a8679",
+      "business_performance_agent\\llm\\result_builder.py": "6c9856c4c7b5f34e74efd1d5eae30c25c2a86a81dede2b7314c17f9bb731f1c6",
+      "business_performance_agent\\llm\\__init__.py": "953ae844b8d0e01cd50beb57b605775412aab4208d39241099bcd22ea2f800cd",
+      "business_performance_agent\\models\\schemas.py": "680dd0570389d73f9976ee34c8a074f4cc4617bfe316b4422038476e0dfcd420",
+      "business_performance_agent\\models\\__init__.py": "4df95b53229611592c665ad76540256fe37cabca105e72ef84ac03c350355395",
+      "business_performance_agent\\runtime\\engine.py": "ef1facb6436a33769c04902fff0aea7453ca629bb3619455b0364ae873e85bee",
+      "business_performance_agent\\runtime\\executor.py": "4dfe050717c7eb0ef635e9e4f452bda142dc5054b11d4741c5e01adc054fcebb",
+      "business_performance_agent\\runtime\\router.py": "ea5043810b8bbb69c3015c510e531c2b1f5b030514b6ab5222f35c5d2608c248",
+      "business_performance_agent\\runtime\\state.py": "68153a09824fb13e87ffefac7488b9206c07ed61398e9af6f01e28637f9f6eab",
+      "business_performance_agent\\runtime\\__init__.py": "8345a522abaedaa12472b66a8a9ea8b30d037baa16f4ec6f70952dbe7f9492e1",
+      "business_performance_agent\\skills\\anomaly_evaluate.py": "f060990482d28fce1c98aed217d9f9869af1dc2a0fb71f927b0d9d64329001a3",
+      "business_performance_agent\\skills\\contribution_analysis.py": "caa9fa390f3a360ecb44f6ac5517a732d2352a9cf6cb2c150d62e2f897d4bf9f",
+      "business_performance_agent\\skills\\data_quality_guard.py": "1f21b8b46903ec700e170c7ac5e3486c47785012368b59b4d92ba249cb45bade",
+      "business_performance_agent\\skills\\dimension_drilldown.py": "d11a3edd9d85ddb068fdd9204664c16257a3ab95c7b01ec8e79ab32bf7e574ba",
+      "business_performance_agent\\skills\\evidence_validate.py": "9dba9ddadf187e15c3c60b0b1ec879cb55c4cdf0f854666d1233eea83f4e708c",
+      "business_performance_agent\\skills\\metric_compare.py": "eabc725932896011c42db688f3c35e5882378d74017c08a05d0a5d98d8500e04",
+      "business_performance_agent\\skills\\metric_decompose.py": "82542bb54d03235340a55ec6a612d68643f559f4d217fb741b27ad25f68ba71b",
+      "business_performance_agent\\skills\\__init__.py": "c05d9a9c071378658ec2725b28d0b3bca4d058f3750176b0bfc68062b8e75866",
+      "business_performance_agent\\tools\\calculations.py": "dff78c85d77d46f606911130cbb146246509e6cdc3119e8794f951813c740fb2",
+      "business_performance_agent\\tools\\knowledge_loader.py": "096201d2fe7266ec660488540652d39d77c35ce46a2f38fb112c7f39557b646b",
+      "business_performance_agent\\tools\\query_tool.py": "04aee6fcb8be9a5d2f5db23086e612128658b641f673e0a10080aae1cd7f4dde",
+      "business_performance_agent\\tools\\schema_tool.py": "cf686d4e009c0bb9be78865fede244ed8491c2b9ddff3d79744d384c03836d82",
+      "business_performance_agent\\tools\\sqlite_query_tool.py": "9b3cb5a784dd5cdc8e144ef67f1c4fa0f2e9b0af2712a71bd793def3f198d5c6",
+      "business_performance_agent\\tools\\__init__.py": "b727ccbcbda1d9e18beb5b4a11d5bafe2511f64af631b3f461822f378578e1b0",
+      "business_performance_agent\\workflows\\definition.py": "590b855d498500556b7ce530d55acd059f3f2195d6e70a979a13f04125980a21",
+      "business_performance_agent\\workflows\\__init__.py": "3d2367238c75fe9b6c1b5776037f66ad8d7fbc0db4b2d21232af73b49945ee14"
+    }
+  },
+  "notes": "Phase2B bounded Live Gemini attempt. Provider circuit stopped after3 consecutive provider-failed cases:3 attempted,2 business-evaluable (1pass/1fail),1 provider-interrupted,17not run. Nine requests:2 successes,7 failures (2x429,5x5xx),4 retries,2report fallbacks. Provider-interrupted/not-run cases are unscored and excluded from business metrics. No successful live routing/report sample; do not claim those capabilities validated. Agent and source Cases/Expected unchanged.",
+  "artifact_sha256": {
+    "summary.json": "38e49b2159e4595c83ec7c3ee18ce65698d5a45849241796f3027e9debfe7af3",
+    "summary.md": "24c5fb3cccedf0230d2115697b2eb8ef12203c525f97abb8e089f09e9518e409",
+    "failures.md": "3f4ac0cf19f7130b2968f22f7e4c6954ea68c941663f5ac369d18f0715207658"
+  }
+}

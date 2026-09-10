@@ -3,6 +3,7 @@ __pycache__/
 *.egg-info/
 logs/*.json
 logs/*.tmp
+logs/
 .venv/
 .env
 .env.*
@@ -14,3 +15,30 @@ dist/
 # Local source databases
 /data/*.db
 /data/*.db-*
+
+# Generated synthetic fixtures and evaluation output
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+evals/results/*
+!evals/results/.gitkeep
+.ruff_cache/
+/data/raw/completejourney/
+/data/processed/completejourney/*.sqlite
+/data/processed/completejourney/*.sqlite-*
+evals/fixtures/*.mapping.json
+evals/fixtures/*.review.json
+evals/fixtures/**/*.mapping.json
+evals/fixtures/**/*.review.json
+
+# Preserve only the two curated Phase 3 batches; new local demos stay local.
+/examples/real_data/completejourney/runs/*
+!/examples/real_data/completejourney/runs/45954e94-a97e-4ffb-9a81-a6999dc0a480/
+!/examples/real_data/completejourney/runs/77101cc3-974a-46fe-9608-6390362b9449/
+
+# Development instructions and retired diagnostics are not public deliverables.
+*_prompt.md
+/experiments/
+/docs/phase3/
+/evals/analysis/

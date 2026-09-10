@@ -1,0 +1,21 @@
+{
+  "contract_id": "completejourney_v1",
+  "gate_a": "PASSED",
+  "approval": "User: Resume Phase 3 — Resolve Gate A; dataset-specific semantic approval",
+  "sources": ["https://bradleyboehmke.github.io/completejourney/articles/completejourney.html", "https://bradleyboehmke.github.io/completejourney/reference/transactions.html"],
+  "data_origin": "public_historical",
+  "grain": "one observed basket/product receipt row; basket_id + product_id unique in supplied files",
+  "transaction_validity": "completed_purchase_receipts",
+  "approved_semantics": {"order_id": "basket_id", "paid_at": "transaction_timestamp calendar date; preserve full timestamp separately", "gross_gmv": "SUM(sales_value): retailer-received merchandise sales value", "product": "product_id", "category": "products.product_category left join, missing -> unknown"},
+  "customer_entity": "household_id identifies a household, not an individual; household counts only",
+  "supported_metrics": ["gross_gmv", "orders", "aov"],
+  "partial_metrics": ["buyers", "orders_per_buyer"],
+  "unsupported_metrics": ["net_gmv", "refunded_merchandise_amount", "units", "units_per_order", "average_realized_unit_price", "new_buyers", "returning_buyers", "new_buyer_orders", "returning_buyer_orders"],
+  "supported_dimensions": ["product", "category"],
+  "unsupported_dimensions": ["channel", "region", "campaign", "customer_type"],
+  "unknown_handling": "Preserve every transaction and raw product ID; missing category maps to unknown; no inner join or dropping outliers",
+  "time_boundary": "2017 calendar months only; source timezone unspecified; exclude incomplete 2018-01 tail from complete periods, not from stored data; full timestamp retained",
+  "quantity_limitation": "Raw quantity retained without conversion, no quantity-based metric mapping; mixed units/scales unresolved",
+  "refund_limitation": "Refund lifecycle unobserved; no refund or net_gmv; do not infer zero refunds",
+  "limitations": ["Complete Journey public historical receipts; not a production real-time system.", "gross_gmv is retailer-received merchandise sales value, not customer out-of-pocket payment or shelf/list price.", "Transaction validity is approved at source-contract level; no physical payment_success column.", "household_id represents households, not individual customers; buyer/frequency counts use household entities.", "Refund lifecycle is unobserved; net_gmv and refund analysis unavailable.", "Quantity units/scales unresolved; units, UPO and realized unit price unavailable.", "channel, region, campaign and lifecycle customer_type unavailable; no proxy dimensions.", "Dataset first purchase is left-censored and not lifecycle first purchase.", "Calendar dates retain source clock with unknown timezone; 2018-01 is incomplete."]
+}

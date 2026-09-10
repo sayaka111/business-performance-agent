@@ -1,0 +1,299 @@
+{
+  "run_id": "192f066a-461f-4e9e-ae82-e51f75cf1c18",
+  "mode": "live_gemini",
+  "suite": "holdout",
+  "status": "PARTIAL",
+  "total_cases": 20,
+  "executed_cases": 3,
+  "passed_cases": 1,
+  "failed_cases": 1,
+  "review_required_cases": 18,
+  "provider_interrupted_cases": 1,
+  "not_run_cases": 17,
+  "business_evaluated_cases": 2,
+  "metrics": {
+    "Calculation Accuracy": {
+      "numerator": 1,
+      "denominator": 2,
+      "value": 0.5
+    },
+    "Workflow Path Accuracy": {
+      "numerator": 1,
+      "denominator": 2,
+      "value": 0.5
+    },
+    "Primary Driver Accuracy": {
+      "numerator": 1,
+      "denominator": 2,
+      "value": 0.5
+    },
+    "Correct Stop Rate": {
+      "numerator": 2,
+      "denominator": 2,
+      "value": 1.0
+    },
+    "First-Level Driver Accuracy": {
+      "numerator": 1,
+      "denominator": 1,
+      "value": 1.0
+    },
+    "Nested Driver Accuracy": {
+      "numerator": 1,
+      "denominator": 1,
+      "value": 1.0
+    },
+    "Routing Validity": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "Evidence Coverage": {
+      "numerator": 6,
+      "denominator": 6,
+      "value": 1.0
+    },
+    "Unsupported Claim Rate": {
+      "numerator": 0,
+      "denominator": 6,
+      "value": 0.0
+    },
+    "Required Claim Coverage": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "Overall Case Pass Rate": {
+      "numerator": 1,
+      "denominator": 2,
+      "value": 0.5
+    },
+    "Intent Accuracy": {
+      "numerator": 1,
+      "denominator": 2,
+      "value": 0.5
+    }
+  },
+  "provider_metrics": {
+    "provider_attempts": 9,
+    "provider_successes": 2,
+    "provider_failures": 7,
+    "provider_success_rate": {
+      "numerator": 2,
+      "denominator": 9,
+      "value": 0.2222222222222222
+    },
+    "count_429": 2,
+    "count_5xx": 5,
+    "retry_count": 4,
+    "fallback_count": 2,
+    "fallback_rate": {
+      "numerator": 2,
+      "denominator": 2,
+      "value": 1.0
+    },
+    "structured_output_compliance": {
+      "numerator": 2,
+      "denominator": 2,
+      "value": 1.0
+    }
+  },
+  "stop_reason": "three_consecutive_provider_failures",
+  "hard_constraint_violations": 0,
+  "expected_leakage": "PASS",
+  "leakage_audit": [
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_aov_units_down_price_offset_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_category_multi_driver_001.json"
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "holdout_aov_price_down_units_offset_001",
+      "execution_status": "completed",
+      "overall_pass": false,
+      "failures": [],
+      "review_required": [
+        "Provider failure interrupted intent/routing; business checks N/A"
+      ]
+    },
+    {
+      "case_id": "holdout_aov_units_down_price_offset_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_category_multi_driver_001",
+      "execution_status": "completed",
+      "overall_pass": false,
+      "failures": [
+        "CalculationGrader: No contribution observed for gross_gmv / category; required closure cannot be assessed",
+        "WorkflowPathGrader: Required gross_gmv × category analytical path was not executed",
+        "PrimaryDriverGrader: top_dimension_driver: expected 'category_a', observed '<not observed>'",
+        "HoldoutBehaviorGrader: expected_ranking: expected ['category_a', 'category_b'], observed []",
+        "HoldoutBehaviorGrader: offsetting_segment_category_c: expected True, observed False",
+        "HoldoutBehaviorGrader: dimension_selection: expected True, observed False",
+        "Intent mismatch: target, periods, filters or explicitly requested dimension"
+      ],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_channel_multi_driver_001",
+      "execution_status": "not_run",
+      "overall_pass": false,
+      "failures": [],
+      "review_required": [
+        "three_consecutive_provider_failures"
+      ]
+    },
+    {
+      "case_id": "holdout_channel_unknown_share_high_001",
+      "execution_status": "not_run",
+      "overall_pass": false,
+      "failures": [],
+      "review_required": [
+        "three_consecutive_provider_failures"
+      ]
+    },
+    {
+      "case_id": "holdout_dimension_zero_baseline_001",
+      "execution_status": "not_run",
+      "overall_pass": false,
+      "failures": [],
+      "review_required": [
+        "three_consecutive_provider_failures"
+      ]
+    },
+    {
+      "case_id": "holdout_evidence_boundary_channel_002",
+      "execution_status": "not_run",
+      "overall_pass": false,
+      "failures": [],
+      "review_required": [
+        "three_consecutive_provider_failures"
+      ]
+    },
+    {
+      "case_id": "holdout_explicit_category_intent_001",
+      "execution_status": "not_run",
+      "overall_pass": false,
+      "failures": [],
+      "review_required": [
+        "three_consecutive_provider_failures"
+      ]
+    },
+    {
+      "case_id": "holdout_explicit_channel_intent_001",
+      "execution_status": "not_run",
+      "overall_pass": false,
+      "failures": [],
+      "review_required": [
+        "three_consecutive_provider_failures"
+      ]
+    },
+    {
+      "case_id": "holdout_explicit_orders_category_illegal_001",
+      "execution_status": "not_run",
+      "overall_pass": false,
+      "failures": [],
+      "review_required": [
+        "three_consecutive_provider_failures"
+      ]
+    },
+    {
+      "case_id": "holdout_gmv_aov_down_orders_offset_001",
+      "execution_status": "not_run",
+      "overall_pass": false,
+      "failures": [],
+      "review_required": [
+        "three_consecutive_provider_failures"
+      ]
+    },
+    {
+      "case_id": "holdout_gmv_mixed_aov_primary_001",
+      "execution_status": "not_run",
+      "overall_pass": false,
+      "failures": [],
+      "review_required": [
+        "three_consecutive_provider_failures"
+      ]
+    },
+    {
+      "case_id": "holdout_gmv_mixed_orders_primary_001",
+      "execution_status": "not_run",
+      "overall_pass": false,
+      "failures": [],
+      "review_required": [
+        "three_consecutive_provider_failures"
+      ]
+    },
+    {
+      "case_id": "holdout_gmv_orders_down_aov_offset_001",
+      "execution_status": "not_run",
+      "overall_pass": false,
+      "failures": [],
+      "review_required": [
+        "three_consecutive_provider_failures"
+      ]
+    },
+    {
+      "case_id": "holdout_no_anomaly_001",
+      "execution_status": "not_run",
+      "overall_pass": false,
+      "failures": [],
+      "review_required": [
+        "three_consecutive_provider_failures"
+      ]
+    },
+    {
+      "case_id": "holdout_orders_buyers_down_frequency_offset_001",
+      "execution_status": "not_run",
+      "overall_pass": false,
+      "failures": [],
+      "review_required": [
+        "three_consecutive_provider_failures"
+      ]
+    },
+    {
+      "case_id": "holdout_orders_frequency_down_buyers_offset_001",
+      "execution_status": "not_run",
+      "overall_pass": false,
+      "failures": [],
+      "review_required": [
+        "three_consecutive_provider_failures"
+      ]
+    },
+    {
+      "case_id": "holdout_region_gmv_drilldown_001",
+      "execution_status": "not_run",
+      "overall_pass": false,
+      "failures": [],
+      "review_required": [
+        "three_consecutive_provider_failures"
+      ]
+    },
+    {
+      "case_id": "holdout_requested_dimension_unavailable_001",
+      "execution_status": "not_run",
+      "overall_pass": false,
+      "failures": [],
+      "review_required": [
+        "three_consecutive_provider_failures"
+      ]
+    },
+    {
+      "case_id": "holdout_small_decline_below_threshold_001",
+      "execution_status": "not_run",
+      "overall_pass": false,
+      "failures": [],
+      "review_required": [
+        "three_consecutive_provider_failures"
+      ]
+    }
+  ]
+}

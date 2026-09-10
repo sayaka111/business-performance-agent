@@ -1,0 +1,31 @@
+{
+  "case_id": "orders_buyers_driver_001",
+  "category": "decomposition",
+  "title": "Orders下降，Buyers为主要驱动",
+  "user_query": "本期 GMV 为什么下降？",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "构造基期 Buyers=100、Orders per Buyer=1.20、Orders=120；本期 Buyers=80、Orders per Buyer=1.15、Orders=92。 两个周期每笔订单成交金额为100，AOV=100保持稳定。",
+    "required_semantic_fields": [
+      "order_id",
+      "customer_id",
+      "paid_at",
+      "merchandise_amount",
+      "quantity"
+    ],
+    "construction_requirements": [
+      "基期distinct buyers=100且orders=120",
+      "本期distinct buyers=80且orders=92",
+      "本期orders_per_buyer=1.15由真实聚合得到",
+      "以gross_gmv为入口；Orders与Buyers来自有效订单聚合；GMV=Orders×AOV且AOV=Units per Order×Average Realized Unit Price闭合。"
+    ]
+  },
+  "evaluation_focus": [
+    "orders_buyers_frequency关系",
+    "buyers作为主要驱动",
+    "乘法贡献闭合"
+  ]
+}

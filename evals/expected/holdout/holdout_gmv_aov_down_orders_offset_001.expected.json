@@ -1,0 +1,22 @@
+{
+  "case_id": "holdout_gmv_aov_down_orders_offset_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "required_relationships": [
+      "gross_gmv_orders_aov"
+    ],
+    "first_level_primary_driver": "aov",
+    "expected_values": {
+      "delta_gmv": -1600,
+      "orders_effect": 1700,
+      "aov_effect": -3300
+    },
+    "required_behaviors": [
+      "identify orders as offsetting factor"
+    ],
+    "closure_required": true
+  },
+  "forbidden": {
+    "claims": []
+  }
+}

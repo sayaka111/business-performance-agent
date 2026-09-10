@@ -1,0 +1,29 @@
+{
+  "case_id": "aov_units_driver_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "required_relationships": [
+      "gross_gmv_orders_aov",
+      "aov_units_price"
+    ],
+    "expected_values": {
+      "baseline_aov": 100,
+      "current_aov": 75,
+      "delta_aov": -25,
+      "units_effect": -25,
+      "price_effect": 0
+    },
+    "closure_required": true,
+    "first_level_primary_driver": "aov",
+    "nested_primary_driver": "units_per_order",
+    "nested_metric": "aov",
+    "contribution_metric": "aov"
+  },
+  "forbidden": {
+    "relationships": [],
+    "claims": [
+      "用户购买意愿下降",
+      "消费意愿下降"
+    ]
+  }
+}

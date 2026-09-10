@@ -12,6 +12,7 @@ dependencies = []
 
 [project.optional-dependencies]
 gemini = ["google-genai>=1.0,<3"]
+dev = ["ruff>=0.16,<0.17", "build>=1.2,<2"]
 
 [project.scripts]
 bpa = "business_performance_agent.app.cli:main"

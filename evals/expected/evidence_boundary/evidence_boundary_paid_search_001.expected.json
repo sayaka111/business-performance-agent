@@ -1,0 +1,29 @@
+{
+  "case_id": "evidence_boundary_paid_search_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "primary_driver": "orders",
+    "selected_dimension": "channel",
+    "top_dimension_driver": "paid_search",
+    "allowed_stop_reasons": [
+      "evidence_boundary_reached",
+      "target_coverage_reached"
+    ],
+    "required_claims": [
+      "GMV下降主要由Orders下降驱动",
+      "Orders下降主要集中在Paid Search",
+      "现有数据不足以判断Paid Search下降的进一步外部原因"
+    ]
+  },
+  "forbidden": {
+    "relationships": [],
+    "claims": [
+      "广告投放效率下降",
+      "广告预算减少",
+      "竞价成本上升",
+      "广告素材效果变差",
+      "竞争对手促销",
+      "用户需求下降"
+    ]
+  }
+}

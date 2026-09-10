@@ -4,7 +4,9 @@
     "dataset": "mock",
     "dataset_id": "mock_retail_v1",
     "llm": "mock",
-    "real_business_data": false
+    "data_backend": "memory",
+    "data_origin": "synthetic",
+    "production_database": false
   },
   "result": {
     "workflow_id": "gmv_diagnosis",

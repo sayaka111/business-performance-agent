@@ -2,11 +2,28 @@ include .env.example README.md QUICKSTART.md AGENTS.md .gitignore .gitattributes
 recursive-include business_performance_agent *.py *.json
 recursive-include specs *.md *.json
 recursive-include docs *.md
-recursive-include tests *.py
+recursive-include tests *.py *.json
+recursive-include evals *.py *.json *.md
 recursive-include examples *.json *.md
+recursive-include scripts *.py
+recursive-include data/contracts *.json
+recursive-include data/mappings *.json
 recursive-include .github *.yml
 prune logs
+prune experiments
+prune docs/phase3
+prune evals/analysis
+prune data/raw
+prune data/processed
+prune evals/results
+exclude evals/fixtures/*.mapping.json
+exclude evals/fixtures/*.review.json
+recursive-exclude evals/fixtures *.mapping.json *.review.json
 prune .venv
 prune build
 prune dist
-global-exclude __pycache__ *.py[cod] .env
+global-exclude __pycache__ *.py[cod] .env *.db *.db-*
+global-exclude *.sqlite *.sqlite-*
+global-exclude *_prompt.md
+
+include data/processed/completejourney/preparation_manifest.json

@@ -1,0 +1,344 @@
+{
+  "run_id": "5c7f83ec-1fac-4018-aeda-dc74649d9e28",
+  "mode": "live_deepseek",
+  "provider": "deepseek",
+  "suite": "holdout",
+  "status": "SUCCESS",
+  "total_cases": 20,
+  "executed_cases": 20,
+  "passed_cases": 16,
+  "failed_cases": 4,
+  "review_required_cases": 0,
+  "provider_interrupted_cases": 0,
+  "not_run_cases": 0,
+  "business_evaluated_cases": 20,
+  "metrics": {
+    "Calculation Accuracy": {
+      "numerator": 19,
+      "denominator": 19,
+      "value": 1.0
+    },
+    "Workflow Path Accuracy": {
+      "numerator": 17,
+      "denominator": 19,
+      "value": 0.8947368421052632
+    },
+    "Primary Driver Accuracy": {
+      "numerator": 10,
+      "denominator": 12,
+      "value": 0.8333333333333334
+    },
+    "Correct Stop Rate": {
+      "numerator": 19,
+      "denominator": 19,
+      "value": 1.0
+    },
+    "First-Level Driver Accuracy": {
+      "numerator": 8,
+      "denominator": 9,
+      "value": 0.8888888888888888
+    },
+    "Nested Driver Accuracy": {
+      "numerator": 2,
+      "denominator": 4,
+      "value": 0.5
+    },
+    "Routing Validity": {
+      "numerator": 17,
+      "denominator": 17,
+      "value": 1.0
+    },
+    "Evidence Coverage": {
+      "numerator": 52,
+      "denominator": 52,
+      "value": 1.0
+    },
+    "Unsupported Claim Rate": {
+      "numerator": 0,
+      "denominator": 52,
+      "value": 0.0
+    },
+    "Required Claim Coverage": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "Overall Case Pass Rate": {
+      "numerator": 16,
+      "denominator": 20,
+      "value": 0.8
+    },
+    "Intent Accuracy": {
+      "numerator": 19,
+      "denominator": 20,
+      "value": 0.95
+    }
+  },
+  "provider_metrics": {
+    "provider_attempts": 43,
+    "provider_successes": 43,
+    "provider_failures": 0,
+    "provider_success_rate": {
+      "numerator": 43,
+      "denominator": 43,
+      "value": 1.0
+    },
+    "count_429": 0,
+    "count_5xx": 0,
+    "retry_count": 0,
+    "fallback_count": 0,
+    "fallback_rate": {
+      "numerator": 0,
+      "denominator": 19,
+      "value": 0.0
+    },
+    "structured_output_compliance": {
+      "numerator": 43,
+      "denominator": 43,
+      "value": 1.0
+    }
+  },
+  "stop_reason": null,
+  "hard_constraint_violations": 0,
+  "expected_leakage": "PASS",
+  "leakage_audit": [
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_aov_price_down_units_offset_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_aov_units_down_price_offset_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_category_multi_driver_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_channel_multi_driver_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_channel_unknown_share_high_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_dimension_zero_baseline_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_evidence_boundary_channel_002.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_explicit_category_intent_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_explicit_channel_intent_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_explicit_orders_category_illegal_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_gmv_aov_down_orders_offset_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_gmv_mixed_aov_primary_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_gmv_mixed_orders_primary_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_gmv_orders_down_aov_offset_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_no_anomaly_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_orders_buyers_down_frequency_offset_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_orders_frequency_down_buyers_offset_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_region_gmv_drilldown_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_requested_dimension_unavailable_001.json"
+    },
+    {
+      "event": "expected_loaded_after_actual",
+      "checkpoint": "actual/holdout_small_decline_below_threshold_001.json"
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "holdout_aov_price_down_units_offset_001",
+      "execution_status": "completed",
+      "overall_pass": false,
+      "failures": [
+        "WorkflowPathGrader: relationship_gross_gmv_orders_aov: expected True, observed False",
+        "WorkflowPathGrader: relationship_aov_units_price: expected True, observed False",
+        "PrimaryDriverGrader: first_level_primary_driver: expected 'aov', observed None",
+        "PrimaryDriverGrader: nested_primary_driver: expected 'average_realized_unit_price', observed '<not observed>'",
+        "HoldoutBehaviorGrader: identify units_per_order as offsetting nested driver: expected True, observed False"
+      ],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_aov_units_down_price_offset_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_category_multi_driver_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_channel_multi_driver_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_channel_unknown_share_high_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_dimension_zero_baseline_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_evidence_boundary_channel_002",
+      "execution_status": "completed",
+      "overall_pass": false,
+      "failures": [
+        "Structured/semantic intent rejected; no Workflow result, calculation N/A",
+        "Intent mismatch: target, periods, filters or explicitly requested dimension"
+      ],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_explicit_category_intent_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_explicit_channel_intent_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_explicit_orders_category_illegal_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_gmv_aov_down_orders_offset_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_gmv_mixed_aov_primary_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_gmv_mixed_orders_primary_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_gmv_orders_down_aov_offset_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_no_anomaly_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_orders_buyers_down_frequency_offset_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_orders_frequency_down_buyers_offset_001",
+      "execution_status": "completed",
+      "overall_pass": false,
+      "failures": [
+        "WorkflowPathGrader: relationship_orders_buyers_frequency: expected True, observed False",
+        "PrimaryDriverGrader: nested_primary_driver: expected 'orders_per_buyer', observed '<not observed>'",
+        "HoldoutBehaviorGrader: identify buyers as offsetting nested driver: expected True, observed False"
+      ],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_region_gmv_drilldown_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_requested_dimension_unavailable_001",
+      "execution_status": "completed",
+      "overall_pass": false,
+      "failures": [
+        "HoldoutBehaviorGrader: report dimension unavailable: expected True, observed False",
+        "HoldoutBehaviorGrader: allowed_statuses: expected True, observed False"
+      ],
+      "review_required": []
+    },
+    {
+      "case_id": "holdout_small_decline_below_threshold_001",
+      "execution_status": "completed",
+      "overall_pass": true,
+      "failures": [],
+      "review_required": []
+    }
+  ]
+}

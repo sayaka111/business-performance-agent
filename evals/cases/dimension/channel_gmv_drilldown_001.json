@@ -1,0 +1,31 @@
+{
+  "case_id": "channel_gmv_drilldown_001",
+  "category": "dimension",
+  "title": "Channel下钻，Paid Search为最大拖累",
+  "user_query": "GMV 下滑主要集中在哪个渠道？",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "构造channel维度GMV：Paid Search 4000→2000，Organic 3000→3000，Direct 3000→3000。",
+    "required_semantic_fields": [
+      "order_id",
+      "paid_at",
+      "merchandise_amount",
+      "channel"
+    ],
+    "construction_requirements": [
+      "channel为单触点互斥归属",
+      "Paid Search基期GMV=4000、本期=2000",
+      "Organic两期均=3000",
+      "Direct两期均=3000",
+      "总GMV 10000→8000"
+    ]
+  },
+  "evaluation_focus": [
+    "channel对gross_gmv的strict contribution合法性",
+    "top negative driver识别",
+    "dimension closure"
+  ]
+}

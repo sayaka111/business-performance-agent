@@ -1,78 +1,33 @@
-# Codex → Business Performance Agent
+# Codex Usage
 
-将 repository 根目录作为项目打开，按 [AGENTS.md](../AGENTS.md) 操作。Codex 是可选的开发/操作界面，CLI 可独立运行。分析必须调用现有 Runtime，不由 Codex 自行重算指标或补写因果解释。
+Codex 可作为项目操作入口，正式分析必须调用既有 CLI，不能自行替代 Runtime 取数、计算或规划。首先阅读 [AGENTS.md](../AGENTS.md)。CLI 不依赖 Codex 安装。
 
-## Actual entry points
-
-`python -m business_performance_agent` → `app/cli.py` → `Runtime.run`。没有 HTTP API。环境和可选 SDK 安装见 [QUICKSTART](../QUICKSTART.md)。
-
-| Python CLI | 用途 | run.ps1 对应 |
-|---|---|---|
-| `--input PATH` | UTF-8 JSON，允许 BOM | `-InputFile` |
-| `--question TEXT` | JSON 文本或自然语言；与 input 互斥 | `-Question` |
-| `--mock-llm` | 离线 Mock Provider | `-MockLLM` |
-| `--gemini` | Gemini Provider，与 mock-llm 互斥 | 不支持，用 Python CLI |
-| `--model MODEL_ID` | 覆盖 Gemini 模型，要求 gemini | 不支持，用 Python CLI |
-| `--database PATH` | 只读 Olist SQLite，要求显式输入 | 不支持，用 Python CLI |
-| `--json` | 输出结构化 JSON | `-Json` |
-| `--help` | 查看真实参数 | 用 Python CLI |
-
-无 database 时使用 Mock；无 Provider 标志时 LLM 未配置。默认输入仅供 Mock 演示，常规操作显式传文件。不要发明 `--mapping`、Policy 覆盖参数或新的输入字段。
-
-## Mode selection
+## Inputs and runtime modes
 
 ```bash
 python -m business_performance_agent --input examples/gmv_input.json --mock-llm --json
-python -m business_performance_agent --database data/olist_raw.db --input examples/olist_input.json --mock-llm --json
-python -m business_performance_agent --database data/olist_raw.db --input examples/olist_input.json --gemini --json
 ```
 
-第二、三条要求先准备兼容数据库，第三条还要求 SDK 和 `GEMINI_API_KEY`。实际源是 Olist 历史公开数据，不是生产数据库；质量检查可能 blocked。原始导入、映射和限制见 [DATA_SOURCES](DATA_SOURCES.md)。不静默切换真实/Mock 模式或替换用户周期。
+SQLite 加 `--database PATH --mapping PATH`；Gemini 使用 `--gemini` 代替 `--mock-llm`。自然语言通过 `--question TEXT` 提供，与 `--input` 互斥。Gemini 模型可用 `--model` 覆盖，需已安装可选依赖并配置 Key。
 
-## Workflow input
+DeepSeek 使用 `--provider deepseek`，通过 `DEEPSEEK_API_KEY` 配置，`--model` 同样可覆盖所选 Provider。真实 API 是显式 opt-in；首次使用按 [离线 Quick Start](../QUICKSTART.md) 操作。
 
-输入是 `metric_id`、`current_period`、`baseline_period`、`filters`，可选 `context`，参见 [Mock 输入](../examples/gmv_input.json) 与 [Olist 周期输入](../examples/olist_input.json)。
+输入字段是 metric_id、current_period、baseline_period、filters、可选 context；不接受 intent 字段。不得静默替换用户周期或把 synthetic 数据当作用户真实数据。无 Provider 时，多候选可能在未配置边界停止。
 
-当前目标仅 `gross_gmv`；日期有效且 baseline 早于 current。Filters 使用 Knowledge 中的维度 ID 和字符串值。Context 仅接受 `customer_structure`、`traffic_view`、`preferred_dimension`，不能为改变路径而伪造上下文。`intent` 不是合法输入字段。
+`run.ps1` 支持 -MockLLM、-Gemini、-Database、-Mapping、-Model、-InputFile、-Question、-Json、-Test，统一转交 CLI，不是另一套 Runtime。
 
-只有明确的示例请求才使用 synthetic 固定周期。自然语言解析需要 Provider，Mock parser 仅是有限的离线替身，不具备通用语义理解能力。
+## Results
 
-## Read result and trace
+以 result 为业务结论依据，检查 workflow_status、stop_reason、warnings、limitations、failed_branches 和 evidence_refs。execution_mode 的 data_backend 与 data_origin 分开说明数据位置和来源；不把 SQLite 自动视为真实数据。
 
-```powershell
-$agentJson = python -m business_performance_agent --input examples/gmv_input.json --mock-llm --json
-$agentExit = $LASTEXITCODE
-if ($agentJson) {
-    $agentOutput = ($agentJson -join "`n") | ConvertFrom-Json
-    $agentOutput.execution_mode
-    $agentOutput.result.workflow_status
-    $agentOutput.result.key_findings
-    $agentOutput.result.stop_reason
-    $agentOutput.trace_path
-}
-```
+退出码 0 不保证完整完成；blocked/failed 返回 1；输入/路径错误通常返回 2。新运行必须使用新 run_id/trace_path，不用旧日志冒充成功。
 
-输出含 `run_id`、`result`、`trace_path`、`execution_mode`。Mock 数据标识 `mock_retail_v1`、`real_business_data=false`；SQLite 标识 `olist_raw_sqlite_v1`、`production_database=false`。Provider 为 mock、gemini 或 unconfigured。
+## Evidence and fallback
 
-Gemini 模式还提供 report、`llm_requests_succeeded` 和 `report_rendering`。配置 Gemini 并不保证实际调用；唯一候选或无 Claim 时可不调用。核心结论以 `result` 为准，必须保留 Evidence 引用、警告和限制；Trace 中 `final_structured_result` 应与其一致。
+只总结 direct / derived Evidence 支持的内部贡献，不补外部因果或强业务动作。Gemini 报告失败可使用确定性 Markdown，保留已有状态与限制；这不证明 Provider 已恢复或其他失败已修复。
 
-报告生成后 Trace 记录 `report_renderer=gemini/deterministic_fallback`、`provider_error_code` 和报告 `retry_count`。SDK 不重试，应用最多重试一次。报告回退不改变业务结果，不证明模型调用成功，也不能代替失败的路由或意图解析。
+## Software tests and Eval
 
-## Failure handling
+普通 discovery 不调用真实 API。Live 必须显式运行 tests.test_gemini_live，并同时设置 BPA_RUN_LIVE_TESTS=1 与 GEMINI_API_KEY。软件测试、live 服务验证与正式 Eval 是不同任务。
 
-| 情况 | 操作 |
-|---|---|
-| 退出 0 | 仍检查 workflow_status / stop_reason，可能 partial 或边界终止 |
-| Workflow blocked / failed，退出 1 | 读取结果和 Trace，展示 failed_branches、warnings、limitations |
-| 参数/路径/解析错误，通常退出 2 | 不把终端错误当报告；Gemini intent 失败可能有独立 Trace，无业务结果 |
-| `llm_provider_not_configured` | 说明缺少 Provider，不接管路由或偷偷换 Mock |
-| 缺失字段/不兼容 Schema/semantic conflict | 核对数据契约，不猜字段、不删单补值或改变冻结口径 |
-| 429 / 503 / 504 | 视为 Provider 暂时性故障，保留有限重试和报告回退记录，不反复重跑完整 E2E |
-| 外部竞争、市场、心理因果 | 没有证据时不提供解释或强业务动作 |
-
-新 Workflow、Adapter 或指标属于开发任务，按用户授权和冻结规范处理；运行请求不自行扩展业务范围。
-
-## Tests
-
-入口验证：`python -m unittest discover -s tests -p test_cli_integration.py -v`。
-完整离线及可选 live 测试见 [Testing](../QUICKSTART.md#testing)。`run.ps1 -Test` 执行测试发现，若环境已有 Key 也可能执行 live 测试；要求离线时使用文档中的隔离子进程命令。
+Golden Set 与 Offline Runner / Graders 已提供，见 [Eval 文档](../evals/README.md)。不得将 Expected、case_id 或案例提示注入 Agent。完整命令见 [Quick Start](../QUICKSTART.md)。

@@ -1,0 +1,17 @@
+{
+  "case_id": "holdout_dimension_zero_baseline_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "selected_dimension": "channel",
+    "required_behaviors": [
+      "segment relative_change undefined",
+      "absolute_change=1500"
+    ]
+  },
+  "forbidden": {
+    "claims": [
+      "增长100%",
+      "增长无限%"
+    ]
+  }
+}

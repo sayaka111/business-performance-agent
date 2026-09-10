@@ -1,0 +1,523 @@
+{
+  "scenario": "drivers",
+  "user_query": "GMV变化主要由订单还是客单价驱动？当前周期2017-12-01至2017-12-31，基期2017-01-01至2017-01-31。",
+  "execution_mode": {
+    "llm": "mock",
+    "data_origin": "public_historical",
+    "dataset_id": "completejourney_v1",
+    "production_database": false
+  },
+  "capability_contract": "data/contracts/completejourney.json",
+  "parsed_input": {
+    "metric_id": "gross_gmv",
+    "current_period": {
+      "start": "2017-12-01",
+      "end": "2017-12-31"
+    },
+    "baseline_period": {
+      "start": "2017-01-01",
+      "end": "2017-01-31"
+    },
+    "filters": {},
+    "context": {}
+  },
+  "run_id": "54adcb89-4bff-422c-9a38-9185452a3938",
+  "result": {
+    "workflow_id": "gmv_diagnosis",
+    "workflow_version": "1.0",
+    "workflow_status": "partial",
+    "target": {
+      "metric_id": "gross_gmv",
+      "current_value": 421882.29,
+      "baseline_value": 370886.93,
+      "absolute_change": 50995.359999999986,
+      "relative_change": 0.13749570522746646
+    },
+    "primary_driver": {
+      "metric_id": "aov",
+      "effect": 39669.85647708267,
+      "aligned_share": 0.7779110977367881
+    },
+    "secondary_drivers": [
+      {
+        "metric_id": "orders",
+        "effect": 11325.503522917295,
+        "aligned_share": 0.22208890226321185
+      }
+    ],
+    "diagnostic_path": [
+      {
+        "metric_id": "gross_gmv",
+        "relationship_id": "gross_gmv_orders_aov",
+        "dimension_id": null,
+        "segment_id": null
+      }
+    ],
+    "key_findings": [
+      {
+        "claim_id": "C0001",
+        "claim": "gross_gmv 从 370886.93 变为 421882.29，变化 50995.359999999986（13.75%）。",
+        "evidence_level": "direct",
+        "evidence_refs": [
+          "E0001"
+        ]
+      },
+      {
+        "claim_id": "C0004",
+        "claim": "在 gross_gmv 的本层分解中，aov 是最大同向内部贡献项：effect=39669.9，占本层同向贡献 77.79%。",
+        "evidence_level": "derived",
+        "evidence_refs": [
+          "E0004"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_id": "E0001",
+        "evidence_level": "direct",
+        "source_step": "metric_compare",
+        "payload": {
+          "kind": "comparison",
+          "fact": {
+            "metric_id": "gross_gmv",
+            "current_value": 421882.29,
+            "baseline_value": 370886.93,
+            "absolute_change": 50995.359999999986,
+            "relative_change": 0.13749570522746646,
+            "provenance": [
+              {
+                "query_id": "Q00003",
+                "dataset_id": "completejourney_v1",
+                "backend": "SQLite",
+                "operation": "metric",
+                "request": {
+                  "metric_id": "gross_gmv",
+                  "period": {
+                    "start": "2017-01-01",
+                    "end": "2017-01-31"
+                  },
+                  "filters": {}
+                },
+                "read_only": true,
+                "sql_query_ids": [
+                  "SQL00016"
+                ]
+              },
+              {
+                "query_id": "Q00002",
+                "dataset_id": "completejourney_v1",
+                "backend": "SQLite",
+                "operation": "metric",
+                "request": {
+                  "metric_id": "gross_gmv",
+                  "period": {
+                    "start": "2017-12-01",
+                    "end": "2017-12-31"
+                  },
+                  "filters": {}
+                },
+                "read_only": true,
+                "sql_query_ids": [
+                  "SQL00015"
+                ]
+              }
+            ]
+          },
+          "scope": {
+            "metric_id": "gross_gmv",
+            "current_period": {
+              "start": "2017-12-01",
+              "end": "2017-12-31"
+            },
+            "baseline_period": {
+              "start": "2017-01-01",
+              "end": "2017-01-31"
+            },
+            "filters": {}
+          },
+          "provenance": [
+            {
+              "query_id": "Q00003",
+              "dataset_id": "completejourney_v1",
+              "backend": "SQLite",
+              "operation": "metric",
+              "request": {
+                "metric_id": "gross_gmv",
+                "period": {
+                  "start": "2017-01-01",
+                  "end": "2017-01-31"
+                },
+                "filters": {}
+              },
+              "read_only": true,
+              "sql_query_ids": [
+                "SQL00016"
+              ]
+            },
+            {
+              "query_id": "Q00002",
+              "dataset_id": "completejourney_v1",
+              "backend": "SQLite",
+              "operation": "metric",
+              "request": {
+                "metric_id": "gross_gmv",
+                "period": {
+                  "start": "2017-12-01",
+                  "end": "2017-12-31"
+                },
+                "filters": {}
+              },
+              "read_only": true,
+              "sql_query_ids": [
+                "SQL00015"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "evidence_id": "E0002",
+        "evidence_level": "derived",
+        "source_step": "anomaly_evaluate",
+        "payload": {
+          "kind": "anomaly",
+          "fact": {
+            "is_anomaly": true,
+            "severity": "warning",
+            "direction": "increase"
+          },
+          "scope": {
+            "metric_id": "gross_gmv",
+            "current_period": {
+              "start": "2017-12-01",
+              "end": "2017-12-31"
+            },
+            "baseline_period": {
+              "start": "2017-01-01",
+              "end": "2017-01-31"
+            },
+            "filters": {}
+          },
+          "provenance": []
+        }
+      },
+      {
+        "evidence_id": "E0003",
+        "evidence_level": "direct",
+        "source_step": "decompose_gross_gmv",
+        "payload": {
+          "kind": "decomposition",
+          "fact": {
+            "target_metric": "gross_gmv",
+            "relationship": {
+              "id": "gross_gmv_orders_aov",
+              "target_metric": "gross_gmv",
+              "type": "exact_multiplicative",
+              "formula": "gross_gmv = orders * aov",
+              "drivers": [
+                "orders",
+                "aov"
+              ]
+            },
+            "drivers": [
+              {
+                "metric_id": "orders",
+                "coefficient": 1,
+                "baseline": 12721,
+                "current": 13090
+              },
+              {
+                "metric_id": "aov",
+                "coefficient": 1,
+                "baseline": 29.155485417813065,
+                "current": 32.22935752482811
+              }
+            ],
+            "provenance": [
+              {
+                "query_id": "Q00005",
+                "dataset_id": "completejourney_v1",
+                "backend": "SQLite",
+                "operation": "metric",
+                "request": {
+                  "metric_id": "orders",
+                  "period": {
+                    "start": "2017-01-01",
+                    "end": "2017-01-31"
+                  },
+                  "filters": {}
+                },
+                "read_only": true,
+                "sql_query_ids": [
+                  "SQL00018"
+                ]
+              },
+              {
+                "query_id": "Q00006",
+                "dataset_id": "completejourney_v1",
+                "backend": "SQLite",
+                "operation": "metric",
+                "request": {
+                  "metric_id": "orders",
+                  "period": {
+                    "start": "2017-12-01",
+                    "end": "2017-12-31"
+                  },
+                  "filters": {}
+                },
+                "read_only": true,
+                "sql_query_ids": [
+                  "SQL00019"
+                ]
+              },
+              {
+                "query_id": "Q00007",
+                "dataset_id": "completejourney_v1",
+                "backend": "SQLite",
+                "operation": "metric",
+                "request": {
+                  "metric_id": "aov",
+                  "period": {
+                    "start": "2017-01-01",
+                    "end": "2017-01-31"
+                  },
+                  "filters": {}
+                },
+                "read_only": true,
+                "sql_query_ids": [
+                  "SQL00020",
+                  "SQL00021"
+                ]
+              },
+              {
+                "query_id": "Q00008",
+                "dataset_id": "completejourney_v1",
+                "backend": "SQLite",
+                "operation": "metric",
+                "request": {
+                  "metric_id": "aov",
+                  "period": {
+                    "start": "2017-12-01",
+                    "end": "2017-12-31"
+                  },
+                  "filters": {}
+                },
+                "read_only": true,
+                "sql_query_ids": [
+                  "SQL00022",
+                  "SQL00023"
+                ]
+              }
+            ]
+          },
+          "scope": {
+            "metric_id": "gross_gmv",
+            "current_period": {
+              "start": "2017-12-01",
+              "end": "2017-12-31"
+            },
+            "baseline_period": {
+              "start": "2017-01-01",
+              "end": "2017-01-31"
+            },
+            "filters": {}
+          },
+          "provenance": [
+            {
+              "query_id": "Q00005",
+              "dataset_id": "completejourney_v1",
+              "backend": "SQLite",
+              "operation": "metric",
+              "request": {
+                "metric_id": "orders",
+                "period": {
+                  "start": "2017-01-01",
+                  "end": "2017-01-31"
+                },
+                "filters": {}
+              },
+              "read_only": true,
+              "sql_query_ids": [
+                "SQL00018"
+              ]
+            },
+            {
+              "query_id": "Q00006",
+              "dataset_id": "completejourney_v1",
+              "backend": "SQLite",
+              "operation": "metric",
+              "request": {
+                "metric_id": "orders",
+                "period": {
+                  "start": "2017-12-01",
+                  "end": "2017-12-31"
+                },
+                "filters": {}
+              },
+              "read_only": true,
+              "sql_query_ids": [
+                "SQL00019"
+              ]
+            },
+            {
+              "query_id": "Q00007",
+              "dataset_id": "completejourney_v1",
+              "backend": "SQLite",
+              "operation": "metric",
+              "request": {
+                "metric_id": "aov",
+                "period": {
+                  "start": "2017-01-01",
+                  "end": "2017-01-31"
+                },
+                "filters": {}
+              },
+              "read_only": true,
+              "sql_query_ids": [
+                "SQL00020",
+                "SQL00021"
+              ]
+            },
+            {
+              "query_id": "Q00008",
+              "dataset_id": "completejourney_v1",
+              "backend": "SQLite",
+              "operation": "metric",
+              "request": {
+                "metric_id": "aov",
+                "period": {
+                  "start": "2017-12-01",
+                  "end": "2017-12-31"
+                },
+                "filters": {}
+              },
+              "read_only": true,
+              "sql_query_ids": [
+                "SQL00022",
+                "SQL00023"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "evidence_id": "E0004",
+        "evidence_level": "derived",
+        "source_step": "contribution_analysis",
+        "payload": {
+          "kind": "contribution",
+          "fact": {
+            "target_metric": "gross_gmv",
+            "target_change": 50995.359999999986,
+            "relationship_id": "gross_gmv_orders_aov",
+            "dimension_id": null,
+            "effects": [
+              {
+                "id": "aov",
+                "effect": 39669.85647708267,
+                "role": "aligned_driver",
+                "aligned_share": 0.7779110977367881
+              },
+              {
+                "id": "orders",
+                "effect": 11325.503522917295,
+                "role": "aligned_driver",
+                "aligned_share": 0.22208890226321185
+              }
+            ],
+            "closure_error": -2.1827872842550278e-11,
+            "closed": true
+          },
+          "scope": {
+            "metric_id": "gross_gmv",
+            "current_period": {
+              "start": "2017-12-01",
+              "end": "2017-12-31"
+            },
+            "baseline_period": {
+              "start": "2017-01-01",
+              "end": "2017-01-31"
+            },
+            "filters": {}
+          },
+          "provenance": [
+            {
+              "query_id": "Q00010",
+              "dataset_id": "completejourney_v1",
+              "backend": "SQLite",
+              "operation": "metric",
+              "request": {
+                "metric_id": "gross_gmv",
+                "period": {
+                  "start": "2017-01-01",
+                  "end": "2017-01-31"
+                },
+                "filters": {}
+              },
+              "read_only": true,
+              "sql_query_ids": [
+                "SQL00025"
+              ]
+            },
+            {
+              "query_id": "Q00009",
+              "dataset_id": "completejourney_v1",
+              "backend": "SQLite",
+              "operation": "metric",
+              "request": {
+                "metric_id": "gross_gmv",
+                "period": {
+                  "start": "2017-12-01",
+                  "end": "2017-12-31"
+                },
+                "filters": {}
+              },
+              "read_only": true,
+              "sql_query_ids": [
+                "SQL00024"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "warnings": [
+      "dataset_limitation"
+    ],
+    "limitations": [
+      "Complete Journey public historical receipts; not a production real-time system.",
+      "gross_gmv is retailer-received merchandise sales value, not customer out-of-pocket payment or shelf/list price.",
+      "Transaction validity is approved at source-contract level; no physical payment_success column.",
+      "household_id represents households, not individual customers; buyer/frequency counts use household entities.",
+      "Refund lifecycle is unobserved; net_gmv and refund analysis unavailable.",
+      "Quantity units/scales unresolved; units, UPO and realized unit price unavailable.",
+      "channel, region, campaign and lifecycle customer_type unavailable; no proxy dimensions.",
+      "Dataset first purchase is left-censored and not lifecycle first purchase.",
+      "Calendar dates retain source clock with unknown timezone; 2018-01 is incomplete.",
+      "Analysis stopped at decompose_aov: data_unavailable."
+    ],
+    "failed_branches": [
+      {
+        "node": "decompose_aov",
+        "metric_id": "aov",
+        "filters": {},
+        "reason": "data_unavailable"
+      }
+    ],
+    "stop_reason": "data_unavailable"
+  },
+  "trace_path": "C:\\Users\\ASUS\\Desktop\\经营分析agent\\examples\\real_data\\completejourney\\runs\\45954e94-a97e-4ffb-9a81-a6999dc0a480\\traces\\54adcb89-4bff-422c-9a38-9185452a3938.json",
+  "report": "# GMV 诊断报告\n\n- GMV 诊断状态：partial\n- 停止原因：data_unavailable\n\n## 分析发现\n\n- gross_gmv 从 370886.93 变为 421882.29，变化 50995.359999999986（13.75%）。\n- 在 gross_gmv 的本层分解中，aov 是最大同向内部贡献项：effect=39669.9，占本层同向贡献 77.79%。\n\n## 警告\n\n- dataset_limitation\n\n## 限制\n\n- Complete Journey public historical receipts; not a production real-time system.\n- gross_gmv is retailer-received merchandise sales value, not customer out-of-pocket payment or shelf/list price.\n- Transaction validity is approved at source-contract level; no physical payment_success column.\n- household_id represents households, not individual customers; buyer/frequency counts use household entities.\n- Refund lifecycle is unobserved; net_gmv and refund analysis unavailable.\n- Quantity units/scales unresolved; units, UPO and realized unit price unavailable.\n- channel, region, campaign and lifecycle customer_type unavailable; no proxy dimensions.\n- Dataset first purchase is left-censored and not lifecycle first purchase.\n- Calendar dates retain source clock with unknown timezone; 2018-01 is incomplete.\n- Analysis stopped at decompose_aov: data_unavailable.",
+  "report_metadata": {
+    "report_renderer": "deterministic_fallback",
+    "provider_error_code": null,
+    "retry_count": 0
+  },
+  "provider_events": [],
+  "checks": {
+    "no_unsupported_core_claim": true,
+    "root_decomposition": true,
+    "category_path": false,
+    "unsupported_stops": false
+  }
+}

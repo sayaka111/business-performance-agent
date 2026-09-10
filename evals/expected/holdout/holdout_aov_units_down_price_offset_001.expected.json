@@ -1,0 +1,20 @@
+{
+  "case_id": "holdout_aov_units_down_price_offset_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "required_relationships": [
+      "gross_gmv_orders_aov",
+      "aov_units_price"
+    ],
+    "first_level_primary_driver": "aov",
+    "nested_primary_driver": "units_per_order",
+    "required_behaviors": [
+      "identify average_realized_unit_price as offsetting nested driver"
+    ]
+  },
+  "forbidden": {
+    "claims": [
+      "用户购买意愿下降"
+    ]
+  }
+}

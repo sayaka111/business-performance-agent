@@ -1,0 +1,13 @@
+{
+  "case_id": "holdout_explicit_category_intent_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "selected_dimension": "category",
+    "required_behaviors": [
+      "execute gross_gmv x category drilldown"
+    ]
+  },
+  "forbidden": {
+    "claims": []
+  }
+}

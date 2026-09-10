@@ -1,0 +1,29 @@
+{
+  "case_id": "holdout_category_multi_driver_001",
+  "category": "dimension",
+  "title": "多个品类共同拖累且一个品类增长",
+  "user_query": "哪个品类对GMV下滑影响最大？",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "Category A 7000→5200, B 5000→4300, C 3000→3600，总变化=-1900。",
+    "required_semantic_fields": [
+      "order_id",
+      "paid_at",
+      "merchandise_amount",
+      "category"
+    ],
+    "construction_requirements": [
+      "Category GMV可加总闭合",
+      "A=-1800",
+      "B=-700",
+      "C=+600"
+    ]
+  },
+  "evaluation_focus": [
+    "category contribution ranking",
+    "offsetting category"
+  ]
+}

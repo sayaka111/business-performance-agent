@@ -1,0 +1,60 @@
+{
+  "verified_at_utc": "2026-09-10T12:06:42.990069+00:00",
+  "status": "PASS",
+  "sqlite_readonly": true,
+  "no_payment_column": true,
+  "rows": 1469307,
+  "amount": 4596039.58,
+  "unknown_category": 7045,
+  "database_sha256": "ff2002fff3cc5a69e139d920f8849d5f115b88850a025f6f6b54177cd580affa",
+  "scenarios": [
+    {
+      "name": "overall",
+      "deterministic_live_core_equal": true,
+      "supported_claims_and_valid_evidence_refs": true,
+      "observed_contributions_closed": true,
+      "no_forbidden_orders_category_product_path": true,
+      "workflow_status": "partial",
+      "stop_reason": "data_unavailable"
+    },
+    {
+      "name": "drivers",
+      "deterministic_live_core_equal": true,
+      "supported_claims_and_valid_evidence_refs": true,
+      "observed_contributions_closed": true,
+      "no_forbidden_orders_category_product_path": true,
+      "workflow_status": "partial",
+      "stop_reason": "data_unavailable"
+    },
+    {
+      "name": "category",
+      "deterministic_live_core_equal": true,
+      "supported_claims_and_valid_evidence_refs": true,
+      "observed_contributions_closed": true,
+      "no_forbidden_orders_category_product_path": true,
+      "workflow_status": "completed",
+      "stop_reason": "below_min_contribution"
+    },
+    {
+      "name": "unsupported_channel",
+      "deterministic_live_core_equal": true,
+      "supported_claims_and_valid_evidence_refs": true,
+      "observed_contributions_closed": true,
+      "no_forbidden_orders_category_product_path": true,
+      "workflow_status": "blocked",
+      "stop_reason": "data_quality_boundary"
+    }
+  ],
+  "matches_previously_recorded_two_build_hash": true,
+  "raw_hashes_unchanged": true,
+  "historical_provider_events": {
+    "requests": 7,
+    "successes": 7,
+    "failures": 0,
+    "retries": 0
+  },
+  "protected_historical_files_checked": 111,
+  "frozen_specs_and_eval_unchanged": true,
+  "new_api_calls": 0,
+  "runtime_reexecuted": false
+}

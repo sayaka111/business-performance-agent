@@ -1,0 +1,32 @@
+{
+  "case_id": "aov_units_driver_001",
+  "category": "decomposition",
+  "title": "AOV下降，Units per Order为主要驱动",
+  "user_query": "本期 GMV 为什么下降？",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "构造基期 Units per Order=2.0、Average Realized Unit Price=50、AOV=100；本期 Units per Order=1.5、Average Realized Unit Price=50、AOV=75。 两周期有效订单数相同，按单位数约束的最小整数记录构造。",
+    "required_semantic_fields": [
+      "order_id",
+      "paid_at",
+      "merchandise_amount",
+      "quantity"
+    ],
+    "construction_requirements": [
+      "基期与本期平均成交单价均=50",
+      "基期units_per_order=2.0",
+      "本期units_per_order=1.5",
+      "AOV分别=100和75",
+      "以gross_gmv为入口；Orders与Buyers来自有效订单聚合；GMV=Orders×AOV且AOV=Units per Order×Average Realized Unit Price闭合。",
+      "两个周期有效订单数相同，使GMV第一层由AOV主导。"
+    ]
+  },
+  "evaluation_focus": [
+    "aov_units_price关系",
+    "units_per_order主驱动",
+    "因果边界"
+  ]
+}

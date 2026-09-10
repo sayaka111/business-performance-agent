@@ -1,0 +1,25 @@
+{
+  "case_id": "gmv_orders_driver_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "anomaly": true,
+    "required_relationships": [
+      "gross_gmv_orders_aov"
+    ],
+    "primary_driver": "orders",
+    "expected_values": {
+      "baseline_gmv": 10000,
+      "current_gmv": 7840,
+      "delta_gmv": -2160,
+      "orders_effect": -1980,
+      "aov_effect": -180
+    },
+    "closure_required": true
+  },
+  "forbidden": {
+    "relationships": [],
+    "claims": [
+      "直接将channel或category描述为GMV第一层数学驱动"
+    ]
+  }
+}

@@ -1,13 +1,14 @@
 from dataclasses import dataclass, field, asdict
 from ..models.schemas import validate_shape
 
+
 @dataclass
 class WorkflowState:
-    workflow_status: str = 'initialized'
-    target_metric: str = 'gross_gmv'
-    current_period: dict = field(default_factory=lambda: {'start':None,'end':None})
-    baseline_period: dict = field(default_factory=lambda: {'start':None,'end':None})
-    current_node: str | None = 'validate_input'
+    workflow_status: str = "initialized"
+    target_metric: str = "gross_gmv"
+    current_period: dict = field(default_factory=lambda: {"start": None, "end": None})
+    baseline_period: dict = field(default_factory=lambda: {"start": None, "end": None})
+    current_node: str | None = "validate_input"
     current_metric: str | None = None
     current_filters: dict = field(default_factory=dict)
     analysis_path: list = field(default_factory=list)
@@ -28,6 +29,6 @@ class WorkflowState:
 
     def validate(self, schema):
         value = asdict(self)
-        for key,spec in schema['state'].items():
-            validate_shape(value[key],spec,key)
+        for key, spec in schema["state"].items():
+            validate_shape(value[key], spec, key)
         return value

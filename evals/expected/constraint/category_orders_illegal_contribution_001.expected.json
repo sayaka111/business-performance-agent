@@ -1,0 +1,25 @@
+{
+  "case_id": "category_orders_illegal_contribution_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "expected_behavior": [
+      "可以做descriptive comparison",
+      "不得输出strict contribution percentage"
+    ],
+    "required_relationships": [
+      "gross_gmv_orders_aov"
+    ],
+    "first_level_primary_driver": "orders",
+    "forbidden_contribution": {
+      "metric_id": "orders",
+      "dimension_id": "category"
+    }
+  },
+  "forbidden": {
+    "relationships": [],
+    "claims": [
+      "Category A对总Orders下降贡献了83.3%",
+      "Category A对订单下降贡献最大"
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "case_id": "holdout_explicit_category_intent_001",
+  "category": "intent_dimension",
+  "title": "用户明确指定品类维度",
+  "user_query": "先按品类看，8月GMV到底是哪一类拖得最狠？",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "构造Category D为最大GMV负贡献，另有品类增长对冲。",
+    "required_semantic_fields": [
+      "order_id",
+      "paid_at",
+      "merchandise_amount",
+      "category"
+    ],
+    "construction_requirements": [
+      "Category D负贡献最大",
+      "至少一个category为正贡献",
+      "GMV按category闭合"
+    ]
+  },
+  "evaluation_focus": [
+    "explicit category intent",
+    "scope preservation"
+  ]
+}

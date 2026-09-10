@@ -1,0 +1,19 @@
+{
+  "case_id": "holdout_gmv_mixed_orders_primary_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "required_relationships": [
+      "gross_gmv_orders_aov"
+    ],
+    "first_level_primary_driver": "orders",
+    "expected_values": {
+      "delta_gmv": -4100,
+      "orders_effect": -2250,
+      "aov_effect": -1850
+    },
+    "closure_required": true
+  },
+  "forbidden": {
+    "claims": []
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "case_id": "holdout_aov_units_down_price_offset_001",
+  "category": "decomposition",
+  "title": "每单件数下降但成交单价上升对冲",
+  "user_query": "客单价变差主要是哪块？单件价格有没有帮忙对冲？",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "保持Orders稳定。基期 units_per_order=2.0, realized_unit_price=50, AOV=100；本期 1.4 × 60 = 84。",
+    "required_semantic_fields": [
+      "order_id",
+      "paid_at",
+      "merchandise_amount",
+      "quantity"
+    ],
+    "construction_requirements": [
+      "两期orders稳定",
+      "基期UPO=2.0 price=50",
+      "本期UPO=1.4 price=60"
+    ]
+  },
+  "evaluation_focus": [
+    "nested AOV decomposition",
+    "offsetting factor"
+  ]
+}

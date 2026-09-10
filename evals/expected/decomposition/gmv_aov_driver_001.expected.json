@@ -1,0 +1,25 @@
+{
+  "case_id": "gmv_aov_driver_001",
+  "expected": {
+    "target_metric": "gross_gmv",
+    "required_relationships": [
+      "gross_gmv_orders_aov",
+      "aov_units_price"
+    ],
+    "primary_driver": "aov",
+    "expected_values": {
+      "baseline_gmv": 10000,
+      "current_gmv": 7840,
+      "delta_gmv": -2160,
+      "orders_effect": -180,
+      "aov_effect": -1980
+    },
+    "closure_required": true
+  },
+  "forbidden": {
+    "relationships": [],
+    "claims": [
+      "将orders作为主要驱动"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "case_id": "zero_baseline_001",
+  "expected": {
+    "absolute_change": 1000,
+    "relative_change": null,
+    "relative_change_status": "undefined"
+  },
+  "forbidden": {
+    "relationships": [],
+    "claims": [
+      "增长100%",
+      "增长无限%",
+      "增长0%"
+    ]
+  }
+}

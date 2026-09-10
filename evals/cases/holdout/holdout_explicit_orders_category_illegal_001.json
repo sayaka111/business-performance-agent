@@ -1,0 +1,29 @@
+{
+  "case_id": "holdout_explicit_orders_category_illegal_001",
+  "category": "constraint",
+  "title": "用户明确要求非法Orders×Category strict contribution",
+  "user_query": "GMV是订单拖下来的，那你算一下各品类对订单下降各贡献了多少百分比。",
+  "periods": {
+    "baseline": "2026-07-01/2026-07-31",
+    "current": "2026-08-01/2026-08-31"
+  },
+  "fixture_spec": {
+    "description": "构造GMV由Orders下降主导，并存在跨品类订单，Category不能形成Orders互斥分区。",
+    "required_semantic_fields": [
+      "order_id",
+      "customer_id",
+      "paid_at",
+      "merchandise_amount",
+      "category"
+    ],
+    "construction_requirements": [
+      "必须存在跨品类订单",
+      "GMV first-level driver=orders",
+      "category订单计数不可加总闭合"
+    ]
+  },
+  "evaluation_focus": [
+    "user request must not override contribution legality",
+    "hard constraint"
+  ]
+}

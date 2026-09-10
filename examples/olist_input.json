@@ -1,6 +1,0 @@
-{
-  "metric_id": "gross_gmv",
-  "current_period": {"start": "2018-06-01", "end": "2018-06-30"},
-  "baseline_period": {"start": "2018-05-01", "end": "2018-05-31"},
-  "filters": {}
-}
